@@ -1,8 +1,9 @@
 import { FunctionComponent } from "react";
 import { motion } from "framer-motion";
+import "./AnimatedList.css";
 
 interface AnimatedListProps {
-  list: string[];
+  list: string[][];
 }
 const container = {
   hidden: { opacity: 0 },
@@ -33,12 +34,15 @@ const AnimatedList: FunctionComponent<AnimatedListProps> = ({ list }) => {
     >
       {list.map((item, i) => (
         <motion.li
-          className="list-group-item d-flex gap-2 rounded-3 box-shadow-custom fw-bold my-2 p-4 text-dark"
+          className="list-group-item d-flex gap-2 align-items-center rounded-3 box-shadow-custom fw-bold my-2 p-4 text-dark"
           key={i}
           variants={listItem}
         >
           <p className="h1">{emojiArr[i]}</p>
-          <p>{item}</p>
+          <p className="list-text">
+            <strong>{item[0]} </strong>
+            {item[1]}
+          </p>
         </motion.li>
       ))}
     </motion.ul>
