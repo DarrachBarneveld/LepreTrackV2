@@ -153,9 +153,9 @@ const NavButton: FunctionComponent<NavButtonProps> = ({ auth }) => {
   return (
     <button
       onClick={form}
-      className="nav-link btn btn-success text-white m-1 ms-0 mx-2 px-3 w-100 text-capitalize"
+      className="d-flex justify-content-center align-items-center gap-1 nav-link btn btn-success text-white m-1 ms-0 mx-2 px-3 w-100 text-capitalize"
     >
-      {auth + " "}
+      {auth}
       {auth === "login" && <i className="fa-solid fa-right-to-bracket"></i>}
       {auth === "signup" && <i className="fa-solid fa-user-plus"></i>}
       {auth === "logout" && <i className="fa-solid fa-right-to-bracket"></i>}

@@ -47,24 +47,6 @@ export async function signUpUserWithEmailAndPassword(
   }
 }
 
-export async function logOutUser() {
-  const result = await Swal.fire({
-    title: "Are you sure you want to log out?",
-    text: "You will be logged out from your account.",
-    icon: "question",
-    showCancelButton: true,
-    confirmButtonColor: "#3085d6",
-    cancelButtonColor: "#d33",
-    confirmButtonText: "Yes, log me out",
-  });
-
-  if (result.isConfirmed) {
-    await signOut(firebaseAuth);
-
-    window.location.href = "/";
-  }
-}
-
 async function createUserDocumentFromAuth(userAuth: User, userName: string) {
   if (!userAuth) return;
 
