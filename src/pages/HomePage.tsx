@@ -2,7 +2,7 @@ import { FunctionComponent, useContext } from "react";
 import earthGuardian from "../assets/images/guardians/earth-guardian.png";
 import terraTormentor from "../assets/images/guardians/terra-tormentor.png";
 import { AppContext } from "../components/FireBaseContext";
-import AnimatedList from "../components/AnimatedList";
+import AnimatedList, { HomeCopy } from "../components/AnimatedList";
 import { homeContent } from "../content/content";
 
 export interface IHomePageProps {}
@@ -40,7 +40,7 @@ const HomePage: FunctionComponent<IHomePageProps> = (props) => {
 
       <div className="glassmorphism container mt-4" id="text-overlay">
         <div className="fs-4 px-3 fw-bold text-dark">Features</div>
-        <AnimatedList list={homeContent} />
+        <AnimatedList list={homeContent} component={HomeCopy} />
       </div>
 
       <div className="w-100 card glassmorphism mt-4">

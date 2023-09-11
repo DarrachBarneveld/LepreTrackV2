@@ -2,9 +2,13 @@ import { FunctionComponent } from "react";
 import { motion } from "framer-motion";
 import "./AnimatedList.css";
 
-interface AnimatedListProps {
-  list: string[][];
+type ComponentType<T> = React.ComponentType<T>;
+
+interface AnimatedListProps<T> {
+  list: T[];
+  component: ComponentType<{ item: T; i: number }>;
 }
+
 const container = {
   hidden: { opacity: 0 },
   show: {
@@ -24,7 +28,10 @@ const listItem = {
 };
 
 const emojiArr = ["🌎", "🌱", "📊", "⭐"];
-const AnimatedList: FunctionComponent<AnimatedListProps> = ({ list }) => {
+const AnimatedList: FunctionComponent<AnimatedListProps<any>> = ({
+  list,
+  component: Component,
+}) => {
   return (
     <motion.ul
       className="list-group"
@@ -33,16 +40,8 @@ const AnimatedList: FunctionComponent<AnimatedListProps> = ({ list }) => {
       animate="show"
     >
       {list.map((item, i) => (
-        <motion.li
-          className="list-group-item d-flex gap-2 align-items-center rounded-3 box-shadow-custom fw-bold my-2 p-4 text-dark"
-          key={i}
-          variants={listItem}
-        >
-          <p className="h1">{emojiArr[i]}</p>
-          <p className="list-text">
-            <strong>{item[0]} </strong>
-            {item[1]}
-          </p>
+        <motion.li className="list-unstyled" key={i} variants={listItem}>
+          <ListItem key={i} item={item} i={i} component={Component} />
         </motion.li>
       ))}
     </motion.ul>
@@ -50,3 +49,30 @@ const AnimatedList: FunctionComponent<AnimatedListProps> = ({ list }) => {
 };
 
 export default AnimatedList;
+
+type ListItemProps<T> = {
+  item: T;
+  component: ComponentType<{ item: T; i: number }>;
+  i: number;
+};
+
+const ListItem = <T,>({ item, component: Component, i }: ListItemProps<T>) => {
+  return <Component item={item} i={i} />;
+};
+
+interface HomeCopyProps {
+  item: string[];
+  i: number;
+}
+
+export const HomeCopy: FunctionComponent<HomeCopyProps> = ({ item, i }) => {
+  return (
+    <div className="list-group-item d-flex gap-2 align-items-center rounded-3 box-shadow-custom fw-bold my-2 p-4 text-dark">
+      <p className="h1">{emojiArr[i]}</p>
+      <p className="list-text">
+        <strong>{item[0]} </strong>
+        {item[1]}
+      </p>
+    </div>
+  );
+};
