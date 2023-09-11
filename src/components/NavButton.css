@@ -11,8 +11,7 @@
   align-items: center;
 }
 
-input[type="email"],
-input[type="password"] {
+input {
   width: 100%;
   max-width: 300px;
   padding: 1rem;

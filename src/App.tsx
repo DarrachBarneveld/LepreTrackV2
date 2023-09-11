@@ -9,7 +9,7 @@ import { firebaseAuth } from "./config/firebaseConfig";
 import { useContext, useEffect } from "react";
 import { onAuthStateChanged } from "firebase/auth";
 import { getUserData } from "./config/firebaseAuth";
-import { User, UserData } from "./classes/User";
+import { AppUser, UserData } from "./classes/AppUser";
 
 export interface IAppProps {}
 
@@ -35,7 +35,7 @@ const App: React.FunctionComponent<IAppProps> = (props) => {
             community: documentData.community,
           };
 
-          const newUser = new User(userData);
+          const newUser = new AppUser(userData);
           setUserData(newUser);
         }
       }

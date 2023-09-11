@@ -88,7 +88,7 @@ export interface UserData {
   community?: CommunityData;
 }
 
-export class User {
+export class AppUser {
   id: string;
   email: string;
   name: string;
@@ -183,10 +183,10 @@ export class User {
     this.email = data.email;
     this.name = data.name;
     this.createdAt = data.createdAt;
-    this.travel = data.travel || User.defaultTravel;
-    this.food = data.food || User.defaultFood;
-    this.energy = data.energy || User.defaultEnergy;
-    this.community = data.community || User.defaultCommunity;
+    this.travel = data.travel || AppUser.defaultTravel;
+    this.food = data.food || AppUser.defaultFood;
+    this.energy = data.energy || AppUser.defaultEnergy;
+    this.community = data.community || AppUser.defaultCommunity;
   }
 
   // Rest of the class methods

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { User } from "../classes/User";
+import { User } from "../classes/AppUser";
 
 type ValueProp = {
   userId: string;

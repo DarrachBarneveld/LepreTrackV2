@@ -73,7 +73,8 @@ const NavBar: FC<NavBarProps> = () => {
               </li>
             </ul>
             <div className="d-flex">
-              <NavButton />
+              <NavButton auth="login" />
+              <NavButton auth="signup" />
             </div>
           </div>
         </div>
