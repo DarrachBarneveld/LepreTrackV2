@@ -1,24 +1,15 @@
-import { FunctionComponent, useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { FunctionComponent, useContext } from "react";
+import { AppContext } from "../components/FireBaseContext";
 
 export interface IAboutPageProps {}
 
 const AboutPage: FunctionComponent<IAboutPageProps> = (props) => {
-  const [message, setMessage] = useState("");
-  const { number } = useParams();
-
-  useEffect(() => {
-    if (number) {
-      setMessage("The number is " + number);
-    } else {
-      setMessage("No number was provided");
-    }
-  }, []);
+  const { userData } = useContext(AppContext);
 
   return (
     <div>
-      <p>This is the about page.</p>
-      <p>{message}</p>
+      <p>This is the learn page.</p>
+      <p>Your travel score {userData?.travel.flight.score}</p>
     </div>
   );
 };

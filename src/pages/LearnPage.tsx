@@ -1,9 +1,17 @@
-import { FC } from "react";
+import { FC, useContext } from "react";
+import { AppContext } from "../components/FireBaseContext";
 
 interface LearnPageProps {}
 
 const LearnPage: FC<{}> = () => {
-  return <div>I am the LearnPage</div>;
+  const { userData } = useContext(AppContext);
+
+  return (
+    <div>
+      <p>This is the home page.</p>
+      <p>Your food score {userData?.food.diet.score}</p>
+    </div>
+  );
 };
 
 export default LearnPage;

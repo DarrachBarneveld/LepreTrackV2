@@ -25,7 +25,7 @@ const App: React.FunctionComponent<IAppProps> = (props) => {
 
         if (documentData) {
           const userData: UserData = {
-            id: userId,
+            id: documentData.id,
             email: documentData.email,
             name: documentData.name,
             createdAt: documentData.createdAt.toDate(),

@@ -2,18 +2,20 @@ import { signInWithEmailAndPassword } from "firebase/auth";
 import { FunctionComponent } from "react";
 import { firebaseAuth } from "../config/firebaseConfig";
 import Swal from "sweetalert2";
+import "./NavButton.css";
 
 interface NavButtonProps {}
 
 const loginHtml = `
-<input type="email" class="swal2-input" id="email" placeholder="Email" required />
-<input type="password" id="password" class="swal2-input" placeholder="Password" required />
+<input type="email" id="email" placeholder="Email" required />
+<input type="password" id="password" placeholder="Password" required />
+
 `;
 
 const NavButton: FunctionComponent<NavButtonProps> = () => {
   async function loginForm() {
     Swal.fire({
-      title: "Login Form",
+      title: "Login",
       icon: "question",
       html: loginHtml,
       confirmButtonText: "Sign in",

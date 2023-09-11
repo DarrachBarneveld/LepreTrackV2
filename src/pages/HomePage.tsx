@@ -1,5 +1,4 @@
 import { FunctionComponent, useContext } from "react";
-import { Link, useNavigate } from "react-router-dom";
 import { AppContext } from "../components/FireBaseContext";
 
 export interface IHomePageProps {}

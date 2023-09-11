@@ -68,8 +68,7 @@ const NavBar: FC<NavBarProps> = () => {
                       : "nav-link btn btn-success text-white m-1 ms-0 mx-2 px-3"
                   }
                 >
-                  About Us
-                  <i className="fa-solid fa-people-group"></i>
+                  About <i className="fa-solid fa-people-group"></i>
                 </NavLink>
               </li>
             </ul>
