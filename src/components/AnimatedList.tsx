@@ -1,6 +1,7 @@
-import { FunctionComponent } from "react";
-import { motion } from "framer-motion";
+import { FunctionComponent, useEffect } from "react";
+import { animate, motion, useAnimation } from "framer-motion";
 import "./AnimatedList.css";
+import { useInView } from "react-intersection-observer";
 
 type ComponentType<T> = React.ComponentType<T>;
 
@@ -18,6 +19,7 @@ const listItem = {
 };
 
 const emojiArr = ["🌎", "🌱", "📊", "⭐"];
+
 const AnimatedList: FunctionComponent<AnimatedListProps<any>> = ({
   list,
   component: Component,
@@ -25,9 +27,12 @@ const AnimatedList: FunctionComponent<AnimatedListProps<any>> = ({
   stylesItem,
   staggerDuration,
 }) => {
+  const animation = useAnimation();
+  const { ref, inView } = useInView({ triggerOnce: false, threshold: 0.3 });
+
   const container = {
-    hidden: { opacity: 0 },
-    show: {
+    initial: { opacity: 0 },
+    animate: {
       opacity: 1,
       transition: {
         staggerChildren: staggerDuration || 0.5,
@@ -37,18 +42,33 @@ const AnimatedList: FunctionComponent<AnimatedListProps<any>> = ({
       },
     },
   };
+
+  const child = {
+    initial: { opacity: 0, scale: 0.8, y: -100 },
+    animate: { opacity: 1, scale: 1, y: 0 },
+  };
+
+  useEffect(() => {
+    console.log("lol");
+    if (inView) {
+      animation.start("animate");
+    } else {
+      animation.start("initial");
+    }
+  }, [animation, inView]);
+
   return (
     <motion.ul
+      ref={ref}
       className={`${styles ? styles : "list-group"}`}
       variants={container}
-      initial="hidden"
-      animate="show"
+      animate={animation}
     >
       {list.map((item, i) => (
         <motion.li
           className={`list-unstyled ${stylesItem}`}
           key={i}
-          variants={listItem}
+          variants={child}
         >
           <ListItem key={i} item={item} i={i} component={Component} />
         </motion.li>
