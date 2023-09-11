@@ -7,6 +7,8 @@ type ComponentType<T> = React.ComponentType<T>;
 interface AnimatedListProps<T> {
   list: T[];
   component: ComponentType<{ item: T; i: number }>;
+  styles?: string;
+  stylesItem?: string;
 }
 
 const container = {
@@ -31,16 +33,22 @@ const emojiArr = ["🌎", "🌱", "📊", "⭐"];
 const AnimatedList: FunctionComponent<AnimatedListProps<any>> = ({
   list,
   component: Component,
+  styles,
+  stylesItem,
 }) => {
   return (
     <motion.ul
-      className="list-group"
+      className={`${styles ? styles : "list-group"}`}
       variants={container}
       initial="hidden"
       animate="show"
     >
       {list.map((item, i) => (
-        <motion.li className="list-unstyled" key={i} variants={listItem}>
+        <motion.li
+          className={`list-unstyled ${stylesItem}`}
+          key={i}
+          variants={listItem}
+        >
           <ListItem key={i} item={item} i={i} component={Component} />
         </motion.li>
       ))}
