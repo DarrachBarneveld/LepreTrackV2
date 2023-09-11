@@ -4,6 +4,7 @@ import { firebaseAuth } from "../config/firebaseConfig";
 import Swal from "sweetalert2";
 import "./NavButton.css";
 import { signUpUserWithEmailAndPassword } from "../config/firebaseAuth";
+import { useNavigate } from "react-router-dom";
 
 interface NavButtonProps {
   auth: string;
@@ -103,50 +104,52 @@ async function signupForm() {
   });
 }
 
-async function loginForm() {
-  Swal.fire({
-    title: "Login",
-    icon: "question",
-    html: loginHtml,
-    confirmButtonText: "Sign in",
-    focusConfirm: false,
-    preConfirm: () => {
-      const email = Swal.getPopup()!.querySelector(
-        "#email"
-      ) as HTMLInputElement | null;
-      const password = Swal.getPopup()!.querySelector(
-        "#password"
-      ) as HTMLInputElement | null;
-
-      if (!email?.value || !password?.value) {
-        Swal.showValidationMessage(`Please enter login and password`);
-      }
-      return { email: email?.value, password: password?.value };
-    },
-  }).then(async (result) => {
-    await signInWithEmailAndPassword(
-      firebaseAuth,
-      result.value.email,
-      result.value.password
-    );
-
-    const Toast = Swal.mixin({
-      toast: true,
-      position: "top-end",
-      showConfirmButton: false,
-      timer: 1500,
-      timerProgressBar: true,
-    });
-
-    await Toast.fire({
-      icon: "success",
-      title: "Signed in successfully",
-    });
-
-    console.log("fire");
-  });
-}
 const NavButton: FunctionComponent<NavButtonProps> = ({ auth }) => {
+  const navigate = useNavigate();
+
+  async function loginForm() {
+    Swal.fire({
+      title: "Login",
+      icon: "question",
+      html: loginHtml,
+      confirmButtonText: "Sign in",
+      focusConfirm: false,
+      preConfirm: () => {
+        const email = Swal.getPopup()!.querySelector(
+          "#email"
+        ) as HTMLInputElement | null;
+        const password = Swal.getPopup()!.querySelector(
+          "#password"
+        ) as HTMLInputElement | null;
+
+        if (!email?.value || !password?.value) {
+          Swal.showValidationMessage(`Please enter login and password`);
+        }
+        return { email: email?.value, password: password?.value };
+      },
+    }).then(async (result) => {
+      await signInWithEmailAndPassword(
+        firebaseAuth,
+        result.value.email,
+        result.value.password
+      );
+
+      const Toast = Swal.mixin({
+        toast: true,
+        position: "top-end",
+        showConfirmButton: false,
+        timer: 1500,
+        timerProgressBar: true,
+      });
+
+      navigate("dashboard");
+
+      await Toast.fire({
+        icon: "success",
+        title: "Signed in successfully",
+      });
+    });
+  }
   const form =
     auth === "login" ? loginForm : auth === "signup" ? signupForm : logOutUser;
 

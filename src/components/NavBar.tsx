@@ -77,7 +77,28 @@ const NavBar: FC<NavBarProps> = ({ user }) => {
             </ul>
             <div className="d-flex">
               {user ? (
-                <NavButton auth="logout" />
+                <ul
+                  className="navbar-nav me-auto mb-2 mb-lg-0"
+                  id="navbar-list"
+                >
+                  <li className="nav-item">
+                    <NavLink
+                      to="/dashboard"
+                      className={({ isActive, isPending }) =>
+                        isPending
+                          ? "nav-link btn btn-success text-white m-1 ms-0 mx-2 px-3 text-capitalize"
+                          : isActive
+                          ? "nav-link btn btn-primary text-white m-1 ms-0 mx-2 px-3 text-capitalize"
+                          : "nav-link btn btn-success text-white m-1 ms-0 mx-2 px-3 text-capitalize"
+                      }
+                    >
+                      {user.name} <i className="fa-solid fa-user"></i>
+                    </NavLink>
+                  </li>
+                  <li className="nav-item">
+                    <NavButton auth="logout" />
+                  </li>
+                </ul>
               ) : (
                 <>
                   <NavButton auth="signup" />

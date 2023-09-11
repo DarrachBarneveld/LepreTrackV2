@@ -11,6 +11,7 @@ import { onAuthStateChanged } from "firebase/auth";
 import { getUserData } from "./config/firebaseAuth";
 import { AppUser, UserData } from "./classes/AppUser";
 import Footer from "./components/Footer";
+import DashboardPage from "./pages/DashboardPage";
 
 export interface IAppProps {}
 
@@ -50,6 +51,7 @@ const App: React.FunctionComponent<IAppProps> = (props) => {
         <Route path="/" element={<HomePage />} />
         <Route path="about" element={<AboutPage />} />
         <Route path="learn" element={<LearnPage />} />
+        <Route path="dashboard" element={<DashboardPage />} />
       </Routes>
       <Footer />
     </BrowserRouter>
