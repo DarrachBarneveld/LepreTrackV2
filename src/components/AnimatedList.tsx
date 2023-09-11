@@ -9,20 +9,8 @@ interface AnimatedListProps<T> {
   component: ComponentType<{ item: T; i: number }>;
   styles?: string;
   stylesItem?: string;
+  staggerDuration?: number;
 }
-
-const container = {
-  hidden: { opacity: 0 },
-  show: {
-    opacity: 1,
-    transition: {
-      staggerChildren: 0.5,
-      opacity: {
-        duration: 2,
-      },
-    },
-  },
-};
 
 const listItem = {
   hidden: { opacity: 0, scale: 0.8, y: -100 },
@@ -35,7 +23,20 @@ const AnimatedList: FunctionComponent<AnimatedListProps<any>> = ({
   component: Component,
   styles,
   stylesItem,
+  staggerDuration,
 }) => {
+  const container = {
+    hidden: { opacity: 0 },
+    show: {
+      opacity: 1,
+      transition: {
+        staggerChildren: staggerDuration || 0.5,
+        opacity: {
+          duration: 1.5,
+        },
+      },
+    },
+  };
   return (
     <motion.ul
       className={`${styles ? styles : "list-group"}`}

@@ -54,7 +54,7 @@ const AboutPage: FunctionComponent<IAboutPageProps> = (props) => {
 
   return (
     <main>
-      <div className="w-100 card glassmorphism-title">
+      <div className="w-100 card glassmorphism mb-5 text-success fw-bolder">
         <div className="card-body">
           <h1 className="card-title text-center">About Us</h1>
           <h6 className="card-subtitle mb-2 text-muted text-center">
@@ -69,6 +69,7 @@ const AboutPage: FunctionComponent<IAboutPageProps> = (props) => {
           component={Developer}
           styles="row"
           stylesItem="col-md-4 col-sm-6"
+          staggerDuration={0.2}
         />
       </div>
     </main>

@@ -4,6 +4,10 @@ import terraTormentor from "../assets/images/guardians/terra-tormentor.png";
 import { AppContext } from "../components/FireBaseContext";
 import AnimatedList, { HomeCopy } from "../components/AnimatedList";
 import { homeContent } from "../content/content";
+import leprechaun from "../assets/images/leprechaun.png";
+import { motion } from "framer-motion";
+
+import "./homepage.css";
 
 export interface IHomePageProps {}
 
@@ -23,19 +27,38 @@ const HomePage: FunctionComponent<IHomePageProps> = (props) => {
         </h2>
       </div>
 
-      <div className=" card p-4 glassmorphism mt-4" id="text-overlay">
-        <div className="fs-4 px-3 fw-bold">
-          Tracking Solutions for a Greener Tomorrow
+      <div className="p-4 position-relative">
+        {/* <motion.img
+          animate={{ y: -125 }}
+          transition={{
+            delay: 1,
+            repeat: Infinity,
+            ease: "linear",
+            duration: 2,
+            repeatType: "reverse",
+          }}
+          src={leprechaun}
+          alt="leprechaun waving"
+          id="leprechaun"
+        /> */}
+        <div className="card p-4  mt-4" id="text-overlay">
+          <div className="fs-4 px-3 fw-bold">
+            Tracking Solutions for a Greener Tomorrow
+          </div>
+          <div className="mt-3">
+            Our platform enables you to effortlessly track your carbon
+            footprint,
+            <br />
+            empowering you to make informed choices that reduce your CO2
+            emissions.
+          </div>
+          <a
+            className="btn btn-success text-white start-tracking mt-3"
+            href="#"
+          >
+            Start Tracking
+          </a>
         </div>
-        <div className="mt-3">
-          Our platform enables you to effortlessly track your carbon footprint,
-          <br />
-          empowering you to make informed choices that reduce your CO2
-          emissions.
-        </div>
-        <a className="btn btn-success text-white start-tracking mt-3" href="#">
-          Start Tracking
-        </a>
       </div>
 
       <div className="glassmorphism container mt-4" id="text-overlay">

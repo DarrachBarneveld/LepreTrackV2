@@ -1,0 +1,11 @@
+#text-overlay {
+  position: relative;
+  z-index: 1000;
+}
+
+#leprechaun {
+  position: absolute;
+  width: 150px;
+  top: 50px;
+  z-index: 1;
+}

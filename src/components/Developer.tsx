@@ -12,7 +12,7 @@ export interface DeveloperProps {
 
 const Developer: FunctionComponent<DeveloperProps> = ({ item }) => {
   return (
-    <div className="card glassmorphism">
+    <div className="card glassmorphism my-3">
       <div className="card-body">
         <h5 className="card-title text-center fw-bold">{item.name}</h5>
         <q className="card-text text-center fst-italic px-4">{item.quote}</q>
