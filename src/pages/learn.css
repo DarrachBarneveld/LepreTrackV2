@@ -1,6 +1,7 @@
 .my-carousel {
   background-color: #f0f0f0;
   border-radius: 1rem;
+  min-height: 400px;
 }
 
 .my-carousel .carousel-item {
@@ -11,4 +12,24 @@
   background-color: rgba(0, 0, 0, 0.7);
   color: white;
   padding: 10px;
+}
+
+.carousel-indicators {
+  background-color: transparent; /* Background color for the indicators */
+  padding: 10px; /* Add padding to the indicators */
+}
+
+/* Style individual indicator items */
+.carousel-indicators button {
+  background-color: #2b8754 !important;
+  border: 1px solid #2b8754;
+  border-radius: 50%;
+  width: 20px !important;
+  height: 20px !important;
+  margin-right: 5px;
+  cursor: pointer;
+}
+
+.carousel-indicators .active {
+  background-color: #486ffd !important;
 }

@@ -12,7 +12,7 @@ const LearnPage: FC<{}> = () => {
 
   return (
     <main>
-      <Carousel className="container text-dark my-carousel">
+      <Carousel controls={false} className="container text-dark my-carousel">
         <Carousel.Item>
           <h2 className="">
             Transport by Bicycle
