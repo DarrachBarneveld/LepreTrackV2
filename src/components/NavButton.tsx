@@ -34,6 +34,21 @@ const NavButton: FunctionComponent<NavButtonProps> = () => {
         result.value.email,
         result.value.password
       );
+
+      const Toast = Swal.mixin({
+        toast: true,
+        position: "top-end",
+        showConfirmButton: false,
+        timer: 1500,
+        timerProgressBar: true,
+      });
+
+      await Toast.fire({
+        icon: "success",
+        title: "Signed in successfully",
+      });
+
+      console.log("fire");
     });
   }
 

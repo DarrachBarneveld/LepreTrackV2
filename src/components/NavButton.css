@@ -3,12 +3,21 @@
   flex-direction: column;
   align-items: center;
 }
-.swal2-popup input[type="email"],
-.swal2-popup input[type="password"] {
+
+#swal2-html-container {
+  display: flex !important;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+input[type="email"],
+input[type="password"] {
   width: 100%;
   max-width: 300px;
-  padding: 10px;
-  margin: 5px 0;
+  padding: 1rem;
+  margin: 0.5rem 0;
   border: 1px solid #ccc;
-  border-radius: 5px;
+  border-radius: 0.5rem;
+  box-sizing: border-box;
 }
