@@ -3,10 +3,13 @@ import logo from "../assets/images/logo.png";
 import "./Navbar.css";
 import { NavLink } from "react-router-dom";
 import NavButton from "./NavButton";
+import { AppUser } from "../classes/AppUser";
 
-interface NavBarProps {}
+interface NavBarProps {
+  user: AppUser;
+}
 
-const NavBar: FC<NavBarProps> = () => {
+const NavBar: FC<NavBarProps> = ({ user }) => {
   return (
     <header>
       <nav className="navbar navbar-expand-lg navbar-light bg-nav">
@@ -73,8 +76,14 @@ const NavBar: FC<NavBarProps> = () => {
               </li>
             </ul>
             <div className="d-flex">
-              <NavButton auth="login" />
-              <NavButton auth="signup" />
+              {user ? (
+                <NavButton auth="logout" />
+              ) : (
+                <>
+                  <NavButton auth="signup" />
+                  <NavButton auth="login" />
+                </>
+              )}
             </div>
           </div>
         </div>

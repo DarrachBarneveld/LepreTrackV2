@@ -1,4 +1,4 @@
-import { signInWithEmailAndPassword } from "firebase/auth";
+import { signInWithEmailAndPassword, signOut } from "firebase/auth";
 import { FunctionComponent } from "react";
 import { firebaseAuth } from "../config/firebaseConfig";
 import Swal from "sweetalert2";
@@ -20,6 +20,24 @@ const signupHtml = `
 <input type="password" id="password" minlength="6" placeholder="Password" required  />
 `;
 
+export async function logOutUser() {
+  const result = await Swal.fire({
+    title: "Are you sure you want to log out?",
+    text: "You will be logged out from your account.",
+    icon: "question",
+    showCancelButton: true,
+    confirmButtonColor: "#3085d6",
+    cancelButtonColor: "#d33",
+    confirmButtonText: "Yes, log me out",
+  });
+
+  if (result.isConfirmed) {
+    await signOut(firebaseAuth);
+
+    window.location.href = "/";
+  }
+}
+
 async function signupForm() {
   Swal.fire({
     title: "Signup Form",
@@ -27,51 +45,34 @@ async function signupForm() {
     html: signupHtml,
     confirmButtonText: "Sign Up",
     focusConfirm: false,
-    didOpen: () => {
-      const username = Swal.getPopup()!.querySelector(
+    preConfirm: () => {
+      const usernameInput = Swal.getPopup()!.querySelector(
         "#username"
       ) as HTMLInputElement;
-      const email = Swal.getPopup()!.querySelector(
+      const emailInput = Swal.getPopup()!.querySelector(
         "#email"
       ) as HTMLInputElement;
-      const password = Swal.getPopup()!.querySelector(
+      const passwordInput = Swal.getPopup()!.querySelector(
         "#password"
       ) as HTMLInputElement;
 
-      username.addEventListener("focus", () => {
-        username.classList.add("focused");
-      });
-      email.addEventListener("focus", () => {
-        email.classList.add("focused");
-      });
-      password.addEventListener("focus", () => {
-        password.classList.add("focused");
-      });
-    },
-    preConfirm: () => {
-      const username = Swal.getPopup()!.querySelector(
-        "#username"
-      ) as HTMLInputElement | null;
-      const email = Swal.getPopup()!.querySelector(
-        "#email"
-      ) as HTMLInputElement | null;
-      const password = Swal.getPopup()!.querySelector(
-        "#password"
-      ) as HTMLInputElement | null;
+      const username = usernameInput.value.trim();
+      const email = emailInput.value.trim();
+      const password = passwordInput.value;
 
       const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
       // Validate the email using the regular expression
-      if (!emailPattern.test(email?.value.trim())) {
+      if (!emailPattern.test(email)) {
         Swal.showValidationMessage("Please enter a valid email address.");
       }
 
-      if (password?.value.length < 6) {
+      if (password.length < 6) {
         Swal.showValidationMessage(
           `Please enter a password of least 6 characters.`
         );
       }
-      if (username?.value.length < 5) {
+      if (username.length < 5) {
         Swal.showValidationMessage(
           `Please enter a username of least 5 characters.`
         );
@@ -88,9 +89,9 @@ async function signupForm() {
       }
 
       return {
-        email: email?.value.trim(),
-        password: password,
-        username: username?.value.trim(),
+        email,
+        password,
+        username,
       };
     },
   }).then(async (result) => {
@@ -146,18 +147,18 @@ async function loginForm() {
   });
 }
 const NavButton: FunctionComponent<NavButtonProps> = ({ auth }) => {
-  const form = auth === "login" ? loginForm : signupForm;
-
-  const text = auth === "login" ? "Login " : "Signup ";
+  const form =
+    auth === "login" ? loginForm : auth === "signup" ? signupForm : logOutUser;
 
   return (
     <button
       onClick={form}
-      className="nav-link btn btn-success text-white m-1 ms-0 mx-2 px-3 w-100"
+      className="nav-link btn btn-success text-white m-1 ms-0 mx-2 px-3 w-100 text-capitalize"
     >
-      {text}
+      {auth + " "}
       {auth === "login" && <i className="fa-solid fa-right-to-bracket"></i>}
       {auth === "signup" && <i className="fa-solid fa-user-plus"></i>}
+      {auth === "logout" && <i className="fa-solid fa-right-to-bracket"></i>}
     </button>
   );
 };

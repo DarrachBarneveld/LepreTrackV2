@@ -14,7 +14,7 @@ import { AppUser, UserData } from "./classes/AppUser";
 export interface IAppProps {}
 
 const App: React.FunctionComponent<IAppProps> = (props) => {
-  const { userId, setUserId, setUserData } = useContext(AppContext);
+  const { userId, setUserId, setUserData, userData } = useContext(AppContext);
 
   useEffect(() => {
     onAuthStateChanged(firebaseAuth, async (user) => {
@@ -44,7 +44,7 @@ const App: React.FunctionComponent<IAppProps> = (props) => {
 
   return (
     <BrowserRouter>
-      <NavBar />
+      <NavBar user={userData} />
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="about" element={<AboutPage />} />

@@ -1,4 +1,4 @@
-import { User, createUserWithEmailAndPassword } from "firebase/auth";
+import { User, createUserWithEmailAndPassword, signOut } from "firebase/auth";
 import { doc, getDoc, setDoc } from "firebase/firestore";
 import { firebaseAuth, firebaseDB } from "./firebaseConfig";
 import Swal from "sweetalert2";
@@ -19,9 +19,9 @@ export async function getUserData(user: User) {
 }
 
 export async function signUpUserWithEmailAndPassword(
-  username,
-  email,
-  password
+  username: string,
+  email: string,
+  password: string
 ) {
   try {
     const userCreds = await createUserWithEmailAndPassword(
@@ -47,7 +47,25 @@ export async function signUpUserWithEmailAndPassword(
   }
 }
 
-async function createUserDocumentFromAuth(userAuth, userName) {
+export async function logOutUser() {
+  const result = await Swal.fire({
+    title: "Are you sure you want to log out?",
+    text: "You will be logged out from your account.",
+    icon: "question",
+    showCancelButton: true,
+    confirmButtonColor: "#3085d6",
+    cancelButtonColor: "#d33",
+    confirmButtonText: "Yes, log me out",
+  });
+
+  if (result.isConfirmed) {
+    await signOut(firebaseAuth);
+
+    window.location.href = "/";
+  }
+}
+
+async function createUserDocumentFromAuth(userAuth: User, userName: string) {
   if (!userAuth) return;
 
   const userDocument = await getUserData(userAuth);
@@ -56,6 +74,8 @@ async function createUserDocumentFromAuth(userAuth, userName) {
     const { email, displayName, uid } = userAuth;
 
     const createdAt = new Date();
+
+    if (!email) return;
 
     const data = {
       id: uid,
@@ -66,8 +86,6 @@ async function createUserDocumentFromAuth(userAuth, userName) {
 
     // create a new class
     const newUser = new AppUser(data);
-
-    // User object for firebase
     const userObject = {
       id: newUser.id,
       createdAt: newUser.createdAt,
@@ -78,6 +96,8 @@ async function createUserDocumentFromAuth(userAuth, userName) {
       energy: newUser.energy,
       community: newUser.community,
     };
+
+    // User object for firebase
 
     try {
       const userDocRef = doc(firebaseDB, "users", userAuth.uid);
