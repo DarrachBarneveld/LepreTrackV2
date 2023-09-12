@@ -93,30 +93,28 @@ const DashboardPage: FunctionComponent<DashboardPageProps> = () => {
           <div className="col-lg-6 col-md-6 col-sm-12 mb-4 glassmorphism">
             <div>
               <ul className="d-flex list-unstyled justify-content-center">
-                <li>user</li>
-                <li className="d-flex align-items-center">
-                  <div className="legend bg-primary"></div>
+                <li className="d-flex align-items-center mx-1">
+                  <div className="legend bg-primary mx-1"></div>
                   <span>Travel</span>
                 </li>
-                <li className="d-flex align-items-center">
-                  <div className="legend bg-danger"></div>
+                <li className="d-flex align-items-center mx-1">
+                  <div className="legend bg-danger mx-1"></div>
                   <span>Food</span>
                 </li>
-                <li className="d-flex align-items-center">
-                  <div className="legend bg-warning"></div>
+                <li className="d-flex align-items-center mx-1">
+                  <div className="legend bg-warning mx-1"></div>
                   <span>Energy</span>
                 </li>
-                <li className="d-flex align-items-center">
-                  <div className="legend bg-success"></div>
+                <li className="d-flex align-items-center mx-1">
+                  <div className="legend bg-success mx-1"></div>
                   <span>Community</span>
                 </li>
-                <li>rating</li>
               </ul>
             </div>
             {totalUsers &&
-              totalUsers.map((user, i) => (
-                <LeaderBoardUser user={user} key={i} />
-              ))}
+              totalUsers
+                .sort((a, b) => +b.starRating() - +a.starRating())
+                .map((user, i) => <LeaderBoardUser user={user} key={i} />)}
           </div>
         </div>
       </div>

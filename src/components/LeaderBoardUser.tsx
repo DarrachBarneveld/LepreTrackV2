@@ -13,6 +13,8 @@ const LeaderBoardUser: FunctionComponent<LeaderBoardUserProps> = ({ user }) => {
   const foodScore = user.calcFoodScore() / 4;
   const energyScore = user.calcEnergyScore() / 4;
 
+  const rating = user.starRating();
+
   return (
     <div className="d-flex my-2">
       {/* <OverlayTrigger
@@ -41,7 +43,7 @@ const LeaderBoardUser: FunctionComponent<LeaderBoardUserProps> = ({ user }) => {
           <ProgressBar striped variant="success" now={communityScore} key={4} />
         </ProgressBar>
       </div>
-      <span>⭐</span>
+      <span>{rating}⭐</span>
     </div>
   );
 };

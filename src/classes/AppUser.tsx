@@ -242,4 +242,18 @@ export class AppUser {
 
     return +totalValue;
   }
+
+  starRating() {
+    const totalScore = this.overAllScore();
+
+    if (totalScore <= 0) {
+      return 0;
+    }
+
+    const percentageDifference = Math.abs((totalScore - 400) / 400) * 100;
+
+    const starRating = Math.round((percentageDifference / 20) * 100) / 100;
+
+    return Math.min(Math.max(5 - starRating, 0), 5).toFixed(2);
+  }
 }
