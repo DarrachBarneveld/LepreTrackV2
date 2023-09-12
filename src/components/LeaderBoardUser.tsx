@@ -35,10 +35,10 @@ const LeaderBoardUser: FunctionComponent<LeaderBoardUserProps> = ({ user }) => {
 
       <div className="d-block w-100 mx-2 position-relative">
         <ProgressBar className="leaderboard-bar" label={user.name}>
-          <ProgressBar variant="primary" now={traveScore} key={1} />
-          <ProgressBar variant="success" now={foodScore} key={2} />
-          <ProgressBar variant="warning" now={energyScore} key={3} />
-          <ProgressBar variant="danger" now={communityScore} key={4} />
+          <ProgressBar striped variant="primary" now={traveScore} key={1} />
+          <ProgressBar striped variant="danger" now={foodScore} key={2} />
+          <ProgressBar striped variant="warning" now={energyScore} key={3} />
+          <ProgressBar striped variant="success" now={communityScore} key={4} />
         </ProgressBar>
       </div>
       <span>⭐</span>

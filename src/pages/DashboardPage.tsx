@@ -91,6 +91,28 @@ const DashboardPage: FunctionComponent<DashboardPageProps> = () => {
             </div>
           </div>
           <div className="col-lg-6 col-md-6 col-sm-12 mb-4 glassmorphism">
+            <div>
+              <ul className="d-flex list-unstyled justify-content-center">
+                <li>user</li>
+                <li className="d-flex align-items-center">
+                  <div className="legend bg-primary"></div>
+                  <span>Travel</span>
+                </li>
+                <li className="d-flex align-items-center">
+                  <div className="legend bg-danger"></div>
+                  <span>Food</span>
+                </li>
+                <li className="d-flex align-items-center">
+                  <div className="legend bg-warning"></div>
+                  <span>Energy</span>
+                </li>
+                <li className="d-flex align-items-center">
+                  <div className="legend bg-success"></div>
+                  <span>Community</span>
+                </li>
+                <li>rating</li>
+              </ul>
+            </div>
             {totalUsers &&
               totalUsers.map((user, i) => (
                 <LeaderBoardUser user={user} key={i} />

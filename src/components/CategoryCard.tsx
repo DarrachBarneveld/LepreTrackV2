@@ -104,9 +104,11 @@ const CategoryCard: FunctionComponent<CategoryCardProps> = ({
         <div className="row justify-content-center align-items-center">
           <div className="col-6">
             {Object.keys(categoryData).map((categoryKey, i) => {
-              let categoryScore = (
-                categoryData[categoryKey as keyof CategoryDataTypes] as any
-              )?.score;
+              const categoryScore = (
+                categoryData[categoryKey as keyof CategoryDataTypes] as {
+                  score: number;
+                }
+              ).score;
 
               let variant;
               if (categoryScore < 25) {
