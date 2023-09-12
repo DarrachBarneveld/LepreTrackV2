@@ -10,6 +10,11 @@
   box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px;
 }
 
+.stroke {
+  stroke: rgba(0, 0, 0, 0.7);
+  stroke-width: 5px;
+}
+
 .guardian-tag {
   height: 50px;
   /* border: 3px solid green;

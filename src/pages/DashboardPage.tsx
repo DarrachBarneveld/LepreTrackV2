@@ -4,14 +4,18 @@ import {
   faBolt,
   faBurger,
   faRecycle,
+  faSignal,
+  faStar,
   faTruckPlane,
 } from "@fortawesome/free-solid-svg-icons";
-import { AppContext } from "../components/FireBaseContext";
+import { AppContext } from "../context/FireBaseContext";
 import { AppUser } from "../classes/AppUser";
 import guardian from "../assets/images/guardians/earth-guardian.png";
 import { TotalScoreBar } from "../components/Charts";
 import LeaderBoardUser from "../components/LeaderBoardUser";
 import { getAllUserDocuments } from "../config/firebaseAuth";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import PageHeader from "../components/PageHeader";
 
 interface DashboardPageProps {}
 
@@ -37,6 +41,7 @@ const DashboardPage: FunctionComponent<DashboardPageProps> = () => {
 
   return (
     <main>
+      <PageHeader title="Dashboard" subheadline="Check out your latest data" />
       <div className="container">
         <div className="row categories">
           <div className="col-lg-3 col-md-6 col-sm-12 mb-4">
@@ -72,8 +77,15 @@ const DashboardPage: FunctionComponent<DashboardPageProps> = () => {
             />
           </div>
 
-          <div className="col-lg-6 col-md-6 col-sm-12 mb-4">
+          <div className="col-lg-6 col-md-6 col-sm-12 mb-4 py-2">
             <div className="row m-0 p-2 glassmorphism">
+              <h3 className="border-bottom">
+                Your Score{" "}
+                <FontAwesomeIcon
+                  icon={faStar}
+                  className="text-warning stroke"
+                />
+              </h3>
               <div className="col-md-6 col-sm-12">
                 <h3>Earths Guardian</h3>
                 <img
@@ -90,8 +102,15 @@ const DashboardPage: FunctionComponent<DashboardPageProps> = () => {
               </div>
             </div>
           </div>
-          <div className="col-lg-6 col-md-6 col-sm-12 mb-4 glassmorphism">
+          <div className="col-lg-6 col-md-6 col-sm-12 mb-4 glassmorphism py-2">
             <div>
+              <h3 className="border-bottom">
+                Leaderboard{" "}
+                <FontAwesomeIcon
+                  icon={faSignal}
+                  className="stroke text-success"
+                />
+              </h3>
               <ul className="d-flex list-unstyled justify-content-center">
                 <li className="d-flex align-items-center mx-1">
                   <div className="legend bg-primary mx-1"></div>

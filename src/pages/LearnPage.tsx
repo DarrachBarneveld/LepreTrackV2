@@ -3,7 +3,8 @@ import Carousel from "react-bootstrap/Carousel";
 
 import "./learn.css";
 
-import { AppContext } from "../components/FireBaseContext";
+import { AppContext } from "../context/FireBaseContext";
+import PageHeader from "../components/PageHeader";
 
 interface LearnPageProps {}
 
@@ -12,6 +13,11 @@ const LearnPage: FC<{}> = () => {
 
   return (
     <main>
+      <PageHeader
+        title="Learn More"
+        subheadline="Inform yourself with the latest articles"
+      />
+
       <Carousel
         controls={false}
         className="container text-dark my-carousel glassmorphism"

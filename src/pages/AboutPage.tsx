@@ -1,7 +1,8 @@
 import { FunctionComponent, useContext } from "react";
-import { AppContext } from "../components/FireBaseContext";
+import { AppContext } from "../context/FireBaseContext";
 import Developer from "../components/Developer";
 import AnimatedList from "../components/AnimatedList";
+import PageHeader from "../components/PageHeader";
 
 export interface IAboutPageProps {}
 
@@ -54,15 +55,10 @@ const AboutPage: FunctionComponent<IAboutPageProps> = (props) => {
 
   return (
     <main>
-      <div className="w-100 card glassmorphism mb-5 text-success fw-bolder">
-        <div className="card-body">
-          <h1 className="card-title text-center">About Us</h1>
-          <h6 className="card-subtitle mb-2 text-muted text-center">
-            Check out these talented folks
-          </h6>
-        </div>
-      </div>
-
+      <PageHeader
+        title="About Us"
+        subheadline="Check out these talented folks"
+      />
       <div className="container">
         <AnimatedList
           list={developers}

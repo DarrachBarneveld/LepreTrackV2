@@ -1,7 +1,3 @@
 .loader {
   min-height: 200px;
 }
-.stroke {
-  stroke: rgb(0, 0, 0, 0.5);
-  stroke-width: 10px;
-}

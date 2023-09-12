@@ -4,9 +4,11 @@ import "./Navbar.css";
 import { NavLink } from "react-router-dom";
 import NavButton from "./NavButton";
 import { AppUser } from "../classes/AppUser";
+import { Dropdown } from "react-bootstrap";
+import { Link } from "react-router-dom";
 
 interface NavBarProps {
-  user: AppUser;
+  user: AppUser | undefined;
 }
 
 const NavBar: FC<NavBarProps> = ({ user }) => {
@@ -46,6 +48,36 @@ const NavBar: FC<NavBarProps> = ({ user }) => {
                   Home <i className="fa-solid fa-house"></i>
                 </NavLink>
               </li>
+
+              {user && (
+                <Dropdown>
+                  <Dropdown.Toggle
+                    variant="success"
+                    id="dropdown-basic"
+                    className="nav-link btn btn-success text-white m-1 ms-0 mx-2 px-3"
+                  >
+                    Categories
+                  </Dropdown.Toggle>
+
+                  <Dropdown.Menu>
+                    <Dropdown.Item as={Link} to={"dashboard"}>
+                      Dashboard
+                    </Dropdown.Item>
+                    <Dropdown.Item as={Link} to={"travel"}>
+                      Travel
+                    </Dropdown.Item>
+                    <Dropdown.Item as={Link} to={"food"}>
+                      Food
+                    </Dropdown.Item>
+                    <Dropdown.Item as={Link} to={"energy"}>
+                      Energy
+                    </Dropdown.Item>
+                    <Dropdown.Item as={Link} to={"community"}>
+                      Community
+                    </Dropdown.Item>
+                  </Dropdown.Menu>
+                </Dropdown>
+              )}
               <li className="nav-item">
                 <NavLink
                   to="/learn"

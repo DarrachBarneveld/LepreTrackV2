@@ -4,7 +4,7 @@ import NavBar from "./components/NavBar";
 import HomePage from "./pages/HomePage";
 import AboutPage from "./pages/AboutPage";
 import LearnPage from "./pages/LearnPage";
-import { AppContext } from "./components/FireBaseContext";
+import { AppContext } from "./context/FireBaseContext";
 import { firebaseAuth } from "./config/firebaseConfig";
 import { useContext, useEffect } from "react";
 import { onAuthStateChanged } from "firebase/auth";
@@ -12,6 +12,10 @@ import { getUserData } from "./config/firebaseAuth";
 import { AppUser, UserData } from "./classes/AppUser";
 import Footer from "./components/Footer";
 import DashboardPage from "./pages/DashboardPage";
+import TravelPage from "./pages/TravelPage";
+import FoodPage from "./pages/FoodPage";
+import EnergyPage from "./pages/EnergyPage";
+import CommunityPage from "./pages/CommunityPage";
 
 export interface IAppProps {}
 
@@ -52,6 +56,10 @@ const App: React.FunctionComponent<IAppProps> = (props) => {
         <Route path="about" element={<AboutPage />} />
         <Route path="learn" element={<LearnPage />} />
         <Route path="dashboard" element={<DashboardPage />} />
+        <Route path="travel" element={<TravelPage />} />
+        <Route path="food" element={<FoodPage />} />
+        <Route path="energy" element={<EnergyPage />} />
+        <Route path="community" element={<CommunityPage />} />
       </Routes>
       <Footer />
     </BrowserRouter>

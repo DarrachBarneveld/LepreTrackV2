@@ -1,7 +1,6 @@
-import { FunctionComponent, useContext } from "react";
+import { FunctionComponent } from "react";
 import earthGuardian from "../assets/images/guardians/earth-guardian.png";
 import terraTormentor from "../assets/images/guardians/terra-tormentor.png";
-import { AppContext } from "../components/FireBaseContext";
 import AnimatedList, { HomeCopy } from "../components/AnimatedList";
 import { homeContent } from "../content/content";
 import leprechaun from "../assets/images/leprechaun.png";
@@ -12,14 +11,12 @@ import "./homepage.css";
 export interface IHomePageProps {}
 
 const HomePage: FunctionComponent<IHomePageProps> = (props) => {
-  const { userData } = useContext(AppContext);
-
   return (
     <main>
       <div className="glassmorphism text-success fw-bold text-center w-100">
         <div className="d-flex justify-content-center align-items-center">
           <img src={terraTormentor} width="150" alt="earth guardian photo" />
-          <h1 className="text-center">LepreTrack</h1>
+          <h1 className="text-center">LepreTrackV2</h1>
           <img src={earthGuardian} width="150" alt="earth guardian photo" />
         </div>
         <h2 className="py-4 mt-2 h5">
