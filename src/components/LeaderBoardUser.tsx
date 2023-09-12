@@ -6,14 +6,40 @@ interface LeaderBoardUserProps {
   user: AppUser;
 }
 
-const LeaderBoardUser: FunctionComponent<LeaderBoardUserProps> = () => {
+const LeaderBoardUser: FunctionComponent<LeaderBoardUserProps> = ({ user }) => {
+  const communityScore = user.calcRecyclingScore() / 4;
+  const traveScore = user.calcTransportScore() / 4;
+  const foodScore = user.calcFoodScore() / 4;
+  const energyScore = user.calcEnergyScore() / 4;
+
   return (
-    <ProgressBar>
-      <ProgressBar striped variant="primary" now={35} key={1} animated />
-      <ProgressBar striped variant="success" now={35} key={2} animated />
-      <ProgressBar variant="warning" now={20} key={3} animated />
-      <ProgressBar striped variant="danger" now={10} key={4} animated />
-    </ProgressBar>
+    <>
+      <span>{user.name}</span>
+      <ProgressBar className="leaderboard-bar my-2">
+        <ProgressBar
+          striped
+          variant="primary"
+          now={traveScore}
+          key={1}
+          animated
+        />
+        <ProgressBar
+          striped
+          variant="success"
+          now={foodScore}
+          key={2}
+          animated
+        />
+        <ProgressBar variant="warning" now={energyScore} key={3} animated />
+        <ProgressBar
+          striped
+          variant="danger"
+          now={communityScore}
+          key={4}
+          animated
+        />
+      </ProgressBar>
+    </>
   );
 };
 

@@ -20,6 +20,17 @@
   min-height: 300px !important;
 }
 
+.leaderboard-bar {
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  height: 25px;
+}
+
+.category-card:hover {
+  filter: brightness(0.9);
+  background: white;
+  outline: 1px solid rgba(0, 0, 0, 0.1);
+}
+
 .categories .col-md-6:nth-child(1) .glassmorphism {
   color: blue;
 }

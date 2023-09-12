@@ -83,7 +83,7 @@ const CategoryCard: FunctionComponent<CategoryCardProps> = ({
   return (
     <Link
       to={`/${title}`}
-      className="glassmorphism d-flex justify-content-center align-items-center text-decoration-none flex-column"
+      className="glassmorphism d-flex justify-content-center align-items-center text-decoration-none flex-column category-card"
     >
       <div className="w-100 px-2 mt-1 d-flex justify-content-between">
         <div className="d-flex mt-2">
