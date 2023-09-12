@@ -69,7 +69,7 @@ const AboutPage: FunctionComponent<IAboutPageProps> = (props) => {
           component={Developer}
           styles="row"
           stylesItem="col-md-4 col-sm-6"
-          staggerDuration={0.2}
+          staggerDuration={0.05}
         />
       </div>
     </main>

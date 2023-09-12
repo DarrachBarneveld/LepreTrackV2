@@ -61,12 +61,14 @@ const HomePage: FunctionComponent<IHomePageProps> = (props) => {
         </div>
       </div>
 
-      <div className="glassmorphism container mt-4" id="text-overlay">
-        <div className="fs-4 px-3 fw-bold text-dark">Features</div>
+      <div className="container mt-4">
+        <h2 className="fw-bolder bg-light py-3 rounded-3 text-success text-uppercase">
+          Features
+        </h2>
         <AnimatedList list={homeContent} component={HomeCopy} />
       </div>
 
-      <div className="w-100 card glassmorphism mt-4">
+      <div className="w-100 card glassmorphism my-5">
         <div className="card-body">
           <div className="card-title text-center my-auto py-1 text-muted">
             Together, we're driving positive change, one person at a time,

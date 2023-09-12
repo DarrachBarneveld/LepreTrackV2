@@ -27,8 +27,8 @@ const AnimatedList: FunctionComponent<AnimatedListProps<any>> = ({
   stylesItem,
   staggerDuration,
 }) => {
-  const animation = useAnimation();
-  const { ref, inView } = useInView({ triggerOnce: false, threshold: 0.3 });
+  // const animation = useAnimation();
+  // const { ref, inView } = useInView({ triggerOnce: true, threshold: 0.3 });
 
   const container = {
     initial: { opacity: 0 },
@@ -48,21 +48,23 @@ const AnimatedList: FunctionComponent<AnimatedListProps<any>> = ({
     animate: { opacity: 1, scale: 1, y: 0 },
   };
 
-  useEffect(() => {
-    console.log("lol");
-    if (inView) {
-      animation.start("animate");
-    } else {
-      animation.start("initial");
-    }
-  }, [animation, inView]);
+  // useEffect(() => {
+  //   console.log("lol");
+  //   if (inView) {
+  //     animation.start("animate");
+  //   } else {
+  //     animation.start("initial");
+  //   }
+  // }, [animation, inView]);
 
   return (
     <motion.ul
-      ref={ref}
+      // ref={ref}
       className={`${styles ? styles : "list-group"}`}
       variants={container}
-      animate={animation}
+      initial="initial"
+      animate="animate"
+      // animate={animation}
     >
       {list.map((item, i) => (
         <motion.li

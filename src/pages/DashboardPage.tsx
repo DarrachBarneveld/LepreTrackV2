@@ -1,55 +1,54 @@
-import { FunctionComponent } from "react";
+import { FunctionComponent, useContext } from "react";
+import CategoryCard from "../components/CategoryCard";
+import {
+  faBolt,
+  faBurger,
+  faRecycle,
+  faTruckPlane,
+} from "@fortawesome/free-solid-svg-icons";
+import { AppContext } from "../components/FireBaseContext";
+import { AppUser } from "../classes/AppUser";
 
 interface DashboardPageProps {}
 
 const DashboardPage: FunctionComponent<DashboardPageProps> = () => {
+  const { userData } = useContext(AppContext) as { userData: AppUser };
+
   return (
     <main>
       <div className="container">
         <div className="row">
           <div className="col-xl-3 col-md-6">
-            <a id="transport" href="transport.html">
-              <div className="category">
-                <div className="card-body h3">
-                  <h3>TRAVEL</h3>
-                  <i className="fa-solid fa-truck-plane"></i>
-                  <div id="transportChart"></div>
-                </div>
-              </div>
-            </a>
+            <CategoryCard
+              userData={userData}
+              category="travel"
+              icon={faTruckPlane}
+              title="travel"
+            />
           </div>
           <div className="col-xl-3 col-md-6">
-            <a id="food" href="food.html">
-              <div className="category">
-                <div className="card-body h3">
-                  <h3>FOOD</h3>
-                  <i className="fa-solid fa-utensils"></i>
-                  <div id="foodChart"></div>
-                </div>
-              </div>
-            </a>
+            <CategoryCard
+              userData={userData}
+              category="food"
+              icon={faBurger}
+              title="food"
+            />
           </div>
           <div className="col-xl-3 col-md-6">
-            <a id="energy" href="energy.html">
-              <div className="category">
-                <div className="card-body h3">
-                  <h3>ENERGY</h3>
-                  <i className="fa-solid fa-lightbulb"></i>
-                  <div id="energyChart"></div>
-                </div>
-              </div>
-            </a>
+            <CategoryCard
+              userData={userData}
+              category="energy"
+              icon={faBolt}
+              title="energy"
+            />
           </div>
           <div className="col-xl-3 col-md-6">
-            <a id="community" href="recycling.html">
-              <div className="category">
-                <div className="card-body h3">
-                  <h3>COMMUNITY</h3>
-                  <i className="fa-solid fa-recycle"></i>
-                  <div id="communityChart"></div>
-                </div>
-              </div>
-            </a>
+            <CategoryCard
+              userData={userData}
+              category="community"
+              icon={faRecycle}
+              title="community"
+            />
           </div>
         </div>
       </div>

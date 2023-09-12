@@ -21,14 +21,14 @@ const Developer: FunctionComponent<DeveloperProps> = ({ item }) => {
           target="_blank"
           className="card-link d-block text-center btn btn-success text-white col-sm-6 mx-auto"
         >
-          GitHub
+          GitHub <i className="fa-brands fa-github"></i>
         </a>
         <a
           href={item.linkedIn}
           target="_blank"
           className="mt-1 d-block text-center btn btn-success text-white col-sm-6 mx-auto"
         >
-          LinkedIn
+          LinkedIn <i className="fa-brands fa-linkedin"></i>
         </a>
       </div>
     </div>

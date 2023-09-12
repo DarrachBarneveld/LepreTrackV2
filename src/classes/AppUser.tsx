@@ -1,4 +1,4 @@
-interface TravelData {
+export interface TravelData {
   flight: {
     yearlyKM: number;
     numFlights: number;
@@ -22,7 +22,7 @@ interface TravelData {
   };
 }
 
-interface EnergyData {
+export interface EnergyData {
   energy: {
     electric: number;
     gas: number;
@@ -36,7 +36,7 @@ interface EnergyData {
   };
 }
 
-interface FoodData {
+export interface FoodData {
   diet: {
     type: string;
     calories: number;
@@ -57,7 +57,7 @@ interface FoodData {
   };
 }
 
-interface CommunityData {
+export interface CommunityData {
   recycle: {
     metal: boolean;
     paper: boolean;
