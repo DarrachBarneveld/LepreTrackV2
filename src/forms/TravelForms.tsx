@@ -36,7 +36,7 @@ const FlightForm: FunctionComponent<FlightFormProps> = () => {
       onSubmit={handleSubmit}
     >
       {({ isSubmitting, errors, touched }) => (
-        <Form id="flightForm" className="bg-light p-2">
+        <Form id="flightForm" className="p-2 rounded-3">
           <div>
             <label htmlFor="flightKm">Est km</label>
             <Field
@@ -63,47 +63,54 @@ const FlightForm: FunctionComponent<FlightFormProps> = () => {
             />
             <ErrorMessage name="numFlights" component="div" className="error" />
           </div>
-          <div className="wrapper mt-3">
+          <div className="my-3">
             <p className="h6 fw-bold">Which class do you fly?</p>
-            <div>
-              <Field
-                type="radio"
-                id="economy"
-                name="flightClass"
-                value="economy"
-                isInvalid={!!errors.flightClass && touched.flightClass}
-                className={`form-check-input ${
-                  errors.flightClass && touched.flightClass ? "is-invalid" : ""
-                }`}
-              />
-              <label htmlFor="economy">Economy</label>
-            </div>
-
-            <div>
-              <Field
-                type="radio"
-                id="business"
-                name="flightClass"
-                value="business"
-                isInvalid={!!errors.flightClass && touched.flightClass}
-                className={`form-check-input ${
-                  errors.flightClass && touched.flightClass ? "is-invalid" : ""
-                }`}
-              />
-              <label htmlFor="business">Business</label>
-            </div>
-            <div>
-              <Field
-                type="radio"
-                id="first"
-                name="flightClass"
-                value="first"
-                isInvalid={!!errors.flightClass && touched.flightClass}
-                className={`form-check-input ${
-                  errors.flightClass && touched.flightClass ? "is-invalid" : ""
-                }`}
-              />
-              <label htmlFor="first">First</label>
+            <div className="d-flex flex-column mx-auto w-fit-content">
+              <div className="d-flex align-items-center">
+                <Field
+                  type="radio"
+                  id="economy"
+                  name="flightClass"
+                  value="economy"
+                  isInvalid={!!errors.flightClass && touched.flightClass}
+                  className={`form-check-input mx-2 ${
+                    errors.flightClass && touched.flightClass
+                      ? "is-invalid"
+                      : ""
+                  }`}
+                />
+                <label htmlFor="economy">Economy</label>
+              </div>
+              <div className="d-flex align-items-center">
+                <Field
+                  type="radio"
+                  id="business"
+                  name="flightClass"
+                  value="business"
+                  isInvalid={!!errors.flightClass && touched.flightClass}
+                  className={`form-check-input mx-2 ${
+                    errors.flightClass && touched.flightClass
+                      ? "is-invalid"
+                      : ""
+                  }`}
+                />
+                <label htmlFor="business">Business</label>
+              </div>
+              <div className="d-flex align-items-center">
+                <Field
+                  type="radio"
+                  id="first"
+                  name="flightClass"
+                  value="first"
+                  isInvalid={!!errors.flightClass && touched.flightClass}
+                  className={`form-check-input mx-2 ${
+                    errors.flightClass && touched.flightClass
+                      ? "is-invalid"
+                      : ""
+                  }`}
+                />
+                <label htmlFor="first">First</label>
+              </div>
             </div>
           </div>
           <Button

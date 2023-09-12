@@ -26,3 +26,9 @@ main {
   flex-direction: column;
   text-align: center;
 }
+
+form {
+  background: #e1e5dc;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  padding: 1rem;
+}
