@@ -6,10 +6,10 @@ import "./charts.css";
 export function graphColor(num: number) {
   if (num < 25) {
     return ["#FF0000"];
-  } else if (num < 35) {
+  } else if (num < 50) {
     return ["#ff8c00"];
-  } else if (num < 70) {
-    return ["#FFBF00"];
+  } else if (num < 75) {
+    return ["#2566bc"];
   }
   return ["#008000"];
 }

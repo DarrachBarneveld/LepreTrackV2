@@ -10,6 +10,12 @@
   box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px;
 }
 
+.guardian-tag {
+  height: 50px;
+  /* border: 3px solid green;
+  border-radius: 50%; */
+}
+
 .categories .col-md-6:nth-child(1) .glassmorphism {
   color: blue;
 }
