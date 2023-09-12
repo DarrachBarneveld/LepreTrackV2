@@ -1,16 +1,18 @@
 import { FunctionComponent } from "react";
 import PageHeader from "../components/PageHeader";
 import { FormChart } from "../components/Charts";
-import { faPlaneDeparture } from "@fortawesome/free-solid-svg-icons";
+import {
+  faCar,
+  faPlaneDeparture,
+  faTrain,
+} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import CustomForm, { FlightForm } from "../forms/TravelForms";
+import CustomForm from "../forms/TravelForms";
 import * as Yup from "yup";
 
 interface TravelPageProps {}
 
-const validationSchema = Yup.object().shape({
-  // Define validation rules for each input field
-  // You can extend this schema for different inputs
+const flightValidationSchema = Yup.object().shape({
   flightKm: Yup.number()
     .required("This field is required")
     .positive("Kilometers must be a positive number")
@@ -22,13 +24,13 @@ const validationSchema = Yup.object().shape({
   flightClass: Yup.string().required("Please select a flight class"),
 });
 
-const initialValues = {
+const flightInitialValues = {
   flightKm: "",
   numFlights: "",
   flightClass: "",
 };
 
-const inputFields = [
+const flightInputFields = [
   {
     name: "flightKm",
     label: "Est km",
@@ -49,6 +51,107 @@ const inputFields = [
       { value: "first", label: "First" },
     ],
   },
+];
+
+const carValidationSchema = Yup.object().shape({
+  weeklyKm: Yup.number()
+    .required("This field is required")
+    .positive("Kilometers must be a positive number")
+    .integer("Kilometers must be an integer"),
+  type: Yup.string().required("Please select a car class"),
+  year2000: Yup.string().required("Please select before or after 2000"),
+});
+
+const carInitialValues = {
+  weeklyKm: "",
+  type: "",
+  year2000: "",
+};
+
+const carInputFields = [
+  {
+    name: "weeklyKm",
+    label: "km/week",
+    type: "number",
+  },
+  {
+    name: "carType",
+    label: "Type of Car",
+    type: "radio",
+    options: [
+      { value: "electric", label: "Electric" },
+      { value: "hybrid", label: "Hybrid" },
+      { value: "petro", label: "Petro" },
+    ],
+  },
+  {
+    name: "carYear",
+    label: "Car Manufactured:",
+    type: "radio",
+    options: [
+      { value: "after", label: "After 2000" },
+      { value: "before", label: "Before 2000" },
+    ],
+  },
+];
+
+const transportValidationSchema = Yup.object().shape({
+  drive: Yup.number()
+    .typeError("Must be a number")
+    .min(0, "Value cannot be negative")
+    .max(100, "Value cannot exceed 100")
+    .required("Required"),
+  carpool: Yup.number()
+    .typeError("Must be a number")
+    .min(0, "Value cannot be negative")
+    .max(100, "Value cannot exceed 100")
+    .required("Required"),
+  walk: Yup.number()
+    .typeError("Must be a number")
+    .min(0, "Value cannot be negative")
+    .max(100, "Value cannot exceed 100")
+    .required("Required"),
+  cycle: Yup.number()
+    .typeError("Must be a number")
+    .min(0, "Value cannot be negative")
+    .max(100, "Value cannot exceed 100")
+    .required("Required"),
+  train: Yup.number()
+    .typeError("Must be a number")
+    .min(0, "Value cannot be negative")
+    .max(100, "Value cannot exceed 100")
+    .required("Required"),
+  bus: Yup.number()
+    .typeError("Must be a number")
+    .min(0, "Value cannot be negative")
+    .max(100, "Value cannot exceed 100")
+    .required("Required"),
+  custom: Yup.number()
+    .test("custom", "Total percentage must equal 100%", function (value) {
+      const { drive, carpool, walk, cycle, train, bus } = this.parent;
+      const total = drive + carpool + walk + cycle + train + bus;
+      return total === 100;
+    })
+    .required("Total percentage is required"),
+});
+
+const transportInitialValues = {
+  drive: 0,
+  carpool: 0,
+  walk: 0,
+  cycle: 0,
+  train: 0,
+  bus: 0,
+  custom: 0,
+};
+
+const transportInputFields = [
+  { name: "drive", label: "Drive (%)", type: "number" },
+  { name: "carpool", label: "Carpool (%)", type: "number" },
+  { name: "walk", label: "Walk (%)", type: "number" },
+  { name: "cycle", label: "Cycle (%)", type: "number" },
+  { name: "train", label: "Train (%)", type: "number" },
+  { name: "bus", label: "Bus (%)", type: "number" },
 ];
 
 const TravelPage: FunctionComponent<TravelPageProps> = () => {
@@ -73,192 +176,51 @@ const TravelPage: FunctionComponent<TravelPageProps> = () => {
               <span className="fw-bolder mx-2">100%</span>
               <span className="text-muted">Avg</span>
             </p>
-
+            {/* FLIGHT FORM */}
             <CustomForm
-              initialValues={initialValues}
-              validationSchema={validationSchema}
-              inputFields={inputFields}
+              initialValues={flightInitialValues}
+              validationSchema={flightValidationSchema}
+              inputFields={flightInputFields}
             />
           </div>
         </div>
-
         <div className="col-lg-4 col-md-6 col-sm-12 mb-4 px-3">
-          <div className="form-card card text-center glassmorphism">
+          <div className="card text-center glassmorphism">
             <div className="d-flex align-items-center justify-content-center">
-              <div id="carChart"></div>
-              <i className="fa-solid fa-car chart-icon"></i>
+              <FormChart score={10} color={["#009FFD", "#5200AE"]} />
+              <FontAwesomeIcon icon={faCar} className="h2 position-absolute" />
             </div>
-            <p>
-              <span id="car-result" className="fw-bolder h4"></span>
+            <p className="d-flex justify-content-center">
+              <span className="fw-bolder mx-2">100%</span>
               <span className="text-muted">Avg</span>
             </p>
-            <form id="carForm" className="glassmorphism mt-3">
-              <label for="kilometers">km/week</label>
-              <input type="number" id="kilometers" name="kilometers" required />
-              <br />
-              <br />
-
-              <div className="car-wrapper mt-3">
-                <div className="1col">
-                  <label className="h3">Type of Car:</label>
-                  <br />
-                  <input
-                    type="radio"
-                    id="electric"
-                    name="carType"
-                    value="electric"
-                    required
-                  />
-                  <label for="electric">Electric</label>
-                  <br />
-                  <input
-                    type="radio"
-                    id="hybrid"
-                    name="carType"
-                    value="hybrid"
-                    required
-                  />
-                  <label for="hybrid">Hybrid</label>
-                  <br />
-                  <input
-                    type="radio"
-                    id="petrol"
-                    name="carType"
-                    value="petrol"
-                    required
-                  />
-                  <label for="petrol">Petrol</label>
-                  <br />
-                </div>
-                <div className="2col">
-                  <label className="h3">Car Manufactured:</label>
-                  <br />
-                  <input
-                    type="radio"
-                    id="before"
-                    name="carYear"
-                    value="before"
-                    required
-                  />
-                  <label for="before">Before 2000</label>
-                  <br />
-                  <input
-                    type="radio"
-                    id="after"
-                    name="carYear"
-                    value="after"
-                    required
-                  />
-                  <label for="after">After 2000</label>
-                  <br />
-                  <br />
-                </div>
-              </div>
-              <input
-                type="submit"
-                value="Submit"
-                className="btn btn-success text-white mt-4"
-              />
-            </form>
+            {/* CAR FORM */}
+            <CustomForm
+              initialValues={carInitialValues}
+              validationSchema={carValidationSchema}
+              inputFields={carInputFields}
+            />
           </div>
         </div>
-
         <div className="col-lg-4 col-md-6 col-sm-12 mb-4 px-3">
-          <div className="form-card card text-center glassmorphism">
+          <div className="card text-center glassmorphism">
             <div className="d-flex align-items-center justify-content-center">
-              <div id="transportChart"></div>
-              <i className="fa-solid fa-bicycle chart-icon"></i>
+              <FormChart score={10} color={["#63D471", "#378B29"]} />
+              <FontAwesomeIcon
+                icon={faTrain}
+                className="h2 position-absolute"
+              />
             </div>
-            <p>
-              <span id="transport-result" className="fw-bolder h4"></span>
+            <p className="d-flex justify-content-center">
+              <span className="fw-bolder mx-2">100%</span>
               <span className="text-muted">Avg</span>
             </p>
-
-            <form id="transportForm" className="glassmorphism mt-3">
-              <div>
-                <label for="driveInput">Drive:</label>
-                <input
-                  type="number"
-                  id="driveInput"
-                  name="driveInput"
-                  min="0"
-                  max="100"
-                  value="0"
-                  required
-                />
-                <span>%</span>
-              </div>
-              <div>
-                <label for="carpoolInput">Carpool:</label>
-                <input
-                  type="number"
-                  id="carpoolInput"
-                  name="carpoolInput"
-                  min="0"
-                  max="100"
-                  value="0"
-                  required
-                />
-                <span>%</span>
-              </div>
-              <div>
-                <label for="walkInput">Walk:</label>
-                <input
-                  type="number"
-                  id="walkInput"
-                  name="walkInput"
-                  min="0"
-                  max="100"
-                  value="0"
-                  required
-                />
-                <span>%</span>
-              </div>
-              <div>
-                <label for="cycleInput">Cycle:</label>
-                <input
-                  type="number"
-                  id="cycleInput"
-                  name="cycleInput"
-                  min="0"
-                  max="100"
-                  value="0"
-                  required
-                />
-                <span>%</span>
-              </div>
-              <div>
-                <label for="trainInput">Train:</label>
-                <input
-                  type="number"
-                  id="trainInput"
-                  name="trainInput"
-                  min="0"
-                  max="100"
-                  value="0"
-                  required
-                />
-                <span>%</span>
-              </div>
-              <div>
-                <label for="busInput">Bus:</label>
-                <input
-                  type="number"
-                  id="busInput"
-                  name="busInput"
-                  min="0"
-                  max="100"
-                  value="0"
-                  required
-                />
-                <span>%</span>
-              </div>
-              <input
-                type="submit"
-                value="Submit"
-                className="btn btn-success text-white mt-4"
-              />
-            </form>
+            {/* TRANSPORT FORM */}
+            <CustomForm
+              initialValues={transportInitialValues}
+              validationSchema={transportValidationSchema}
+              inputFields={transportInputFields}
+            />
           </div>
         </div>
       </div>

@@ -24,9 +24,10 @@ export const FlightForm: FunctionComponent<FlightFormProps> = () => {
     flightClass: Yup.string().required("Please select a flight class"),
   });
 
-  const handleSubmit = (values) => {
+  const handleSubmit = (values, { setSubmitting }) => {
     // Handle form submission here
     console.log(values);
+    console.log(setSubmitting);
   };
 
   return (
@@ -126,25 +127,11 @@ export const FlightForm: FunctionComponent<FlightFormProps> = () => {
   );
 };
 
-// Define a validation schema (You can make it more customizable if needed)
-const validationSchema = Yup.object().shape({
-  // Define validation rules for each input field
-  // You can extend this schema for different inputs
-  flightKm: Yup.number()
-    .required("This field is required")
-    .positive("Kilometers must be a positive number")
-    .integer("Kilometers must be an integer"),
-  numFlights: Yup.number()
-    .required("This field is required")
-    .positive("Number of flights must be a positive number")
-    .integer("Number of flights must be an integer"),
-  flightClass: Yup.string().required("Please select a flight class"),
-});
-
-// Define the custom reusable form component
 const CustomForm = ({ initialValues, inputFields, validationSchema }) => {
-  const handleSubmit = (values) => {
+  const handleSubmit = (values, { setSubmitting }) => {
+    // Handle form submission here
     console.log(values);
+    setSubmitting(false);
   };
 
   return (
@@ -171,14 +158,14 @@ const CustomForm = ({ initialValues, inputFields, validationSchema }) => {
                           id={option.value}
                           name={field.name}
                           value={option.value}
-                          isInvalid={!!errors && touched}
+                          isInvalid={touched[field.name] && errors[field.name]}
                           className={`form-check-input mx-2 ${
-                            errors[field.name] && touched[field.name]
+                            touched[field.name] && errors[field.name]
                               ? "error-input"
                               : ""
                           }`}
                         />
-                        <label htmlFor="economy">{option.value}</label>
+                        <label htmlFor={option.value}>{option.value}</label>
                       </div>
                     );
                   })}
@@ -190,7 +177,7 @@ const CustomForm = ({ initialValues, inputFields, validationSchema }) => {
                   name={field.name}
                   required={field.required}
                   className={`form-control ${
-                    errors[field.name] && touched[field.name]
+                    touched[field.name] && errors[field.name]
                       ? "error-input"
                       : ""
                   }`}
@@ -203,6 +190,7 @@ const CustomForm = ({ initialValues, inputFields, validationSchema }) => {
               />
             </div>
           ))}
+          <ErrorMessage name="custom" component="div" className="error" />
           <Button
             type="submit"
             className="btn btn-success text-white"
