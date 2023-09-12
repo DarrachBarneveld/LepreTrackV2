@@ -3,9 +3,53 @@ import PageHeader from "../components/PageHeader";
 import { FormChart } from "../components/Charts";
 import { faPlaneDeparture } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import FlightForm from "../forms/TravelForms";
+import CustomForm, { FlightForm } from "../forms/TravelForms";
+import * as Yup from "yup";
 
 interface TravelPageProps {}
+
+const validationSchema = Yup.object().shape({
+  // Define validation rules for each input field
+  // You can extend this schema for different inputs
+  flightKm: Yup.number()
+    .required("This field is required")
+    .positive("Kilometers must be a positive number")
+    .integer("Kilometers must be an integer"),
+  numFlights: Yup.number()
+    .required("This field is required")
+    .positive("Number of flights must be a positive number")
+    .integer("Number of flights must be an integer"),
+  flightClass: Yup.string().required("Please select a flight class"),
+});
+
+const initialValues = {
+  flightKm: "",
+  numFlights: "",
+  flightClass: "",
+};
+
+const inputFields = [
+  {
+    name: "flightKm",
+    label: "Est km",
+    type: "number",
+  },
+  {
+    name: "numFlights",
+    label: "Num flights",
+    type: "number",
+  },
+  {
+    name: "flightClass",
+    label: "Which class do you fly?",
+    type: "radio",
+    options: [
+      { value: "economy", label: "Economy" },
+      { value: "business", label: "Business" },
+      { value: "first", label: "First" },
+    ],
+  },
+];
 
 const TravelPage: FunctionComponent<TravelPageProps> = () => {
   return (
@@ -30,7 +74,11 @@ const TravelPage: FunctionComponent<TravelPageProps> = () => {
               <span className="text-muted">Avg</span>
             </p>
 
-            <FlightForm />
+            <CustomForm
+              initialValues={initialValues}
+              validationSchema={validationSchema}
+              inputFields={inputFields}
+            />
           </div>
         </div>
 

@@ -7,7 +7,7 @@ import { Button } from "react-bootstrap";
 
 interface FlightFormProps {}
 
-const FlightForm: FunctionComponent<FlightFormProps> = () => {
+export const FlightForm: FunctionComponent<FlightFormProps> = () => {
   const initialValues = {
     flightKm: "",
     numFlights: "",
@@ -126,4 +126,94 @@ const FlightForm: FunctionComponent<FlightFormProps> = () => {
   );
 };
 
-export default FlightForm;
+// Define a validation schema (You can make it more customizable if needed)
+const validationSchema = Yup.object().shape({
+  // Define validation rules for each input field
+  // You can extend this schema for different inputs
+  flightKm: Yup.number()
+    .required("This field is required")
+    .positive("Kilometers must be a positive number")
+    .integer("Kilometers must be an integer"),
+  numFlights: Yup.number()
+    .required("This field is required")
+    .positive("Number of flights must be a positive number")
+    .integer("Number of flights must be an integer"),
+  flightClass: Yup.string().required("Please select a flight class"),
+});
+
+// Define the custom reusable form component
+const CustomForm = ({ initialValues, inputFields, validationSchema }) => {
+  const handleSubmit = (values) => {
+    console.log(values);
+  };
+
+  return (
+    <Formik
+      initialValues={initialValues}
+      validationSchema={validationSchema}
+      onSubmit={handleSubmit}
+    >
+      {({ isSubmitting, errors, touched }) => (
+        <Form id="customForm" className="p-2 rounded-3">
+          {inputFields.map((field) => (
+            <div key={field.name}>
+              <label htmlFor={field.name}>{field.label}</label>
+              {field.type === "radio" ? (
+                <div className="d-flex flex-column mx-auto w-fit-content">
+                  {field.options.map((option) => {
+                    return (
+                      <div
+                        key={option.value}
+                        className="d-flex align-items-center"
+                      >
+                        <Field
+                          type="radio"
+                          id={option.value}
+                          name={field.name}
+                          value={option.value}
+                          isInvalid={!!errors && touched}
+                          className={`form-check-input mx-2 ${
+                            errors[field.name] && touched[field.name]
+                              ? "error-input"
+                              : ""
+                          }`}
+                        />
+                        <label htmlFor="economy">{option.value}</label>
+                      </div>
+                    );
+                  })}
+                </div>
+              ) : (
+                <Field
+                  type={field.type}
+                  id={field.name}
+                  name={field.name}
+                  required={field.required}
+                  className={`form-control ${
+                    errors[field.name] && touched[field.name]
+                      ? "error-input"
+                      : ""
+                  }`}
+                />
+              )}
+              <ErrorMessage
+                name={field.name}
+                component="div"
+                className="error"
+              />
+            </div>
+          ))}
+          <Button
+            type="submit"
+            className="btn btn-success text-white"
+            disabled={isSubmitting}
+          >
+            Submit
+          </Button>
+        </Form>
+      )}
+    </Formik>
+  );
+};
+
+export default CustomForm;
