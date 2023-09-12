@@ -9,3 +9,18 @@
 .box-shadow-custom {
   box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px;
 }
+
+.categories .col-md-6:nth-child(1) .glassmorphism {
+  color: blue;
+}
+.categories .col-md-6:nth-child(2) .glassmorphism {
+  color: red;
+}
+
+.categories .col-md-6:nth-child(3) .glassmorphism {
+  color: gold;
+}
+
+.categories .col-md-6:nth-child(4) .glassmorphism {
+  color: green;
+}

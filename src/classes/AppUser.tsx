@@ -189,5 +189,37 @@ export class AppUser {
     this.community = data.community || AppUser.defaultCommunity;
   }
 
-  // Rest of the class methods
+  calcTransportScore() {
+    const totalValue =
+      +this.travel.flight.score +
+      +this.travel.car.score +
+      +this.travel.transport.score;
+
+    const percentValue = (totalValue / 3).toFixed(2);
+
+    return +percentValue;
+  }
+  calcFoodScore() {
+    const totalValue =
+      +this.food.diet.score + +this.food.farm.score + +this.food.dining.score;
+
+    const percentValue = (totalValue / 3).toFixed(2);
+
+    return +percentValue;
+  }
+
+  calcRecyclingScore() {
+    const totalValue =
+      +this.community.recycle.score + +this.community.volunteer.score;
+
+    const percentValue = (totalValue / 3).toFixed(2);
+
+    return +percentValue;
+  }
+
+  calcEnergyScore() {
+    const totalValue = +this.energy.energy.score;
+
+    return +totalValue;
+  }
 }

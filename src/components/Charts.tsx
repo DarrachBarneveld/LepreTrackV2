@@ -1,12 +1,26 @@
-import { useState } from "react";
+import { FunctionComponent, useState } from "react";
 import ReactApexChart from "react-apexcharts";
 
 import "./charts.css";
 
-export const CategoryChart = () => {
-  const [series, setSeries] = useState([10]);
+export function graphColor(num: number) {
+  if (num < 25) {
+    return ["#FF0000"];
+  } else if (num < 35) {
+    return ["#ff8c00"];
+  } else if (num < 70) {
+    return ["#FFBF00"];
+  }
+  return ["#008000"];
+}
+
+export const CategoryChart: FunctionComponent<{ score: number }> = ({
+  score,
+}) => {
+  const [series, setSeries] = useState([score]);
 
   const [options, setOptions] = useState({
+    colors: graphColor(series[0]),
     chart: {
       sparkline: {
         enabled: true,

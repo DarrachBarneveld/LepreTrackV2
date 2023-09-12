@@ -17,7 +17,7 @@ const DashboardPage: FunctionComponent<DashboardPageProps> = () => {
   return (
     <main>
       <div className="container">
-        <div className="row">
+        <div className="row categories g-3">
           <div className="col-xl-3 col-md-6">
             <CategoryCard
               userData={userData}

@@ -38,9 +38,23 @@ const CategoryCard: FunctionComponent<CategoryCardProps> = ({
   }
   const categoryData = userData[category] as CategoryDataTypes;
 
+  let score = 0;
+  if (category === "energy") {
+    score = userData.calcEnergyScore();
+  }
+  if (category === "food") {
+    score = userData.calcFoodScore();
+  }
+  if (category === "community") {
+    score = userData.calcRecyclingScore();
+  }
+  if (category === "travel") {
+    score = userData.calcTransportScore();
+  }
+
   return (
     <Link
-      to={title}
+      to={`/${title}`}
       className="glassmorphism d-flex justify-content-center align-items-center text-decoration-none flex-column"
     >
       <div className="d-flex mt-2 w-100 justify-content-center">
@@ -51,23 +65,37 @@ const CategoryCard: FunctionComponent<CategoryCardProps> = ({
       <div className="container">
         <div className="row justify-content-center align-items-center">
           <div className="col-6">
-            {Object.keys(categoryData).map((categoryKey, i) => (
-              <ProgressBar
-                className="mb-2"
-                animated
-                striped
-                variant="success"
-                now={
-                  (categoryData[categoryKey as keyof CategoryDataTypes] as any)
-                    ?.score
-                }
-                label={categoryKey}
-                key={i}
-              />
-            ))}
+            {Object.keys(categoryData).map((categoryKey, i) => {
+              let categoryScore = (
+                categoryData[categoryKey as keyof CategoryDataTypes] as any
+              )?.score;
+
+              let variant;
+              if (categoryScore < 25) {
+                variant = "danger";
+              } else if (categoryScore < 50) {
+                variant = "warning";
+              } else if (categoryScore < 75) {
+                variant = "primary";
+              } else if (categoryScore > 75) {
+                variant = "success";
+              }
+
+              return (
+                <ProgressBar
+                  className="mb-2"
+                  animated
+                  striped
+                  variant={variant}
+                  now={categoryScore}
+                  label={categoryKey}
+                  key={i}
+                />
+              );
+            })}
           </div>
           <div className="col-6 d-flex justify-content-center align-items-center">
-            <CategoryChart />
+            <CategoryChart score={score} />
           </div>
         </div>
       </div>
