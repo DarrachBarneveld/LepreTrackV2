@@ -189,6 +189,26 @@ export class AppUser {
     this.community = data.community || AppUser.defaultCommunity;
   }
 
+  overAllScore() {
+    const valueTransport =
+      this.calcTransportScore() > 100 ? 100 : this.calcTransportScore();
+
+    const valueFood = this.calcFoodScore() > 100 ? 100 : this.calcFoodScore();
+
+    const valueRecycle =
+      this.calcRecyclingScore() > 100 ? 100 : this.calcRecyclingScore();
+
+    const valueEnergy =
+      this.calcEnergyScore() > 100 ? 100 : this.calcEnergyScore();
+
+    const totalScore =
+      +valueTransport + +valueFood + +valueRecycle + +valueEnergy;
+
+    // const totalPercentage = totalScore / 2;
+
+    return totalScore;
+  }
+
   calcTransportScore() {
     const totalValue =
       +this.travel.flight.score +

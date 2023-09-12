@@ -72,3 +72,91 @@ export const CategoryChart: FunctionComponent<{ score: number }> = ({
     />
   );
 };
+
+export const TotalScoreBar: FunctionComponent<{
+  score: number;
+  user: string;
+}> = ({ score, user }) => {
+  const [series, setSeries] = useState([
+    {
+      name: "Actual",
+      data: [
+        {
+          x: user,
+          y: score,
+          goals: [
+            {
+              name: "Earth's Guardian",
+              value: 200,
+              strokeHeight: 2,
+              strokeColor: "#FFD700",
+            },
+            {
+              name: "Green Fingers",
+              value: 150,
+              strokeHeight: 2,
+              strokeColor: "#4b7bff",
+            },
+            {
+              name: "Balance Footprint",
+              value: 100,
+              strokeHeight: 2,
+              strokeColor: "#775DD0",
+            },
+            {
+              name: "Terra's Tormentor",
+              value: 50,
+              strokeHeight: 2,
+              strokeColor: "#FF0000",
+            },
+          ],
+        },
+      ],
+    },
+  ]);
+
+  const [options, setOptions] = useState({
+    chart: {
+      toolbar: {
+        show: false,
+      },
+    },
+    plotOptions: {
+      bar: {
+        columnWidth: "50%",
+        borderRadius: 10,
+      },
+    },
+    colors: ["#16b85f"],
+    dataLabels: {
+      enabled: false,
+    },
+    legend: {
+      show: true,
+      showForSingleSeries: true,
+      customLegendItems: [
+        user,
+        "Tormentor",
+        "Footprint",
+        "Fingers",
+        "Guardian",
+      ],
+      markers: {
+        fillColors: ["#16b85f", "#FF0000", "#775DD0", "#4b7bff", "#FFD700"],
+      },
+    },
+
+    stroke: {
+      dashArray: 1,
+    },
+  });
+
+  return (
+    <ReactApexChart
+      options={options}
+      series={series}
+      height={"100%"}
+      type="bar"
+    />
+  );
+};

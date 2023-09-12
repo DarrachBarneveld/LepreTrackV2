@@ -16,6 +16,10 @@
   border-radius: 50%; */
 }
 
+.bar-chart-container {
+  min-height: 300px !important;
+}
+
 .categories .col-md-6:nth-child(1) .glassmorphism {
   color: blue;
 }

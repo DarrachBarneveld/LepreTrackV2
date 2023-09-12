@@ -1,4 +1,4 @@
-import { FunctionComponent, useContext } from "react";
+import { FunctionComponent, useContext, useEffect, useState } from "react";
 import CategoryCard from "../components/CategoryCard";
 import {
   faBolt,
@@ -8,17 +8,38 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { AppContext } from "../components/FireBaseContext";
 import { AppUser } from "../classes/AppUser";
+import guardian from "../assets/images/guardians/earth-guardian.png";
+import { TotalScoreBar } from "../components/Charts";
+import LeaderBoardUser from "../components/LeaderBoardUser";
+import { getAllUserDocuments } from "../config/firebaseAuth";
 
 interface DashboardPageProps {}
 
 const DashboardPage: FunctionComponent<DashboardPageProps> = () => {
+  const [totalUsers, setTotalUsers] = useState<AppUser[]>([]);
   const { userData } = useContext(AppContext) as { userData: AppUser };
+
+  const totalScore = userData?.overAllScore();
+
+  async function fetchAllUsers() {
+    const usersDocs = (await getAllUserDocuments()) as AppUser[];
+
+    if (usersDocs) {
+      const users = usersDocs.map((doc) => new AppUser(doc));
+
+      setTotalUsers(users);
+    }
+  }
+
+  useEffect(() => {
+    fetchAllUsers();
+  }, []);
 
   return (
     <main>
       <div className="container">
-        <div className="row categories g-3">
-          <div className="col-xl-3 col-md-6">
+        <div className="row categories">
+          <div className="col-lg-3 col-md-6 col-sm-12 mb-4">
             <CategoryCard
               userData={userData}
               category="travel"
@@ -26,7 +47,7 @@ const DashboardPage: FunctionComponent<DashboardPageProps> = () => {
               title="travel"
             />
           </div>
-          <div className="col-xl-3 col-md-6">
+          <div className="col-lg-3 col-md-6 col-sm-12 mb-4">
             <CategoryCard
               userData={userData}
               category="food"
@@ -34,7 +55,7 @@ const DashboardPage: FunctionComponent<DashboardPageProps> = () => {
               title="food"
             />
           </div>
-          <div className="col-xl-3 col-md-6">
+          <div className="col-lg-3 col-md-6 col-sm-12 mb-4">
             <CategoryCard
               userData={userData}
               category="energy"
@@ -42,7 +63,7 @@ const DashboardPage: FunctionComponent<DashboardPageProps> = () => {
               title="energy"
             />
           </div>
-          <div className="col-xl-3 col-md-6">
+          <div className="col-lg-3 col-md-6 col-sm-12 mb-4">
             <CategoryCard
               userData={userData}
               category="community"
@@ -50,45 +71,30 @@ const DashboardPage: FunctionComponent<DashboardPageProps> = () => {
               title="community"
             />
           </div>
-        </div>
-      </div>
-      <div className="container">
-        <div className="row">
-          <div className="col-lg-6 col-md-3 pie-container">
-            <img
-              id="badgeImage"
-              width="100%"
-              className="rounded-3"
-              src="./src/assets/images/earth-guardian.png"
-              alt="user badge image"
-            />
-          </div>
-          <div className="col-lg-6 leaderboard-container">
-            <table className="table">
-              <thead className="thead-light">
-                <tr>
-                  <th scope="col">Rank</th>
-                  <th scope="col">User</th>
-                  <th scope="col">Travel</th>
-                  <th scope="col">Food</th>
-                  <th scope="col">Energy</th>
-                  <th scope="col">Community</th>
-                  <th scope="col">Rating</th>
-                </tr>
-              </thead>
-              <tbody id="leaderboard"></tbody>
-            </table>
-          </div>
-        </div>
-      </div>
-      <div className="container">
-        <div className="row">
-          <div className="pie-container col-lg-6">
-            <div id="pieChart"></div>
-          </div>
 
-          <div className="col-lg-6 col-md-3 pie-container">
-            <div id="totalChart"></div>
+          <div className="col-lg-6 col-md-6 col-sm-12 mb-4">
+            <div className="row m-0 p-2 glassmorphism">
+              <div className="col-md-6 col-sm-12">
+                <h3>Earths Guardian</h3>
+                <img
+                  width="100%"
+                  className="rounded-3"
+                  src={guardian}
+                  alt="user badge image"
+                />
+              </div>
+              <div className="col-md-6 col-sm-12 bar-chart-container">
+                {totalScore && (
+                  <TotalScoreBar score={totalScore} user={userData.name} />
+                )}
+              </div>
+            </div>
+          </div>
+          <div className="col-lg-6 col-md-6 col-sm-12 mb-4 glassmorphism">
+            {totalUsers &&
+              totalUsers.map((user, i) => (
+                <LeaderBoardUser user={user} key={i} />
+              ))}
           </div>
         </div>
       </div>

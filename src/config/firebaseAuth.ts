@@ -1,5 +1,12 @@
 import { User, createUserWithEmailAndPassword, signOut } from "firebase/auth";
-import { doc, getDoc, setDoc } from "firebase/firestore";
+import {
+  DocumentData,
+  collection,
+  doc,
+  getDoc,
+  getDocs,
+  setDoc,
+} from "firebase/firestore";
 import { firebaseAuth, firebaseDB } from "./firebaseConfig";
 import Swal from "sweetalert2";
 import { AppUser } from "../classes/AppUser";
@@ -15,6 +22,23 @@ export async function getUserData(user: User) {
     }
   } catch (error) {
     console.log("Error retrieving user data:", error);
+  }
+}
+
+export async function getAllUserDocuments() {
+  try {
+    const userCollectionRef = collection(firebaseDB, "users");
+    const querySnapshot = await getDocs(userCollectionRef);
+
+    const users: DocumentData[] = [];
+    querySnapshot.forEach((doc) => {
+      const data = doc.data();
+      users.push(data);
+    });
+
+    return users;
+  } catch (error) {
+    console.error("Error fetching documents: ", error);
   }
 }
 

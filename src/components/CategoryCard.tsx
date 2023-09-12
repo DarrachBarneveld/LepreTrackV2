@@ -88,7 +88,7 @@ const CategoryCard: FunctionComponent<CategoryCardProps> = ({
       <div className="w-100 px-2 mt-1 d-flex justify-content-between">
         <div className="d-flex mt-2">
           <h3 className="text-dark text-capitalize">{title}</h3>
-          <FontAwesomeIcon icon={icon} className="h2 mx-2" />
+          <FontAwesomeIcon icon={icon} className="h2 mx-2 stroke" />
         </div>
         <div>
           <img
@@ -132,7 +132,7 @@ const CategoryCard: FunctionComponent<CategoryCardProps> = ({
               );
             })}
           </div>
-          <div className="col-6 d-flex justify-content-center align-items-center">
+          <div className="col-6 d-flex justify-content-center align-items-center p-0">
             <CategoryChart score={score} />
           </div>
         </div>
