@@ -1,6 +1,7 @@
-import { ProgressBar } from "react-bootstrap";
+import { OverlayTrigger, ProgressBar, Tooltip } from "react-bootstrap";
 import { AppUser } from "../classes/AppUser";
 import { FunctionComponent } from "react";
+import guardian from "../assets/images/guardians/earth-guardian.png";
 
 interface LeaderBoardUserProps {
   user: AppUser;
@@ -13,33 +14,35 @@ const LeaderBoardUser: FunctionComponent<LeaderBoardUserProps> = ({ user }) => {
   const energyScore = user.calcEnergyScore() / 4;
 
   return (
-    <>
-      <span>{user.name}</span>
-      <ProgressBar className="leaderboard-bar my-2">
-        <ProgressBar
-          striped
-          variant="primary"
-          now={traveScore}
-          key={1}
-          animated
-        />
-        <ProgressBar
-          striped
-          variant="success"
-          now={foodScore}
-          key={2}
-          animated
-        />
-        <ProgressBar variant="warning" now={energyScore} key={3} animated />
-        <ProgressBar
-          striped
-          variant="danger"
-          now={communityScore}
-          key={4}
-          animated
-        />
-      </ProgressBar>
-    </>
+    <div className="d-flex my-2">
+      {/* <OverlayTrigger
+        placement="top"
+        delay={{ show: 250, hide: 400 }}
+        overlay={<Tooltip>{user.name}</Tooltip>}
+      >
+        <img src={guardian} width={30} height={30} />
+      </OverlayTrigger> */}
+
+      <OverlayTrigger
+        placement="top"
+        delay={{ show: 250, hide: 400 }}
+        overlay={<Tooltip>{user.name}</Tooltip>}
+      >
+        <span className="leaderboard-username text-start text-capitalize">
+          {user.name.slice(0, 5)}
+        </span>
+      </OverlayTrigger>
+
+      <div className="d-block w-100 mx-2 position-relative">
+        <ProgressBar className="leaderboard-bar" label={user.name}>
+          <ProgressBar variant="primary" now={traveScore} key={1} />
+          <ProgressBar variant="success" now={foodScore} key={2} />
+          <ProgressBar variant="warning" now={energyScore} key={3} />
+          <ProgressBar variant="danger" now={communityScore} key={4} />
+        </ProgressBar>
+      </div>
+      <span>⭐</span>
+    </div>
   );
 };
 

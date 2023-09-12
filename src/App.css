@@ -22,9 +22,13 @@
 
 .leaderboard-bar {
   border: 1px solid rgba(0, 0, 0, 0.2);
-  height: 25px;
+  height: 30px;
 }
 
+.leaderboard-username {
+  width: 6ch !important;
+  overflow: hidden;
+}
 .category-card:hover {
   filter: brightness(0.9);
   background: white;
