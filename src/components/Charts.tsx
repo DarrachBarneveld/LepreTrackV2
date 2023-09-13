@@ -1,4 +1,4 @@
-import { FunctionComponent, useState } from "react";
+import { FunctionComponent, useEffect, useState } from "react";
 import ReactApexChart from "react-apexcharts";
 
 import "./charts.css";
@@ -168,6 +168,12 @@ export const FormChart: FunctionComponent<{
 }> = ({ score, color }) => {
   const [series, setSeries] = useState([score]);
 
+  useEffect(() => {
+    setSeries([score]);
+  }, [score]);
+
+  console.log(score);
+
   const [options, setOptions] = useState({
     colors: [color[0]],
     chart: {
@@ -178,8 +184,8 @@ export const FormChart: FunctionComponent<{
 
     plotOptions: {
       radialBar: {
-        startAngle: -180,
-        endAngle: 180,
+        startAngle: -179,
+        endAngle: 181,
         hollow: {
           margin: 0,
           size: "70%",

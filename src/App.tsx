@@ -57,10 +57,7 @@ const App: React.FunctionComponent<IAppProps> = (props) => {
         <Route path="about" element={<AboutPage />} />
         <Route path="learn" element={<LearnPage />} />
         <Route path="dashboard" element={<DashboardPage />} />
-        <Route
-          path="travel"
-          element={<TravelPage userData={userData} userAuth={userAuth} />}
-        />
+        <Route path="travel" element={<TravelPage />} />
         <Route path="food" element={<FoodPage userData={userData} />} />
         <Route path="energy" element={<EnergyPage userData={userData} />} />
         <Route

@@ -5,9 +5,9 @@ import "./index.css";
 import FireBaseContext from "./context/FireBaseContext.tsx";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
-  <React.StrictMode>
-    <FireBaseContext>
-      <App />
-    </FireBaseContext>
-  </React.StrictMode>
+  // <React.StrictMode>
+  <FireBaseContext>
+    <App />
+  </FireBaseContext>
+  // </React.StrictMode>
 );

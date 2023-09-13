@@ -1,4 +1,4 @@
-import { FunctionComponent } from "react";
+import { FunctionComponent, useContext, useEffect, useState } from "react";
 import PageHeader from "../components/PageHeader";
 import { FormChart } from "../components/Charts";
 import {
@@ -9,13 +9,14 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import CustomForm from "../forms/CustomForm";
 import * as Yup from "yup";
-import { AppUser } from "../classes/AppUser";
+import { AppUser, UserData } from "../classes/AppUser";
 import { User } from "firebase/auth";
 import {
   calculateInvertedPercentage,
   getPercentInRelationToAverage,
 } from "../helpers/math";
-import { updateFireBase } from "../config/firebaseAuth";
+import { getUserData, updateFireBase } from "../config/firebaseAuth";
+import { AppContext } from "../context/FireBaseContext";
 
 export interface CategoryPageProps {
   userData: AppUser | undefined;
@@ -195,16 +196,22 @@ const transportValidationSchema = createValidationSchema(transportFields);
 const carValidationSchema = createValidationSchema(carFields);
 const flightValidationSchema = createValidationSchema(flightFields);
 
-const TravelPage: FunctionComponent<CategoryPageProps> = ({
-  userData,
-  userAuth,
-}) => {
+const TravelPage: FunctionComponent = () => {
+  const { userData, userAuth } = useContext(AppContext);
   if (!userData) return;
-  const flightScore = userData.travel.flight.score;
+
+  const [flightScore, setFlightScore] = useState<number>(
+    +userData.travel.flight.score
+  );
+
+  useEffect(() => {
+    setFlightScore(+userData.travel.flight.score);
+  }, [userData.travel.flight.score]);
+
   const carScore = userData.travel.car.score;
   const transportScore = userData.travel.transport.score;
 
-  const flightSubmit = (
+  const flightSubmit = async (
     values: any,
     { setSubmitting }: { setSubmitting: (isSubmitting: boolean) => void }
   ) => {
@@ -233,7 +240,7 @@ const TravelPage: FunctionComponent<CategoryPageProps> = ({
 
     const truePercent = percentOfFlightKM;
 
-    const inversePercent = calculateInvertedPercentage(truePercent);
+    let inversePercent = calculateInvertedPercentage(truePercent);
 
     const data = {
       yearlyKM: values.flightKm,
@@ -243,7 +250,11 @@ const TravelPage: FunctionComponent<CategoryPageProps> = ({
     };
 
     if (userAuth) {
-      updateFireBase(data, "travel", "flight", userAuth);
+      await updateFireBase(data, "travel", "flight", userAuth);
+
+      inversePercent < 0 ? (inversePercent = 0) : inversePercent;
+      console.log(inversePercent);
+      setFlightScore(inversePercent);
     }
 
     setSubmitting(false);
@@ -267,7 +278,7 @@ const TravelPage: FunctionComponent<CategoryPageProps> = ({
               />
             </div>
             <p className="d-flex justify-content-center">
-              <span className="fw-bolder mx-2">100%</span>
+              <span className="fw-bolder mx-2">{flightScore.toFixed(2)}%</span>
               <span className="text-muted">Avg</span>
             </p>
             {/* FLIGHT FORM */}
