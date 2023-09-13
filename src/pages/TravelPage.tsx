@@ -10,10 +10,35 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import CustomForm from "../forms/CustomForm";
 import * as Yup from "yup";
 import { AppUser } from "../classes/AppUser";
+import { User } from "firebase/auth";
+import {
+  calculateInvertedPercentage,
+  getPercentInRelationToAverage,
+} from "../helpers/math";
+import { updateFireBase } from "../config/firebaseAuth";
 
 export interface CategoryPageProps {
   userData: AppUser | undefined;
+  userAuth: User | undefined;
 }
+
+const DUMMY_DATA = {
+  // this is the average milage/carbon per week of a car
+  averageKM: 327,
+  averageFlights: 6.5,
+  averageFlightKM: 6850,
+  tonnesPerKM: 0.0002582,
+  flightKperWeek: 34,
+  carKperWeek: 36,
+  communterKperWeek: 29,
+  averageTravelMethod: {
+    car: 65,
+    carpool: 8,
+    walkCycle: 15,
+    bus: 6,
+    train: 6,
+  },
+};
 
 const flightInitialValues = {
   flightKm: "",
@@ -170,11 +195,60 @@ const transportValidationSchema = createValidationSchema(transportFields);
 const carValidationSchema = createValidationSchema(carFields);
 const flightValidationSchema = createValidationSchema(flightFields);
 
-const TravelPage: FunctionComponent<CategoryPageProps> = ({ userData }) => {
+const TravelPage: FunctionComponent<CategoryPageProps> = ({
+  userData,
+  userAuth,
+}) => {
   if (!userData) return;
   const flightScore = userData.travel.flight.score;
   const carScore = userData.travel.car.score;
   const transportScore = userData.travel.transport.score;
+
+  const flightSubmit = (
+    values: any,
+    { setSubmitting }: { setSubmitting: (isSubmitting: boolean) => void }
+  ) => {
+    let tonnesPerDistance = values.flightKm * DUMMY_DATA.tonnesPerKM;
+
+    if (values.flightClass === "business") {
+      // Multiple by 3 for Business Class
+      tonnesPerDistance *= 3;
+    }
+    if (values.flightClass === "first") {
+      // Multiple by 4 for First Class
+      tonnesPerDistance *= 4;
+    }
+
+    const totalFlightCalc = 1 + values.numFlights / 5;
+
+    tonnesPerDistance *= totalFlightCalc;
+
+    const averageFlightCarbon =
+      DUMMY_DATA.averageFlightKM * DUMMY_DATA.tonnesPerKM;
+
+    let percentOfFlightKM = getPercentInRelationToAverage(
+      tonnesPerDistance,
+      averageFlightCarbon
+    );
+
+    const truePercent = percentOfFlightKM;
+
+    const inversePercent = calculateInvertedPercentage(truePercent);
+
+    const data = {
+      yearlyKM: values.flightKm,
+      numFlights: values.numFlights,
+      class: values.flightClass,
+      score: inversePercent.toFixed(2),
+    };
+
+    if (userAuth) {
+      updateFireBase(data, "travel", "flight", userAuth);
+    }
+
+    setSubmitting(false);
+  };
+
   return (
     <main>
       <PageHeader
@@ -201,6 +275,7 @@ const TravelPage: FunctionComponent<CategoryPageProps> = ({ userData }) => {
               initialValues={flightInitialValues}
               validationSchema={flightValidationSchema}
               inputFields={flightInputFields}
+              handleSubmit={flightSubmit}
             />
           </div>
         </div>
@@ -215,11 +290,11 @@ const TravelPage: FunctionComponent<CategoryPageProps> = ({ userData }) => {
               <span className="text-muted">Avg</span>
             </p>
             {/* CAR FORM */}
-            <CustomForm
+            {/* <CustomForm
               initialValues={carInitialValues}
               validationSchema={carValidationSchema}
               inputFields={carInputFields}
-            />
+            /> */}
           </div>
         </div>
         <div className="col-lg-4 col-md-6 col-sm-12 mb-4 px-3">
@@ -239,11 +314,11 @@ const TravelPage: FunctionComponent<CategoryPageProps> = ({ userData }) => {
               <span className="text-muted">Avg</span>
             </p>
             {/* TRANSPORT FORM */}
-            <CustomForm
+            {/* <CustomForm
               initialValues={transportInitialValues}
               validationSchema={transportValidationSchema}
               inputFields={transportInputFields}
-            />
+            /> */}
           </div>
         </div>
       </div>

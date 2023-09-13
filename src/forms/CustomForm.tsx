@@ -21,6 +21,10 @@ interface CustomFormProps {
   validationSchema: {};
   columns?: boolean;
   heading?: string;
+  handleSubmit: (
+    values: any,
+    { setSubmitting }: { setSubmitting: (isSubmitting: boolean) => void }
+  ) => void;
 }
 
 const CustomForm: FunctionComponent<CustomFormProps> = ({
@@ -29,15 +33,8 @@ const CustomForm: FunctionComponent<CustomFormProps> = ({
   validationSchema,
   columns,
   heading,
+  handleSubmit,
 }) => {
-  const handleSubmit = (
-    values: any,
-    { setSubmitting }: { setSubmitting: (isSubmitting: boolean) => void }
-  ) => {
-    console.log(values);
-    setSubmitting(false);
-  };
-
   return (
     <Formik
       initialValues={initialValues}

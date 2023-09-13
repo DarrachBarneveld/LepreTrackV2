@@ -51,7 +51,7 @@ export const CategoryChart: FunctionComponent<{ score: number }> = ({
             offsetY: 10,
             fontSize: "22px",
             color: undefined,
-            formatter: function (val) {
+            formatter: function (val: number) {
               return val + "%";
             },
           },

@@ -1,4 +1,4 @@
-import { User, createUserWithEmailAndPassword, signOut } from "firebase/auth";
+import { User, createUserWithEmailAndPassword } from "firebase/auth";
 import {
   DocumentData,
   collection,
@@ -6,6 +6,7 @@ import {
   getDoc,
   getDocs,
   setDoc,
+  updateDoc,
 } from "firebase/firestore";
 import { firebaseAuth, firebaseDB } from "./firebaseConfig";
 import Swal from "sweetalert2";
@@ -40,6 +41,27 @@ export async function getAllUserDocuments() {
   } catch (error) {
     console.error("Error fetching documents: ", error);
   }
+}
+
+export async function updateFireBase(
+  data: any,
+  category: string,
+  prop: string,
+  user: User
+) {
+  const userRef = doc(firebaseDB, "users", user.uid);
+
+  const userData = await getUserData(user);
+
+  if (userData) {
+    userData![category][prop] = data;
+
+    updateDoc(userRef, userData);
+  } else {
+    console.log("error updating docs");
+  }
+
+  return;
 }
 
 export async function signUpUserWithEmailAndPassword(

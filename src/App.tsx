@@ -20,12 +20,13 @@ import CommunityPage from "./pages/CommunityPage";
 export interface IAppProps {}
 
 const App: React.FunctionComponent<IAppProps> = (props) => {
-  const { userId, setUserId, setUserData, userData } = useContext(AppContext);
+  const { userAuth, setUserAuth, setUserData, userData } =
+    useContext(AppContext);
 
   useEffect(() => {
     onAuthStateChanged(firebaseAuth, async (user) => {
       if (user) {
-        setUserId(user.uid);
+        setUserAuth(user);
 
         const documentData = await getUserData(user);
 
@@ -46,7 +47,7 @@ const App: React.FunctionComponent<IAppProps> = (props) => {
         }
       }
     });
-  }, [userId]);
+  }, [userAuth]);
 
   return (
     <BrowserRouter>
@@ -56,7 +57,10 @@ const App: React.FunctionComponent<IAppProps> = (props) => {
         <Route path="about" element={<AboutPage />} />
         <Route path="learn" element={<LearnPage />} />
         <Route path="dashboard" element={<DashboardPage />} />
-        <Route path="travel" element={<TravelPage userData={userData} />} />
+        <Route
+          path="travel"
+          element={<TravelPage userData={userData} userAuth={userAuth} />}
+        />
         <Route path="food" element={<FoodPage userData={userData} />} />
         <Route path="energy" element={<EnergyPage userData={userData} />} />
         <Route
