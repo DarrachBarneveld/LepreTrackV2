@@ -9,8 +9,11 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import CustomForm from "../forms/CustomForm";
 import * as Yup from "yup";
+import { AppUser } from "../classes/AppUser";
 
-interface TravelPageProps {}
+interface TravelPageProps {
+  userData: AppUser | undefined;
+}
 
 const flightInitialValues = {
   flightKm: "",
@@ -167,7 +170,11 @@ const transportValidationSchema = createValidationSchema(transportFields);
 const carValidationSchema = createValidationSchema(carFields);
 const flightValidationSchema = createValidationSchema(flightFields);
 
-const TravelPage: FunctionComponent<TravelPageProps> = () => {
+const TravelPage: FunctionComponent<TravelPageProps> = ({ userData }) => {
+  if (!userData) return;
+  const flightScore = userData.travel.flight.score;
+  const carScore = userData.travel.car.score;
+  const transportScore = userData.travel.transport.score;
   return (
     <main>
       <PageHeader
@@ -179,7 +186,7 @@ const TravelPage: FunctionComponent<TravelPageProps> = () => {
         <div className="col-lg-4 col-md-6 col-sm-12 mb-4 px-3">
           <div className="card text-center glassmorphism">
             <div className="d-flex align-items-center justify-content-center">
-              <FormChart score={10} color={["#DA2D2D", "#7C0000"]} />
+              <FormChart score={flightScore} color={["#DA2D2D", "#7C0000"]} />
               <FontAwesomeIcon
                 icon={faPlaneDeparture}
                 className="h2 position-absolute"
@@ -200,7 +207,7 @@ const TravelPage: FunctionComponent<TravelPageProps> = () => {
         <div className="col-lg-4 col-md-6 col-sm-12 mb-4 px-3">
           <div className="card text-center glassmorphism">
             <div className="d-flex align-items-center justify-content-center">
-              <FormChart score={10} color={["#009FFD", "#5200AE"]} />
+              <FormChart score={carScore} color={["#009FFD", "#5200AE"]} />
               <FontAwesomeIcon icon={faCar} className="h2 position-absolute" />
             </div>
             <p className="d-flex justify-content-center">
@@ -218,7 +225,10 @@ const TravelPage: FunctionComponent<TravelPageProps> = () => {
         <div className="col-lg-4 col-md-6 col-sm-12 mb-4 px-3">
           <div className="card text-center glassmorphism">
             <div className="d-flex align-items-center justify-content-center">
-              <FormChart score={10} color={["#63D471", "#378B29"]} />
+              <FormChart
+                score={transportScore}
+                color={["#63D471", "#378B29"]}
+              />
               <FontAwesomeIcon
                 icon={faTrain}
                 className="h2 position-absolute"
