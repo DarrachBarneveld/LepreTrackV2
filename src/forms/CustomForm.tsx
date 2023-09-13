@@ -20,6 +20,7 @@ interface CustomFormProps {
   inputFields: inputField[];
   validationSchema: {};
   columns?: boolean;
+  heading?: string;
 }
 
 const CustomForm: FunctionComponent<CustomFormProps> = ({
@@ -27,6 +28,7 @@ const CustomForm: FunctionComponent<CustomFormProps> = ({
   inputFields,
   validationSchema,
   columns,
+  heading,
 }) => {
   const handleSubmit = (
     values: any,
@@ -44,6 +46,7 @@ const CustomForm: FunctionComponent<CustomFormProps> = ({
     >
       {({ isSubmitting, errors, touched }) => (
         <Form id="customForm" className="p-2 rounded-3 ">
+          {heading && <p className="fw-bold mb-3 border-bottom">{heading}</p>}
           <div className={`${columns && "grid-2"}`}>
             {inputFields.map((field) => (
               <div key={field.name}>

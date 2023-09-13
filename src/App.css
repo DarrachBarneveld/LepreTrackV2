@@ -27,8 +27,8 @@
 
 .grid-2 {
   display: grid;
-  grid-template-columns: 1fr 1fr; /* Two equal c
-
+  grid-template-columns: 1fr 1fr;
+  gap: 0.25rem;
 }
 
 .guardian-tag {
