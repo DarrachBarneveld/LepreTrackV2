@@ -1,3 +1,8 @@
 .error-input {
   outline: 2px solid red;
 }
+
+.error {
+  color: red;
+  font-size: 12px;
+}

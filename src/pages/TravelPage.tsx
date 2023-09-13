@@ -12,18 +12,6 @@ import * as Yup from "yup";
 
 interface TravelPageProps {}
 
-const flightValidationSchema = Yup.object().shape({
-  flightKm: Yup.number()
-    .required("This field is required")
-    .positive("Kilometers must be a positive number")
-    .integer("Kilometers must be an integer"),
-  numFlights: Yup.number()
-    .required("This field is required")
-    .positive("Number of flights must be a positive number")
-    .integer("Number of flights must be an integer"),
-  flightClass: Yup.string().required("Please select a flight class"),
-});
-
 const flightInitialValues = {
   flightKm: "",
   numFlights: "",
@@ -53,15 +41,6 @@ const flightInputFields = [
   },
 ];
 
-const carValidationSchema = Yup.object().shape({
-  weeklyKm: Yup.number()
-    .required("This field is required")
-    .positive("Kilometers must be a positive number")
-    .integer("Kilometers must be an integer"),
-  type: Yup.string().required("Please select a car class"),
-  year2000: Yup.string().required("Please select before or after 2000"),
-});
-
 const carInitialValues = {
   weeklyKm: "",
   type: "",
@@ -76,7 +55,7 @@ const carInputFields = [
   },
   {
     name: "carType",
-    label: "Type of Car",
+    label: "Type of Car?",
     type: "radio",
     options: [
       { value: "electric", label: "Electric" },
@@ -86,7 +65,7 @@ const carInputFields = [
   },
   {
     name: "carYear",
-    label: "Car Manufactured:",
+    label: "Car Manufactured?",
     type: "radio",
     options: [
       { value: "after", label: "After 2000" },
@@ -95,7 +74,53 @@ const carInputFields = [
   },
 ];
 
-const transportValidationSchema = Yup.object().shape({
+const transportInitialValues = {
+  drive: 0,
+  carpool: 0,
+  walk: 0,
+  cycle: 0,
+  train: 0,
+  bus: 0,
+  custom: 0,
+};
+
+const transportInputFields = [
+  { name: "drive", label: "Drive (%)", type: "number" },
+  { name: "carpool", label: "Carpool (%)", type: "number" },
+  { name: "walk", label: "Walk (%)", type: "number" },
+  { name: "cycle", label: "Cycle (%)", type: "number" },
+  { name: "train", label: "Train (%)", type: "number" },
+  { name: "bus", label: "Bus (%)", type: "number" },
+];
+
+type FieldSet = Record<string, Yup.StringSchema | Yup.NumberSchema>;
+
+function createValidationSchema(fields: FieldSet) {
+  return Yup.object().shape(fields);
+}
+
+const carFields: FieldSet = {
+  weeklyKm: Yup.number()
+    .required("This field is required")
+    .positive("Kilometers must be a positive number")
+    .integer("Kilometers must be an integer"),
+  type: Yup.string().required("Please select a car class"),
+  year2000: Yup.string().required("Please select before or after 2000"),
+};
+
+const flightFields: FieldSet = {
+  flightKm: Yup.number()
+    .required("This field is required")
+    .positive("Kilometers must be a positive number")
+    .integer("Kilometers must be an integer"),
+  numFlights: Yup.number()
+    .required("This field is required")
+    .positive("Number of flights must be a positive number")
+    .integer("Number of flights must be an integer"),
+  flightClass: Yup.string().required("Please select a flight class"),
+};
+
+const transportFields: FieldSet = {
   drive: Yup.number()
     .typeError("Must be a number")
     .min(0, "Value cannot be negative")
@@ -133,26 +158,11 @@ const transportValidationSchema = Yup.object().shape({
       return total === 100;
     })
     .required("Total percentage is required"),
-});
-
-const transportInitialValues = {
-  drive: 0,
-  carpool: 0,
-  walk: 0,
-  cycle: 0,
-  train: 0,
-  bus: 0,
-  custom: 0,
 };
 
-const transportInputFields = [
-  { name: "drive", label: "Drive (%)", type: "number" },
-  { name: "carpool", label: "Carpool (%)", type: "number" },
-  { name: "walk", label: "Walk (%)", type: "number" },
-  { name: "cycle", label: "Cycle (%)", type: "number" },
-  { name: "train", label: "Train (%)", type: "number" },
-  { name: "bus", label: "Bus (%)", type: "number" },
-];
+const transportValidationSchema = createValidationSchema(transportFields);
+const carValidationSchema = createValidationSchema(carFields);
+const flightValidationSchema = createValidationSchema(flightFields);
 
 const TravelPage: FunctionComponent<TravelPageProps> = () => {
   return (
