@@ -26,8 +26,10 @@ const CustomForm: FunctionComponent<CustomFormProps> = ({
   inputFields,
   validationSchema,
 }) => {
-  const handleSubmit = (values, { setSubmitting }) => {
-    // Handle form submission here
+  const handleSubmit = (
+    values: any,
+    { setSubmitting }: { setSubmitting: (isSubmitting: boolean) => void }
+  ) => {
     console.log(values);
     setSubmitting(false);
   };
@@ -75,6 +77,27 @@ const CustomForm: FunctionComponent<CustomFormProps> = ({
                       </div>
                     );
                   })}
+                </div>
+              ) : field.type === "select" ? (
+                <div className="d-flex flex-column mx-auto">
+                  <Field
+                    as="select"
+                    name={field.name}
+                    isInvalid={touched[field.name] && errors[field.name]}
+                    className={`form-select mb-1 ${
+                      touched[field.name] && errors[field.name]
+                        ? "error-input"
+                        : ""
+                    }`}
+                  >
+                    {field.options?.map((option, i) => (
+                      <option
+                        key={i}
+                        value={option.value}
+                        label={option.label}
+                      />
+                    ))}
+                  </Field>
                 </div>
               ) : (
                 <Field

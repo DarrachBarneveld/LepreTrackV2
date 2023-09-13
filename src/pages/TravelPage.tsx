@@ -7,7 +7,7 @@ import {
   faTrain,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import CustomForm from "../forms/TravelForms";
+import CustomForm from "../forms/CustomForm";
 import * as Yup from "yup";
 
 interface TravelPageProps {}
@@ -93,9 +93,9 @@ const transportInputFields = [
   { name: "bus", label: "Bus (%)", type: "number" },
 ];
 
-type FieldSet = Record<string, Yup.StringSchema | Yup.NumberSchema>;
+export type FieldSet = Record<string, Yup.StringSchema | Yup.NumberSchema>;
 
-function createValidationSchema(fields: FieldSet) {
+export function createValidationSchema(fields: FieldSet) {
   return Yup.object().shape(fields);
 }
 
