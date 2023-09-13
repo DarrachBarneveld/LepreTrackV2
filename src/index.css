@@ -25,7 +25,9 @@ main {
   align-items: center;
   flex-direction: column;
   text-align: center;
+  padding-top: 66px;
 }
+/* 66px for navbar height issue dropdown */
 
 form {
   background: #e1e5dc;

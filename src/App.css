@@ -22,7 +22,13 @@
 }
 
 .w-fit-content {
-  width: fit-content;
+  width: fit-content !important;
+}
+
+.grid-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr; /* Two equal c
+
 }
 
 .guardian-tag {
