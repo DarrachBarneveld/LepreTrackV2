@@ -56,6 +56,16 @@ const farmInputFields = [
   { name: "crop", label: "Do you grow your own crop", type: "checkbox" },
 ];
 
+const diningInitialInputs = {
+  out: false,
+  waste: 0,
+};
+
+const diningInputFields = [
+  { name: "out", label: "Do you eat out weekly?", type: "checkbox" },
+  { name: "waste", label: "Do you regularly waste food?", type: "checkbox" },
+];
+
 const dietFields: FieldSet = {
   diet: Yup.string().required("Please select a diet"),
   calories: Yup.number()
@@ -78,48 +88,14 @@ const farmingFields: FieldSet = {
   crop: Yup.boolean(),
 };
 
-const transportFields: FieldSet = {
-  drive: Yup.number()
-    .typeError("Must be a number")
-    .min(0, "Value cannot be negative")
-    .max(100, "Value cannot exceed 100")
-    .required("Required"),
-  carpool: Yup.number()
-    .typeError("Must be a number")
-    .min(0, "Value cannot be negative")
-    .max(100, "Value cannot exceed 100")
-    .required("Required"),
-  walk: Yup.number()
-    .typeError("Must be a number")
-    .min(0, "Value cannot be negative")
-    .max(100, "Value cannot exceed 100")
-    .required("Required"),
-  cycle: Yup.number()
-    .typeError("Must be a number")
-    .min(0, "Value cannot be negative")
-    .max(100, "Value cannot exceed 100")
-    .required("Required"),
-  train: Yup.number()
-    .typeError("Must be a number")
-    .min(0, "Value cannot be negative")
-    .max(100, "Value cannot exceed 100")
-    .required("Required"),
-  bus: Yup.number()
-    .typeError("Must be a number")
-    .min(0, "Value cannot be negative")
-    .max(100, "Value cannot exceed 100")
-    .required("Required"),
-  custom: Yup.number()
-    .test("custom", "Total percentage must equal 100%", function (value) {
-      const { drive, carpool, walk, cycle, train, bus } = this.parent;
-      const total = drive + carpool + walk + cycle + train + bus;
-      return total === 100;
-    })
-    .required("Total percentage is required"),
+const diningFields: FieldSet = {
+  out: Yup.boolean(),
+  waste: Yup.boolean(),
 };
 
 const dietValidationSchema = createValidationSchema(dietFields);
 const farmingValidationSchema = createValidationSchema(farmingFields);
+const diningValidationSchema = createValidationSchema(diningFields);
 
 interface FoodPageProps {}
 
@@ -183,12 +159,12 @@ const FoodPage: FunctionComponent<FoodPageProps> = () => {
               <span className="fw-bolder mx-2">100%</span>
               <span className="text-muted">Avg</span>
             </p>
-            {/* TRANSPORT FORM */}
-            {/* <CustomForm
-              initialValues={transportInitialValues}
-              validationSchema={transportValidationSchema}
-              inputFields={transportInputFields}
-            /> */}
+            {/* DINING FORM */}
+            <CustomForm
+              initialValues={diningInitialInputs}
+              validationSchema={diningValidationSchema}
+              inputFields={diningInputFields}
+            />
           </div>
         </div>
       </div>

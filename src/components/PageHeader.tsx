@@ -10,7 +10,7 @@ const PageHeader: FunctionComponent<PageHeaderProps> = ({
   subheadline,
 }) => {
   return (
-    <div className="w-100 card glassmorphism mb-5 text-success fw-bolder">
+    <div className="w-100 card glassmorphism mb-5 text-success fw-bolder header">
       <div className="card-body">
         <h1 className="card-title text-center">{title}</h1>
         <h6 className="card-subtitle mb-2 text-muted text-center">
