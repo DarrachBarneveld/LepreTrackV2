@@ -54,14 +54,15 @@ export async function updateFireBase(
   const userData = await getUserData(user);
 
   if (userData) {
-    userData![category][prop] = data;
+    try {
+      userData![category][prop] = data;
 
-    updateDoc(userRef, userData);
-  } else {
-    console.log("error updating docs");
+      console.log(userData[category][prop]);
+      updateDoc(userRef, userData);
+    } catch (err) {
+      console.log(err);
+    }
   }
-
-  return;
 }
 
 export async function signUpUserWithEmailAndPassword(

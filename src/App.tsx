@@ -58,12 +58,9 @@ const App: React.FunctionComponent<IAppProps> = (props) => {
         <Route path="learn" element={<LearnPage />} />
         <Route path="dashboard" element={<DashboardPage />} />
         <Route path="travel" element={<TravelPage />} />
-        <Route path="food" element={<FoodPage userData={userData} />} />
-        <Route path="energy" element={<EnergyPage userData={userData} />} />
-        <Route
-          path="community"
-          element={<CommunityPage userData={userData} />}
-        />
+        <Route path="food" element={<FoodPage />} />
+        <Route path="energy" element={<EnergyPage />} />
+        <Route path="community" element={<CommunityPage />} />
       </Routes>
       <Footer />
     </BrowserRouter>

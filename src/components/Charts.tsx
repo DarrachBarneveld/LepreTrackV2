@@ -172,8 +172,6 @@ export const FormChart: FunctionComponent<{
     setSeries([score]);
   }, [score]);
 
-  console.log(score);
-
   const [options, setOptions] = useState({
     colors: [color[0]],
     chart: {

@@ -9,13 +9,13 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import CustomForm from "../forms/CustomForm";
 import * as Yup from "yup";
-import { AppUser, UserData } from "../classes/AppUser";
+import { AppUser } from "../classes/AppUser";
 import { User } from "firebase/auth";
 import {
   calculateInvertedPercentage,
   getPercentInRelationToAverage,
 } from "../helpers/math";
-import { getUserData, updateFireBase } from "../config/firebaseAuth";
+import { updateFireBase } from "../config/firebaseAuth";
 import { AppContext } from "../context/FireBaseContext";
 
 export interface CategoryPageProps {
@@ -89,7 +89,7 @@ const carInputFields = [
     options: [
       { value: "electric", label: "Electric" },
       { value: "hybrid", label: "Hybrid" },
-      { value: "petro", label: "Petro" },
+      { value: "petrol", label: "Petrol" },
     ],
   },
   {
@@ -203,12 +203,8 @@ const TravelPage: FunctionComponent = () => {
   const [flightScore, setFlightScore] = useState<number>(
     +userData.travel.flight.score
   );
+  const [carScore, setCarScore] = useState<number>(+userData.travel.car.score);
 
-  useEffect(() => {
-    setFlightScore(+userData.travel.flight.score);
-  }, [userData.travel.flight.score]);
-
-  const carScore = userData.travel.car.score;
   const transportScore = userData.travel.transport.score;
 
   const flightSubmit = async (
@@ -253,8 +249,58 @@ const TravelPage: FunctionComponent = () => {
       await updateFireBase(data, "travel", "flight", userAuth);
 
       inversePercent < 0 ? (inversePercent = 0) : inversePercent;
-      console.log(inversePercent);
+
       setFlightScore(inversePercent);
+    }
+
+    setSubmitting(false);
+  };
+
+  const carSubmit = async (
+    values: any,
+    { setSubmitting }: { setSubmitting: (isSubmitting: boolean) => void }
+  ) => {
+    // const carType = values.
+
+    let totalKilometers = values.weeklyKm;
+    const trueTotalKM = values.weeklyKm;
+
+    if (values.type === "electric") {
+      // Reduce by 60% for Electric cars
+      totalKilometers *= 0.4;
+    }
+    if (values.type === "hybrid") {
+      // Reduce by 40% for Hybrid cars
+      totalKilometers *= 0.6;
+    }
+
+    if (values.year2000 === "before") {
+      totalKilometers *= 2;
+    }
+
+    let percentOfCarKM = getPercentInRelationToAverage(
+      totalKilometers,
+      DUMMY_DATA.averageKM
+    );
+
+    let truePercent = percentOfCarKM;
+    let inversePercent = calculateInvertedPercentage(truePercent);
+
+    const data = {
+      weeklyKm: trueTotalKM,
+      type: values.type,
+      year2000: values.year2000,
+      score: inversePercent.toFixed(2),
+    };
+
+    if (userAuth) {
+      await updateFireBase(data, "travel", "car", userAuth);
+
+      inversePercent < 0 ? (inversePercent = 0) : inversePercent;
+
+      console.log(truePercent);
+
+      setCarScore(inversePercent);
     }
 
     setSubmitting(false);
@@ -301,11 +347,12 @@ const TravelPage: FunctionComponent = () => {
               <span className="text-muted">Avg</span>
             </p>
             {/* CAR FORM */}
-            {/* <CustomForm
+            <CustomForm
               initialValues={carInitialValues}
               validationSchema={carValidationSchema}
               inputFields={carInputFields}
-            /> */}
+              handleSubmit={carSubmit}
+            />
           </div>
         </div>
         <div className="col-lg-4 col-md-6 col-sm-12 mb-4 px-3">
