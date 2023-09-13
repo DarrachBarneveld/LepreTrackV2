@@ -6,7 +6,11 @@ import CustomForm from "../forms/CustomForm";
 import * as Yup from "yup";
 import { faHandshake, faRecycle } from "@fortawesome/free-solid-svg-icons";
 
-import { FieldSet, createValidationSchema } from "./TravelPage";
+import {
+  CategoryPageProps,
+  FieldSet,
+  createValidationSchema,
+} from "./TravelPage";
 
 interface CommunityPageProps {}
 
@@ -111,7 +115,11 @@ const volunteeringFields: FieldSet = {
 const recyclingValidationSchema = createValidationSchema(recyclingFields);
 const volunteeringValidationSchema = createValidationSchema(volunteeringFields);
 
-const CommunityPage: FunctionComponent<CommunityPageProps> = () => {
+const CommunityPage: FunctionComponent<CategoryPageProps> = ({ userData }) => {
+  if (!userData) return;
+
+  const recyclingScore = userData.community.recycle.score;
+  const communityScore = userData.community.volunteer.score;
   return (
     <main>
       <PageHeader
@@ -122,7 +130,10 @@ const CommunityPage: FunctionComponent<CommunityPageProps> = () => {
         <div className="col-md-6 col-sm-12 mb-4 px-3">
           <div className="card text-center glassmorphism">
             <div className="d-flex align-items-center justify-content-center">
-              <FormChart score={10} color={["#63D471", "#378B29"]} />
+              <FormChart
+                score={recyclingScore}
+                color={["#63D471", "#378B29"]}
+              />
               <FontAwesomeIcon
                 icon={faRecycle}
                 className="h2 position-absolute"
@@ -145,7 +156,10 @@ const CommunityPage: FunctionComponent<CommunityPageProps> = () => {
         <div className="col-md-6 col-sm-12 mb-4 px-3">
           <div className="card text-center glassmorphism">
             <div className="d-flex align-items-center justify-content-center">
-              <FormChart score={10} color={["#009FFD", "#5200AE"]} />
+              <FormChart
+                score={communityScore}
+                color={["#009FFD", "#5200AE"]}
+              />
               <FontAwesomeIcon
                 icon={faHandshake}
                 className="h2 position-absolute"

@@ -11,7 +11,7 @@ import CustomForm from "../forms/CustomForm";
 import * as Yup from "yup";
 import { AppUser } from "../classes/AppUser";
 
-interface TravelPageProps {
+export interface CategoryPageProps {
   userData: AppUser | undefined;
 }
 
@@ -170,7 +170,7 @@ const transportValidationSchema = createValidationSchema(transportFields);
 const carValidationSchema = createValidationSchema(carFields);
 const flightValidationSchema = createValidationSchema(flightFields);
 
-const TravelPage: FunctionComponent<TravelPageProps> = ({ userData }) => {
+const TravelPage: FunctionComponent<CategoryPageProps> = ({ userData }) => {
   if (!userData) return;
   const flightScore = userData.travel.flight.score;
   const carScore = userData.travel.car.score;

@@ -9,7 +9,11 @@ import {
   faUtensils,
 } from "@fortawesome/free-solid-svg-icons";
 import * as Yup from "yup";
-import { FieldSet, createValidationSchema } from "./TravelPage";
+import {
+  CategoryPageProps,
+  FieldSet,
+  createValidationSchema,
+} from "./TravelPage";
 
 const dietInitialValues = {
   type: "",
@@ -78,11 +82,11 @@ const farmingFields: FieldSet = {
   local: Yup.boolean(),
   produce: Yup.number()
     .required("This field is required")
-    .positive("Number of produce must be a positive number")
+    .min(0, "Number of produce must not be negative")
     .integer("Number of produce must be an integer"),
   organic: Yup.number()
     .required("This field is required")
-    .positive("Number of organic must be a positive number")
+    .min(0, "Number of organic must not be negative")
     .integer("Number of organic must be an integer"),
   seasonal: Yup.boolean(),
   crop: Yup.boolean(),
@@ -99,7 +103,12 @@ const diningValidationSchema = createValidationSchema(diningFields);
 
 interface FoodPageProps {}
 
-const FoodPage: FunctionComponent<FoodPageProps> = () => {
+const FoodPage: FunctionComponent<CategoryPageProps> = ({ userData }) => {
+  if (!userData) return;
+
+  const dietScore = userData.food.diet.score;
+  const farmScore = userData.food.farm.score;
+  const diningScore = userData.food.dining.score;
   return (
     <main>
       <PageHeader title="Food" subheadline="Can you improve your food score?" />
@@ -107,7 +116,7 @@ const FoodPage: FunctionComponent<FoodPageProps> = () => {
         <div className="col-lg-4 col-md-6 col-sm-12 mb-4 px-3">
           <div className="card text-center glassmorphism">
             <div className="d-flex align-items-center justify-content-center">
-              <FormChart score={10} color={["#FFBE3D", "#F06543"]} />
+              <FormChart score={dietScore} color={["#FFBE3D", "#F06543"]} />
               <FontAwesomeIcon
                 icon={faPizzaSlice}
                 className="h2 position-absolute"
@@ -128,7 +137,7 @@ const FoodPage: FunctionComponent<FoodPageProps> = () => {
         <div className="col-lg-4 col-md-6 col-sm-12 mb-4 px-3">
           <div className="card text-center glassmorphism">
             <div className="d-flex align-items-center justify-content-center">
-              <FormChart score={10} color={["#63D471", "#378B29"]} />
+              <FormChart score={farmScore} color={["#63D471", "#378B29"]} />
               <FontAwesomeIcon
                 icon={faSeedling}
                 className="h2 position-absolute"
@@ -149,7 +158,7 @@ const FoodPage: FunctionComponent<FoodPageProps> = () => {
         <div className="col-lg-4 col-md-6 col-sm-12 mb-4 px-3">
           <div className="card text-center glassmorphism">
             <div className="d-flex align-items-center justify-content-center">
-              <FormChart score={10} color={["#A594F9", "#6247AA"]} />
+              <FormChart score={diningScore} color={["#A594F9", "#6247AA"]} />
               <FontAwesomeIcon
                 icon={faUtensils}
                 className="h2 position-absolute"

@@ -5,7 +5,11 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlugCircleExclamation } from "@fortawesome/free-solid-svg-icons";
 import CustomForm from "../forms/CustomForm";
 import * as Yup from "yup";
-import { FieldSet, createValidationSchema } from "./TravelPage";
+import {
+  CategoryPageProps,
+  FieldSet,
+  createValidationSchema,
+} from "./TravelPage";
 
 interface EnergyPageProps {}
 
@@ -100,7 +104,11 @@ const energyFields: FieldSet = {
 
 const energyValidationSchema = createValidationSchema(energyFields);
 
-const EnergyPage: FunctionComponent<EnergyPageProps> = () => {
+const EnergyPage: FunctionComponent<CategoryPageProps> = ({ userData }) => {
+  if (!userData) return;
+
+  const energyScore = userData.energy.energy.score;
+
   return (
     <main>
       <PageHeader
@@ -112,7 +120,7 @@ const EnergyPage: FunctionComponent<EnergyPageProps> = () => {
         <div className="col-12 mb-4 px-3">
           <div className="card text-center glassmorphism">
             <div className="d-flex align-items-center justify-content-center">
-              <FormChart score={10} color={["#F07654", "#F5DF2E"]} />
+              <FormChart score={energyScore} color={["#F07654", "#F5DF2E"]} />
               <FontAwesomeIcon
                 icon={faPlugCircleExclamation}
                 className="h2 position-absolute"
