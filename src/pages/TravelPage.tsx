@@ -12,6 +12,7 @@ import * as Yup from "yup";
 import { AppUser } from "../classes/AppUser";
 import { User } from "firebase/auth";
 import {
+  IrishAverageTravelMethodTotal,
   calculateInvertedPercentage,
   getPercentInRelationToAverage,
 } from "../helpers/math";
@@ -204,8 +205,9 @@ const TravelPage: FunctionComponent = () => {
     +userData.travel.flight.score
   );
   const [carScore, setCarScore] = useState<number>(+userData.travel.car.score);
-
-  const transportScore = userData.travel.transport.score;
+  const [transportScore, setTransportScore] = useState<number>(
+    +userData.travel.transport.score
+  );
 
   const flightSubmit = async (
     values: any,
@@ -298,9 +300,53 @@ const TravelPage: FunctionComponent = () => {
 
       inversePercent < 0 ? (inversePercent = 0) : inversePercent;
 
-      console.log(truePercent);
-
       setCarScore(inversePercent);
+    }
+
+    setSubmitting(false);
+  };
+
+  const transportSubmit = async (
+    values: any,
+    { setSubmitting }: { setSubmitting: (isSubmitting: boolean) => void }
+  ) => {
+    // const carType = values.
+
+    const { drive, carpool, cycle, train, bus, walk } = values;
+    const weightedSum =
+      drive * 1 +
+      carpool * 0.5 +
+      walk * 0 +
+      cycle * 0 +
+      train * 0.2 +
+      bus * 0.6;
+
+    const averageCarbonSum = IrishAverageTravelMethodTotal();
+
+    let percentMode = getPercentInRelationToAverage(
+      weightedSum,
+      averageCarbonSum
+    );
+
+    const truePercent = percentMode;
+    let inversePercent = calculateInvertedPercentage(truePercent);
+
+    const data = {
+      drive,
+      carpool,
+      walk,
+      cycle,
+      train,
+      bus,
+      score: inversePercent.toFixed(2),
+    };
+
+    if (userAuth) {
+      await updateFireBase(data, "travel", "transport", userAuth);
+
+      inversePercent < 0 ? (inversePercent = 0) : inversePercent;
+
+      setTransportScore(inversePercent);
     }
 
     setSubmitting(false);
@@ -372,11 +418,12 @@ const TravelPage: FunctionComponent = () => {
               <span className="text-muted">Avg</span>
             </p>
             {/* TRANSPORT FORM */}
-            {/* <CustomForm
+            <CustomForm
               initialValues={transportInitialValues}
               validationSchema={transportValidationSchema}
               inputFields={transportInputFields}
-            /> */}
+              handleSubmit={transportSubmit}
+            />
           </div>
         </div>
       </div>
