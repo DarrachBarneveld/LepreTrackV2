@@ -54,7 +54,7 @@ const carInputFields = [
     type: "number",
   },
   {
-    name: "carType",
+    name: "type",
     label: "Type of Car?",
     type: "radio",
     options: [
@@ -64,7 +64,7 @@ const carInputFields = [
     ],
   },
   {
-    name: "carYear",
+    name: "year2000",
     label: "Car Manufactured?",
     type: "radio",
     options: [

@@ -8,16 +8,16 @@ interface initialValues {
   [key: string]: string | number;
 }
 
-interface inputFields {
+type inputField = {
   name: string;
   label: string;
-  type: "number" | "radio";
+  type: string;
   options?: { value: string; label: string }[];
-}
+};
 
 interface CustomFormProps {
   initialValues: initialValues;
-  inputFields: inputFields;
+  inputFields: inputField[];
   validationSchema: {};
 }
 
@@ -52,7 +52,7 @@ const CustomForm: FunctionComponent<CustomFormProps> = ({
               />
               {field.type === "radio" ? (
                 <div className="d-flex mx-auto w-fit-content">
-                  {field.options.map((option) => {
+                  {field.options?.map((option) => {
                     return (
                       <div
                         key={option.value}
@@ -81,7 +81,7 @@ const CustomForm: FunctionComponent<CustomFormProps> = ({
                   type={field.type}
                   id={field.name}
                   name={field.name}
-                  required={field.required}
+                  // required={field.required}
                   className={`form-control m-0 mb-1 ${
                     touched[field.name] && errors[field.name]
                       ? "error-input"
