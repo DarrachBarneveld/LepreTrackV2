@@ -232,7 +232,7 @@ export class AppUser {
     const totalValue =
       +this.community.recycle.score + +this.community.volunteer.score;
 
-    const percentValue = (totalValue / 3).toFixed(2);
+    const percentValue = (totalValue / 2).toFixed(2);
 
     return +percentValue;
   }

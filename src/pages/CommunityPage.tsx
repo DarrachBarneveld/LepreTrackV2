@@ -120,6 +120,9 @@ const CommunityPage: FunctionComponent<CategoryPageProps> = ({ userData }) => {
 
   const recyclingScore = userData.community.recycle.score;
   const communityScore = userData.community.volunteer.score;
+
+  console.log(communityScore);
+  console.log(recyclingScore);
   return (
     <main>
       <PageHeader
