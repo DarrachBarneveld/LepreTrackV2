@@ -5,7 +5,7 @@ import { Button } from "react-bootstrap";
 import "./forms.css";
 
 interface initialValues {
-  [key: string]: string | number;
+  [key: string]: string | number | boolean;
 }
 
 type inputField = {
@@ -99,6 +99,17 @@ const CustomForm: FunctionComponent<CustomFormProps> = ({
                     ))}
                   </Field>
                 </div>
+              ) : field.type === "checkbox" ? (
+                <Field
+                  type="checkbox"
+                  name={field.name}
+                  isInvalid={touched[field.name] && errors[field.name]}
+                  className={`form-check mb-1 ${
+                    touched[field.name] && errors[field.name]
+                      ? "error-input"
+                      : ""
+                  }`}
+                />
               ) : (
                 <Field
                   type={field.type}

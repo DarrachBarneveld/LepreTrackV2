@@ -36,43 +36,46 @@ const dietInputFields = [
   },
 ];
 
-const transportInitialValues = {
-  drive: 0,
-  carpool: 0,
-  walk: 0,
-  cycle: 0,
-  train: 0,
-  bus: 0,
-  custom: 0,
+const farmInitialInputs = {
+  local: false,
+  produce: 0,
+  organic: 0,
+  seasonal: false,
+  crop: false,
 };
 
-const transportInputFields = [
-  { name: "drive", label: "Drive (%)", type: "number" },
-  { name: "carpool", label: "Carpool (%)", type: "number" },
-  { name: "walk", label: "Walk (%)", type: "number" },
-  { name: "cycle", label: "Cycle (%)", type: "number" },
-  { name: "train", label: "Train (%)", type: "number" },
-  { name: "bus", label: "Bus (%)", type: "number" },
+const farmInputFields = [
+  { name: "local", label: "Do you shop locally?", type: "checkbox" },
+  { name: "produce", label: "% Local Produce", type: "number" },
+  { name: "organic", label: "% Organic/Regenrative Agr", type: "number" },
+  {
+    name: "seasonal",
+    label: "Do you mostly eat seasonal fruit/veg",
+    type: "checkbox",
+  },
+  { name: "crop", label: "Do you grow your own crop", type: "checkbox" },
 ];
 
 const dietFields: FieldSet = {
   diet: Yup.string().required("Please select a diet"),
   calories: Yup.number()
     .required("This field is required")
-    .positive("Number of flights must be a positive number")
-    .integer("Number of flights must be an integer"),
+    .positive("Number of calories must be a positive number")
+    .integer("Number of calories must be an integer"),
 };
 
-const flightFields: FieldSet = {
-  flightKm: Yup.number()
+const farmingFields: FieldSet = {
+  local: Yup.boolean(),
+  produce: Yup.number()
     .required("This field is required")
-    .positive("Kilometers must be a positive number")
-    .integer("Kilometers must be an integer"),
-  numFlights: Yup.number()
+    .positive("Number of produce must be a positive number")
+    .integer("Number of produce must be an integer"),
+  organic: Yup.number()
     .required("This field is required")
-    .positive("Number of flights must be a positive number")
-    .integer("Number of flights must be an integer"),
-  flightClass: Yup.string().required("Please select a flight class"),
+    .positive("Number of organic must be a positive number")
+    .integer("Number of organic must be an integer"),
+  seasonal: Yup.boolean(),
+  crop: Yup.boolean(),
 };
 
 const transportFields: FieldSet = {
@@ -116,7 +119,7 @@ const transportFields: FieldSet = {
 };
 
 const dietValidationSchema = createValidationSchema(dietFields);
-const flightValidationSchema = createValidationSchema(flightFields);
+const farmingValidationSchema = createValidationSchema(farmingFields);
 
 interface FoodPageProps {}
 
@@ -159,12 +162,12 @@ const FoodPage: FunctionComponent<FoodPageProps> = () => {
               <span className="fw-bolder mx-2">100%</span>
               <span className="text-muted">Avg</span>
             </p>
-            {/* CAR FORM */}
-            {/* <CustomForm
-              initialValues={carInitialValues}
-              validationSchema={carValidationSchema}
-              inputFields={carInputFields}
-            /> */}
+            {/* FARMING FORM */}
+            <CustomForm
+              initialValues={farmInitialInputs}
+              validationSchema={farmingValidationSchema}
+              inputFields={farmInputFields}
+            />
           </div>
         </div>
         <div className="col-lg-4 col-md-6 col-sm-12 mb-4 px-3">

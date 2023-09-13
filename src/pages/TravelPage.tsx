@@ -93,7 +93,10 @@ const transportInputFields = [
   { name: "bus", label: "Bus (%)", type: "number" },
 ];
 
-export type FieldSet = Record<string, Yup.StringSchema | Yup.NumberSchema>;
+export type FieldSet = Record<
+  string,
+  Yup.StringSchema | Yup.NumberSchema | Yup.BooleanSchema
+>;
 
 export function createValidationSchema(fields: FieldSet) {
   return Yup.object().shape(fields);
