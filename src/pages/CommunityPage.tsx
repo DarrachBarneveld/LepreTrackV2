@@ -1,4 +1,4 @@
-import { FunctionComponent } from "react";
+import { FunctionComponent, useContext, useState } from "react";
 import PageHeader from "../components/PageHeader";
 import { FormChart } from "../components/Charts";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -6,11 +6,10 @@ import CustomForm from "../forms/CustomForm";
 import * as Yup from "yup";
 import { faHandshake, faRecycle } from "@fortawesome/free-solid-svg-icons";
 
-import {
-  CategoryPageProps,
-  FieldSet,
-  createValidationSchema,
-} from "./TravelPage";
+import { FieldSet, createValidationSchema } from "./TravelPage";
+import { AppContext } from "../context/FireBaseContext";
+import { calculateInvertedPercentage } from "../helpers/math";
+import { updateFireBase } from "../config/firebaseAuth";
 
 interface CommunityPageProps {}
 
@@ -100,6 +99,24 @@ const volunteerInputFields = [
   },
 ];
 
+const DUMMY_DATA = {
+  averageMetalWaste: 6.3,
+  averagePaperWaste: 19.4,
+  averagePlasticWaste: 9 * 0.1,
+  averageGlassWaste: 3.2,
+  averageFoodWaste: 4.3,
+
+  // below are the co2 saving per kg of material recycled
+  recycledMetal: 8.1,
+  recycledPaper: 0.4,
+  recycledPlastic: 1.1,
+  recycledGlass: 0.3,
+  recycledFood: 0.2,
+
+  // average total co2 emission from packaging & food waste
+  averageTotalCo2: 108.9,
+};
+
 const volunteeringFields: FieldSet = {
   tree: Yup.boolean(),
   gardens: Yup.boolean(),
@@ -115,11 +132,73 @@ const volunteeringFields: FieldSet = {
 const recyclingValidationSchema = createValidationSchema(recyclingFields);
 const volunteeringValidationSchema = createValidationSchema(volunteeringFields);
 
-const CommunityPage: FunctionComponent<CategoryPageProps> = ({ userData }) => {
+const CommunityPage: FunctionComponent = () => {
+  const { userData, userAuth } = useContext(AppContext);
+
   if (!userData) return;
 
-  const recyclingScore = userData.community.recycle.score;
-  const communityScore = userData.community.volunteer.score;
+  const [recyclingScore, setRecyclingScore] = useState<number>(
+    +userData.food.diet.score
+  );
+  const [communityScore, setCommunityScore] = useState<number>(
+    +userData.food.farm.score
+  );
+
+  const recycleInitialValues = {
+    metal: userData.community.recycle.metal || false,
+    paper: userData.community.recycle.paper || false,
+    plastic: userData.community.recycle.plastic || false,
+    glass: userData.community.recycle.glass || false,
+    food: userData.community.recycle.food || false,
+  };
+
+  const volunteerInitialValues = {
+    tree: userData.community.volunteer.tree || false,
+    gardens: userData.community.volunteer.gardens || false,
+    wildlife: userData.community.volunteer.wildlife || false,
+    ocean: userData.community.volunteer.ocean || false,
+    other: userData.community.volunteer.other || false,
+    donation: userData.community.volunteer.donation || 0,
+  };
+
+  const recycleSubmit = async (
+    values: any,
+    { setSubmitting }: { setSubmitting: (isSubmitting: boolean) => void }
+  ) => {
+    const { metal, paper, plastic, glass, food } = values;
+    let co2Savings = 0;
+
+    if (metal) {
+      co2Savings += DUMMY_DATA.recycledMetal * DUMMY_DATA.averageMetalWaste;
+    }
+    if (paper) {
+      co2Savings += DUMMY_DATA.recycledPaper * DUMMY_DATA.averagePaperWaste;
+    }
+    if (plastic) {
+      co2Savings += DUMMY_DATA.recycledPlastic * DUMMY_DATA.averagePlasticWaste;
+    }
+    if (glass) {
+      co2Savings += DUMMY_DATA.recycledGlass * DUMMY_DATA.averageGlassWaste;
+    }
+    if (food) {
+      co2Savings += DUMMY_DATA.recycledFood * DUMMY_DATA.averageFoodWaste;
+    }
+
+    let score = (DUMMY_DATA.averageTotalCo2 - co2Savings) / 1.089;
+    const invertedScore = calculateInvertedPercentage(score);
+
+    const data = { score: invertedScore.toFixed(2), ...values };
+
+    if (userAuth) {
+      await updateFireBase(data, "community", "recycle", userAuth);
+
+      score < 0 ? (score = 0) : score;
+
+      setRecyclingScore(invertedScore);
+    }
+
+    setSubmitting(false);
+  };
 
   return (
     <main>
@@ -151,6 +230,7 @@ const CommunityPage: FunctionComponent<CategoryPageProps> = ({ userData }) => {
               initialValues={recycleInitialValues}
               validationSchema={recyclingValidationSchema}
               inputFields={recyclingInputFields}
+              handleSubmit={recycleSubmit}
             />
           </div>
         </div>
