@@ -40,12 +40,11 @@ export function IrishAverageTravelMethodTotal() {
   return averageCarbonSum;
 }
 
-export function dietScoreComparedToIrishAverage(
-  diet: string,
-  calories: number
-) {
+type Diet = "carnivore" | "omnivore" | "pescatarian" | "vegetarian" | "vegan";
+
+export function dietScoreComparedToIrishAverage(diet: Diet, calories: number) {
   // Object for raw scores
-  let scores = {
+  const scores: Record<Diet, number> = {
     carnivore: 100,
     omnivore: 80.5,
     pescatarian: 62.5,
@@ -59,13 +58,21 @@ export function dietScoreComparedToIrishAverage(
   return score;
 }
 
+type FarmingPercentProps = {
+  local: boolean;
+  produce: number;
+  crop: boolean;
+  seasonal: boolean;
+  organic: number;
+};
+
 export function calcFarmingPercent({
   local,
   produce,
   crop,
   seasonal,
   organic,
-}) {
+}: FarmingPercentProps): number {
   let value = 0;
 
   local ? (value += 20) : value;
@@ -77,6 +84,15 @@ export function calcFarmingPercent({
   return value;
 }
 
+interface calcVolunteerPercentProps {
+  tree: boolean;
+  gardens: boolean;
+  wildlife: boolean;
+  ocean: boolean;
+  other: boolean;
+  donation: number;
+}
+
 export function calcVolunteerPercent({
   tree,
   gardens,
@@ -84,7 +100,7 @@ export function calcVolunteerPercent({
   ocean,
   other,
   donation,
-}) {
+}: calcVolunteerPercentProps) {
   let value = 0;
 
   tree ? (value += 20) : value;
