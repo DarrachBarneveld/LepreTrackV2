@@ -8,7 +8,10 @@ import { faHandshake, faRecycle } from "@fortawesome/free-solid-svg-icons";
 
 import { FieldSet, createValidationSchema } from "./TravelPage";
 import { AppContext } from "../context/FireBaseContext";
-import { calculateInvertedPercentage } from "../helpers/math";
+import {
+  calcVolunteerPercent,
+  calculateInvertedPercentage,
+} from "../helpers/math";
 import { updateFireBase } from "../config/firebaseAuth";
 
 interface CommunityPageProps {}
@@ -138,10 +141,10 @@ const CommunityPage: FunctionComponent = () => {
   if (!userData) return;
 
   const [recyclingScore, setRecyclingScore] = useState<number>(
-    +userData.food.diet.score
+    +userData.community.recycle.score
   );
   const [communityScore, setCommunityScore] = useState<number>(
-    +userData.food.farm.score
+    +userData.community.volunteer.score
   );
 
   const recycleInitialValues = {
@@ -200,6 +203,24 @@ const CommunityPage: FunctionComponent = () => {
     setSubmitting(false);
   };
 
+  const volunteerSubmit = async (
+    values: any,
+    { setSubmitting }: { setSubmitting: (isSubmitting: boolean) => void }
+  ) => {
+    const truePercent = calcVolunteerPercent(values);
+
+    const data = { score: truePercent, ...values };
+
+    if (userAuth) {
+      await updateFireBase(data, "community", "volunteer", userAuth);
+
+      let percent = truePercent > 100 ? 100 : truePercent;
+
+      setCommunityScore(percent);
+    }
+
+    setSubmitting(false);
+  };
   return (
     <main>
       <PageHeader
@@ -220,7 +241,7 @@ const CommunityPage: FunctionComponent = () => {
               />
             </div>
             <p className="d-flex justify-content-center">
-              <span className="fw-bolder mx-2">100%</span>
+              <span className="fw-bolder mx-2">{recyclingScore}%</span>
               <span className="text-muted">Avg</span>
             </p>
             {/* RECYCLING FORM */}
@@ -247,7 +268,7 @@ const CommunityPage: FunctionComponent = () => {
               />
             </div>
             <p className="d-flex justify-content-center">
-              <span className="fw-bolder mx-2">100%</span>
+              <span className="fw-bolder mx-2">{communityScore}%</span>
               <span className="text-muted">Avg</span>
             </p>
             {/* VOLUNTEERING FORM */}
@@ -257,6 +278,7 @@ const CommunityPage: FunctionComponent = () => {
               initialValues={volunteerInitialValues}
               validationSchema={volunteeringValidationSchema}
               inputFields={volunteerInputFields}
+              handleSubmit={volunteerSubmit}
             />
           </div>
         </div>

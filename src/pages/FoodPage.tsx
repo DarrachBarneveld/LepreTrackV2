@@ -226,7 +226,7 @@ const FoodPage: FunctionComponent = () => {
               />
             </div>
             <p className="d-flex justify-content-center">
-              <span className="fw-bolder mx-2">100%</span>
+              <span className="fw-bolder mx-2">{dietScore}%</span>
               <span className="text-muted">Avg</span>
             </p>
             {/* DIET FORM */}
@@ -248,7 +248,7 @@ const FoodPage: FunctionComponent = () => {
               />
             </div>
             <p className="d-flex justify-content-center">
-              <span className="fw-bolder mx-2">100%</span>
+              <span className="fw-bolder mx-2">{farmScore}%</span>
               <span className="text-muted">Avg</span>
             </p>
             {/* FARMING FORM */}
@@ -270,7 +270,7 @@ const FoodPage: FunctionComponent = () => {
               />
             </div>
             <p className="d-flex justify-content-center">
-              <span className="fw-bolder mx-2">100%</span>
+              <span className="fw-bolder mx-2">{diningScore}%</span>
               <span className="text-muted">Avg</span>
             </p>
             {/* DINING FORM */}

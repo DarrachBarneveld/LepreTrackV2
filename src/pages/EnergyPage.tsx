@@ -1,17 +1,12 @@
-import { FunctionComponent } from "react";
+import { FunctionComponent, useContext, useState } from "react";
 import PageHeader from "../components/PageHeader";
 import { FormChart } from "../components/Charts";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlugCircleExclamation } from "@fortawesome/free-solid-svg-icons";
 import CustomForm from "../forms/CustomForm";
 import * as Yup from "yup";
-import {
-  CategoryPageProps,
-  FieldSet,
-  createValidationSchema,
-} from "./TravelPage";
-
-interface EnergyPageProps {}
+import { FieldSet, createValidationSchema } from "./TravelPage";
+import { AppContext } from "../context/FireBaseContext";
 
 const energyInitialValues = {
   electric: 0,
@@ -104,10 +99,14 @@ const energyFields: FieldSet = {
 
 const energyValidationSchema = createValidationSchema(energyFields);
 
-const EnergyPage: FunctionComponent<CategoryPageProps> = ({ userData }) => {
+const EnergyPage: FunctionComponent = () => {
+  const { userData, userAuth } = useContext(AppContext);
+
   if (!userData) return;
 
-  const energyScore = userData.energy.energy.score;
+  const [energyScore, setEnergyScore] = useState<number>(
+    +userData.energy.energy.score
+  );
 
   return (
     <main>
@@ -127,7 +126,7 @@ const EnergyPage: FunctionComponent<CategoryPageProps> = ({ userData }) => {
               />
             </div>
             <p className="d-flex justify-content-center">
-              <span className="fw-bolder mx-2">100%</span>
+              <span className="fw-bolder mx-2">{energyScore}%</span>
               <span className="text-muted">Avg</span>
             </p>
             {/* DIET FORM */}

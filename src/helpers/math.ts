@@ -76,3 +76,24 @@ export function calcFarmingPercent({
 
   return value;
 }
+
+export function calcVolunteerPercent({
+  tree,
+  gardens,
+  wildlife,
+  ocean,
+  other,
+  donation,
+}) {
+  let value = 0;
+
+  tree ? (value += 20) : value;
+  gardens ? (value += 20) : value;
+  wildlife ? (value += 20) : value;
+  ocean ? (value += 20) : value;
+  other ? (value += 20) : value;
+
+  const donationPercent = donation > 100 ? 100 : donation;
+
+  return value + +donationPercent;
+}
