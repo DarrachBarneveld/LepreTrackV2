@@ -10,17 +10,6 @@ import { AppContext } from "../context/FireBaseContext";
 import { updateFireBase } from "../config/firebaseAuth";
 import { calculateInvertedPercentage } from "../helpers/math";
 
-const energyInitialValues = {
-  electric: 0,
-  gas: 0,
-  oil: 0,
-  coal: 0,
-  lpg: 0,
-  propane: 0,
-  wood: 0,
-  factor: 0,
-};
-
 const energyInputFields = [
   {
     name: "electric",
@@ -106,12 +95,21 @@ const EnergyPage: FunctionComponent = () => {
     +userData.energy.energy.score
   );
 
+  const energyInitialValues = {
+    electric: userData.energy.energy.electric || 0,
+    gas: userData.energy.energy.gas || 0,
+    oil: userData.energy.energy.oil || 0,
+    coal: userData.energy.energy.coal || 0,
+    lpg: userData.energy.energy.lpg || 0,
+    propane: userData.energy.energy.propane || 0,
+    wood: userData.energy.energy.wood || 0,
+    factor: userData.energy.energy.factor || 0,
+  };
+
   const energySubmit = async (
     values: any,
     { setSubmitting }: { setSubmitting: (isSubmitting: boolean) => void }
   ) => {
-    console.log(values);
-
     const { factor, electric, coal, gas, lpg, oil, propane, wood } = values;
 
     const elecValue = electric * factor;
@@ -135,14 +133,14 @@ const EnergyPage: FunctionComponent = () => {
 
     let inverseScore = calculateInvertedPercentage(inTonnesValue);
 
-    const data = { score: inverseScore, ...values };
+    const data = { score: inverseScore.toFixed(2), ...values };
 
     if (userAuth) {
       await updateFireBase(data, "energy", "energy", userAuth);
 
       inverseScore < 0 ? (inverseScore = 0) : inverseScore;
 
-      setEnergyScore(inverseScore);
+      setEnergyScore(+inverseScore.toFixed(2));
     }
 
     setSubmitting(false);
