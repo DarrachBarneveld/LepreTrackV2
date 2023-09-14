@@ -185,7 +185,32 @@ const FoodPage: FunctionComponent = () => {
   const diningSubmit = async (
     values: any,
     { setSubmitting }: { setSubmitting: (isSubmitting: boolean) => void }
-  ) => {};
+  ) => {
+    console.log(values);
+    const { out, waste } = values;
+
+    let value = 0;
+
+    out ? (value += 50) : value;
+    waste ? (value += 50) : value;
+
+    let inversePercent = calculateInvertedPercentage(value);
+
+    const data = {
+      out,
+      waste,
+      score: inversePercent,
+    };
+
+    if (userAuth) {
+      await updateFireBase(data, "food", "diet", userAuth);
+
+      inversePercent < 0 ? (inversePercent = 0) : inversePercent;
+
+      setDiningScore(inversePercent);
+    }
+    setSubmitting(false);
+  };
 
   return (
     <main>
