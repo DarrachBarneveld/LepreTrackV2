@@ -84,14 +84,14 @@ export function calcFarmingPercent({
   return value;
 }
 
-interface calcVolunteerPercentProps {
+type calcVolunteerPercentProps = {
   tree: boolean;
   gardens: boolean;
   wildlife: boolean;
   ocean: boolean;
   other: boolean;
   donation: number;
-}
+};
 
 export function calcVolunteerPercent({
   tree,
