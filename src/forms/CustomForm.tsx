@@ -90,6 +90,7 @@ const CustomForm: FunctionComponent<CustomFormProps> = ({
                   <div className="d-flex flex-column mx-auto">
                     <Field
                       as="select"
+                      defaultValue={field.name}
                       name={field.name}
                       isInvalid={touched[field.name] && errors[field.name]}
                       className={`form-select mb-1 ${

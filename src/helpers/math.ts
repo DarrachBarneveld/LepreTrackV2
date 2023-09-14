@@ -39,3 +39,40 @@ export function IrishAverageTravelMethodTotal() {
 
   return averageCarbonSum;
 }
+
+export function dietScoreComparedToIrishAverage(
+  diet: string,
+  calories: number
+) {
+  // Object for raw scores
+  let scores = {
+    carnivore: 100,
+    omnivore: 80.5,
+    pescatarian: 62.5,
+    vegetarian: 52.7,
+    vegan: 40.2,
+  };
+
+  const irishNationalAverage = 2307;
+  const score = (calories / irishNationalAverage) * scores[diet];
+
+  return score;
+}
+
+export function calcFarmingPercent({
+  local,
+  produce,
+  crop,
+  seasonal,
+  organic,
+}) {
+  let value = 0;
+
+  local ? (value += 20) : value;
+  seasonal ? (value += 20) : value;
+  crop ? (value += 20) : value;
+  produce ? (value += (20 / 100) * produce) : value;
+  organic ? (value += (20 / 100) * organic) : value;
+
+  return value;
+}

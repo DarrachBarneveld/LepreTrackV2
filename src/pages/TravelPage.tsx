@@ -187,25 +187,25 @@ const TravelPage: FunctionComponent = () => {
     +userData.travel.transport.score
   );
   const transportInitialValues = {
-    drive: userData.travel.transport.drive | 0,
-    carpool: userData.travel.transport.carpool | 0,
-    walk: userData.travel.transport.walk | 0,
-    cycle: userData.travel.transport.cycle | 0,
-    train: userData.travel.transport.train | 0,
-    bus: userData.travel.transport.bus | 0,
+    drive: userData.travel.transport.drive || 0,
+    carpool: userData.travel.transport.carpool || 0,
+    walk: userData.travel.transport.walk || 0,
+    cycle: userData.travel.transport.cycle || 0,
+    train: userData.travel.transport.train || 0,
+    bus: userData.travel.transport.bus || 0,
     custom: 0,
   };
 
   const flightInitialValues = {
-    flightKm: userData.travel.flight.yearlyKM,
-    numFlights: userData.travel.flight.numFlights,
-    flightClass: userData.travel.flight.class,
+    flightKm: userData.travel.flight.yearlyKM || 0,
+    numFlights: userData.travel.flight.numFlights || 0,
+    flightClass: userData.travel.flight.class || "economy",
   };
 
   const carInitialValues = {
-    weeklyKm: userData.travel.car.weeklyKm,
-    type: userData.travel.car.type,
-    year2000: userData.travel.car.year2000,
+    weeklyKm: userData.travel.car.weeklyKm || 0,
+    type: userData.travel.car.type || "petrol",
+    year2000: userData.travel.car.year2000 || "before",
   };
 
   const flightSubmit = async (
@@ -388,7 +388,7 @@ const TravelPage: FunctionComponent = () => {
               <FontAwesomeIcon icon={faCar} className="h2 position-absolute" />
             </div>
             <p className="d-flex justify-content-center">
-              <span className="fw-bolder mx-2">100%</span>
+              <span className="fw-bolder mx-2">{carScore.toFixed(2)}%</span>
               <span className="text-muted">Avg</span>
             </p>
             {/* CAR FORM */}
@@ -413,7 +413,9 @@ const TravelPage: FunctionComponent = () => {
               />
             </div>
             <p className="d-flex justify-content-center">
-              <span className="fw-bolder mx-2">100%</span>
+              <span className="fw-bolder mx-2">
+                {transportScore.toFixed(2)}%
+              </span>
               <span className="text-muted">Avg</span>
             </p>
             {/* TRANSPORT FORM */}

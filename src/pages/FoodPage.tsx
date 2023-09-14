@@ -1,4 +1,4 @@
-import { FunctionComponent } from "react";
+import { FunctionComponent, useContext, useState } from "react";
 import PageHeader from "../components/PageHeader";
 import { FormChart } from "../components/Charts";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -14,15 +14,17 @@ import {
   FieldSet,
   createValidationSchema,
 } from "./TravelPage";
-
-const dietInitialValues = {
-  type: "",
-  calories: "",
-};
+import { AppContext } from "../context/FireBaseContext";
+import {
+  calcFarmingPercent,
+  calculateInvertedPercentage,
+  dietScoreComparedToIrishAverage,
+} from "../helpers/math";
+import { updateFireBase } from "../config/firebaseAuth";
 
 const dietInputFields = [
   {
-    name: "diet",
+    name: "type",
     label: "Choose your diet",
     type: "select",
     options: [
@@ -39,14 +41,6 @@ const dietInputFields = [
     type: "number",
   },
 ];
-
-const farmInitialInputs = {
-  local: false,
-  produce: 0,
-  organic: 0,
-  seasonal: false,
-  crop: false,
-};
 
 const farmInputFields = [
   { name: "local", label: "Do you shop locally?", type: "checkbox" },
@@ -71,7 +65,7 @@ const diningInputFields = [
 ];
 
 const dietFields: FieldSet = {
-  diet: Yup.string().required("Please select a diet"),
+  type: Yup.string().required("Please select a diet"),
   calories: Yup.number()
     .required("This field is required")
     .positive("Number of calories must be a positive number")
@@ -101,14 +95,98 @@ const dietValidationSchema = createValidationSchema(dietFields);
 const farmingValidationSchema = createValidationSchema(farmingFields);
 const diningValidationSchema = createValidationSchema(diningFields);
 
-interface FoodPageProps {}
-
-const FoodPage: FunctionComponent<CategoryPageProps> = ({ userData }) => {
+const FoodPage: FunctionComponent = () => {
+  const { userData, userAuth } = useContext(AppContext);
   if (!userData) return;
 
-  const dietScore = userData.food.diet.score;
-  const farmScore = userData.food.farm.score;
-  const diningScore = userData.food.dining.score;
+  const [dietScore, setDietScore] = useState<number>(+userData.food.diet.score);
+  const [farmScore, setFarmScore] = useState<number>(+userData.food.farm.score);
+  const [diningScore, setDiningScore] = useState<number>(
+    +userData.food.dining.score
+  );
+
+  const dietInitialValues = {
+    type: userData.food.diet.type || "carnivore",
+    calories: userData.food.diet.calories || 0,
+  };
+
+  const farmInitialInputs = {
+    local: userData.food.farm.local || false,
+    produce: userData.food.farm.produce || 0,
+    organic: userData.food.farm.organic || 0,
+    seasonal: userData.food.farm.seasonal || false,
+    crop: userData.food.farm.crop || false,
+  };
+
+  const diningInitialValues = {
+    out: userData.food.dining.out || false,
+    waste: userData.food.dining.waste || false,
+  };
+
+  const dietSubmit = async (
+    values: any,
+    { setSubmitting }: { setSubmitting: (isSubmitting: boolean) => void }
+  ) => {
+    let score = dietScoreComparedToIrishAverage(values.diet, values.calories);
+    const trueScore = score;
+
+    let inversePercent = calculateInvertedPercentage(trueScore);
+
+    const data = {
+      type: values.diet,
+      calories: values.calories,
+      score: inversePercent.toFixed(2),
+    };
+
+    if (userAuth) {
+      await updateFireBase(data, "food", "diet", userAuth);
+
+      inversePercent < 0 ? (inversePercent = 0) : inversePercent;
+
+      setDietScore(inversePercent);
+    }
+
+    setSubmitting(false);
+  };
+
+  const farmSubmit = async (
+    values: any,
+    { setSubmitting }: { setSubmitting: (isSubmitting: boolean) => void }
+  ) => {
+    console.log(values);
+
+    const { local, produce, organic, crop, seasonal } = values;
+
+    const dataValues = { local, produce, organic, seasonal, crop };
+
+    const percent = calcFarmingPercent(dataValues);
+
+    let inversePercent = calculateInvertedPercentage(percent);
+
+    const data = {
+      local,
+      produce,
+      organic,
+      seasonal,
+      crop,
+      score: inversePercent,
+    };
+
+    if (userAuth) {
+      await updateFireBase(data, "food", "farm", userAuth);
+
+      inversePercent < 0 ? (inversePercent = 0) : inversePercent;
+
+      setFarmScore(inversePercent);
+    }
+    setSubmitting(false);
+  };
+
+  const diningSubmit = async (
+    values: any,
+    { setSubmitting }: { setSubmitting: (isSubmitting: boolean) => void }
+  ) => {};
+
   return (
     <main>
       <PageHeader title="Food" subheadline="Can you improve your food score?" />
@@ -131,6 +209,7 @@ const FoodPage: FunctionComponent<CategoryPageProps> = ({ userData }) => {
               initialValues={dietInitialValues}
               validationSchema={dietValidationSchema}
               inputFields={dietInputFields}
+              handleSubmit={farmSubmit}
             />
           </div>
         </div>
@@ -152,6 +231,7 @@ const FoodPage: FunctionComponent<CategoryPageProps> = ({ userData }) => {
               initialValues={farmInitialInputs}
               validationSchema={farmingValidationSchema}
               inputFields={farmInputFields}
+              handleSubmit={farmSubmit}
             />
           </div>
         </div>
@@ -173,6 +253,7 @@ const FoodPage: FunctionComponent<CategoryPageProps> = ({ userData }) => {
               initialValues={diningInitialInputs}
               validationSchema={diningValidationSchema}
               inputFields={diningInputFields}
+              handleSubmit={diningSubmit}
             />
           </div>
         </div>
