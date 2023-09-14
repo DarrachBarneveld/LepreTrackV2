@@ -420,6 +420,7 @@ const TravelPage: FunctionComponent = () => {
             </p>
             {/* TRANSPORT FORM */}
             <CustomForm
+              columns
               initialValues={transportInitialValues}
               validationSchema={transportValidationSchema}
               inputFields={transportInputFields}
