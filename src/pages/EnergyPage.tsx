@@ -7,6 +7,8 @@ import CustomForm from "../forms/CustomForm";
 import * as Yup from "yup";
 import { FieldSet, createValidationSchema } from "./TravelPage";
 import { AppContext } from "../context/FireBaseContext";
+import { updateFireBase } from "../config/firebaseAuth";
+import { calculateInvertedPercentage } from "../helpers/math";
 
 const energyInitialValues = {
   electric: 0,
@@ -25,6 +27,7 @@ const energyInputFields = [
     label: "Electric",
     type: "number",
   },
+  { name: "factor", label: "Electricty Factor", type: "number" },
   {
     name: "gas",
     label: "Gas",
@@ -47,17 +50,12 @@ const energyInputFields = [
   },
   {
     name: "propane",
-    label: "propane",
+    label: "Propane",
     type: "number",
   },
   {
     name: "wood",
     label: "Wood",
-    type: "number",
-  },
-  {
-    name: "factor",
-    label: "KG",
     type: "number",
   },
 ];
@@ -108,6 +106,47 @@ const EnergyPage: FunctionComponent = () => {
     +userData.energy.energy.score
   );
 
+  const energySubmit = async (
+    values: any,
+    { setSubmitting }: { setSubmitting: (isSubmitting: boolean) => void }
+  ) => {
+    console.log(values);
+
+    const { factor, electric, coal, gas, lpg, oil, propane, wood } = values;
+
+    const elecValue = electric * factor;
+    const gasValue = gas * 0.183;
+    const oilValue = oil * 2.54047619047619;
+    const coalValue = coal * 2.883259523809524;
+    const lpgValue = lpg * 1.557142857142857;
+    const propaneValue = propane * 1.542857142857143;
+    const woodValue = wood * 0.0505547619047619;
+
+    const totalValue =
+      elecValue +
+      gasValue +
+      oilValue +
+      coalValue +
+      lpgValue +
+      propaneValue +
+      woodValue;
+
+    const inTonnesValue = totalValue / 1000;
+
+    let inverseScore = calculateInvertedPercentage(inTonnesValue);
+
+    const data = { score: inverseScore, ...values };
+
+    if (userAuth) {
+      await updateFireBase(data, "energy", "energy", userAuth);
+
+      inverseScore < 0 ? (inverseScore = 0) : inverseScore;
+
+      setEnergyScore(inverseScore);
+    }
+
+    setSubmitting(false);
+  };
   return (
     <main>
       <PageHeader
@@ -135,6 +174,7 @@ const EnergyPage: FunctionComponent = () => {
               initialValues={energyInitialValues}
               validationSchema={energyValidationSchema}
               inputFields={energyInputFields}
+              handleSubmit={energySubmit}
             />
           </div>
         </div>

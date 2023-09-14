@@ -159,9 +159,7 @@ const FoodPage: FunctionComponent = () => {
 
     const dataValues = { local, produce, organic, seasonal, crop };
 
-    const percent = calcFarmingPercent(dataValues);
-
-    let inversePercent = calculateInvertedPercentage(percent);
+    let percent = calcFarmingPercent(dataValues);
 
     const data = {
       local,
@@ -169,15 +167,15 @@ const FoodPage: FunctionComponent = () => {
       organic,
       seasonal,
       crop,
-      score: inversePercent,
+      score: percent,
     };
 
     if (userAuth) {
       await updateFireBase(data, "food", "farm", userAuth);
 
-      inversePercent < 0 ? (inversePercent = 0) : inversePercent;
+      percent < 0 ? (percent = 0) : percent;
 
-      setFarmScore(inversePercent);
+      setFarmScore(percent);
     }
     setSubmitting(false);
   };
