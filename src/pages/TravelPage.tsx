@@ -42,12 +42,6 @@ const DUMMY_DATA = {
   },
 };
 
-const flightInitialValues = {
-  flightKm: "",
-  numFlights: "",
-  flightClass: "",
-};
-
 const flightInputFields = [
   {
     name: "flightKm",
@@ -70,12 +64,6 @@ const flightInputFields = [
     ],
   },
 ];
-
-const carInitialValues = {
-  weeklyKm: "",
-  type: "",
-  year2000: "",
-};
 
 const carInputFields = [
   {
@@ -103,16 +91,6 @@ const carInputFields = [
     ],
   },
 ];
-
-const transportInitialValues = {
-  drive: 0,
-  carpool: 0,
-  walk: 0,
-  cycle: 0,
-  train: 0,
-  bus: 0,
-  custom: 0,
-};
 
 const transportInputFields = [
   { name: "drive", label: "Drive (%)", type: "number" },
@@ -208,6 +186,27 @@ const TravelPage: FunctionComponent = () => {
   const [transportScore, setTransportScore] = useState<number>(
     +userData.travel.transport.score
   );
+  const transportInitialValues = {
+    drive: userData.travel.transport.drive | 0,
+    carpool: userData.travel.transport.carpool | 0,
+    walk: userData.travel.transport.walk | 0,
+    cycle: userData.travel.transport.cycle | 0,
+    train: userData.travel.transport.train | 0,
+    bus: userData.travel.transport.bus | 0,
+    custom: 0,
+  };
+
+  const flightInitialValues = {
+    flightKm: userData.travel.flight.yearlyKM,
+    numFlights: userData.travel.flight.numFlights,
+    flightClass: userData.travel.flight.class,
+  };
+
+  const carInitialValues = {
+    weeklyKm: userData.travel.car.weeklyKm,
+    type: userData.travel.car.type,
+    year2000: userData.travel.car.year2000,
+  };
 
   const flightSubmit = async (
     values: any,
