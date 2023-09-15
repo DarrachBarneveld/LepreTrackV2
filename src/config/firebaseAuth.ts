@@ -99,7 +99,7 @@ async function createUserDocumentFromAuth(userAuth: User, userName: string) {
   const userDocument = await getUserData(userAuth);
 
   if (!userDocument) {
-    const { email, displayName, uid } = userAuth;
+    const { email, uid } = userAuth;
 
     const createdAt = new Date();
 

@@ -3,14 +3,12 @@ import earthGuardian from "../assets/images/guardians/earth-guardian.png";
 import terraTormentor from "../assets/images/guardians/terra-tormentor.png";
 import AnimatedList, { HomeCopy } from "../components/AnimatedList";
 import { homeContent } from "../content/content";
-import leprechaun from "../assets/images/leprechaun.png";
-import { motion } from "framer-motion";
 
 import "./homepage.css";
 
 export interface IHomePageProps {}
 
-const HomePage: FunctionComponent<IHomePageProps> = (props) => {
+const HomePage: FunctionComponent<IHomePageProps> = () => {
   return (
     <main>
       <div className="glassmorphism text-success fw-bold text-center w-100">

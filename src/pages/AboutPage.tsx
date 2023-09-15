@@ -1,5 +1,4 @@
-import { FunctionComponent, useContext } from "react";
-import { AppContext } from "../context/FireBaseContext";
+import { FunctionComponent } from "react";
 import Developer from "../components/Developer";
 import AnimatedList from "../components/AnimatedList";
 import PageHeader from "../components/PageHeader";
@@ -50,9 +49,7 @@ const developers = [
   },
 ];
 
-const AboutPage: FunctionComponent<IAboutPageProps> = (props) => {
-  const { userData } = useContext(AppContext);
-
+const AboutPage: FunctionComponent<IAboutPageProps> = () => {
   return (
     <main>
       <PageHeader

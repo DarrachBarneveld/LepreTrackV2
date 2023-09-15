@@ -41,7 +41,7 @@ const CustomForm: FunctionComponent<CustomFormProps> = ({
       validationSchema={validationSchema}
       onSubmit={handleSubmit}
     >
-      {({ isSubmitting, errors, touched, initialValues }) => (
+      {({ isSubmitting, errors, touched }) => (
         <Form id="customForm" className="p-2 rounded-3 ">
           {heading && <p className="fw-bold mb-3 border-bottom">{heading}</p>}
           <div className={`${columns && "grid-2"}`}>

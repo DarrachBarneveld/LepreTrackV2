@@ -1,7 +1,6 @@
-import { FunctionComponent, useEffect } from "react";
-import { animate, motion, useAnimation } from "framer-motion";
+import { FunctionComponent } from "react";
+import { motion } from "framer-motion";
 import "./AnimatedList.css";
-import { useInView } from "react-intersection-observer";
 
 type ComponentType<T> = React.ComponentType<T>;
 
@@ -13,10 +12,10 @@ interface AnimatedListProps<T> {
   staggerDuration?: number;
 }
 
-const listItem = {
-  hidden: { opacity: 0, scale: 0.8, y: -100 },
-  show: { opacity: 1, scale: 1, y: 0 },
-};
+// const listItem = {
+//   hidden: { opacity: 0, scale: 0.8, y: -100 },
+//   show: { opacity: 1, scale: 1, y: 0 },
+// };
 
 const emojiArr = ["🌎", "🌱", "📊", "⭐"];
 

@@ -1,16 +1,11 @@
-import { FC, useContext } from "react";
+import { FunctionComponent } from "react";
 import Carousel from "react-bootstrap/Carousel";
 
 import "./learn.css";
 
-import { AppContext } from "../context/FireBaseContext";
 import PageHeader from "../components/PageHeader";
 
-interface LearnPageProps {}
-
-const LearnPage: FC<{}> = () => {
-  const { userData } = useContext(AppContext);
-
+const LearnPage: FunctionComponent = () => {
   return (
     <main>
       <PageHeader

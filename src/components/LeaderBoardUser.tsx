@@ -1,7 +1,6 @@
 import { OverlayTrigger, ProgressBar, Tooltip } from "react-bootstrap";
 import { AppUser } from "../classes/AppUser";
 import { FunctionComponent } from "react";
-import guardian from "../assets/images/guardians/earth-guardian.png";
 
 interface LeaderBoardUserProps {
   user: AppUser;

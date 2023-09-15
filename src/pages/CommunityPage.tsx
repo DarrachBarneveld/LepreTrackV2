@@ -15,16 +15,6 @@ import {
 } from "../helpers/math";
 import { updateFireBase } from "../config/firebaseAuth";
 
-interface CommunityPageProps {}
-
-const recycleInitialValues = {
-  metal: false,
-  paper: false,
-  plastic: false,
-  glass: false,
-  food: false,
-};
-
 const recyclingInputFields = [
   {
     name: "metal",
@@ -59,15 +49,6 @@ const recyclingFields: FieldSet = {
   plastic: Yup.boolean(),
   glass: Yup.boolean(),
   food: Yup.boolean(),
-};
-
-const volunteerInitialValues = {
-  tree: false,
-  gardens: false,
-  wildlife: false,
-  ocean: false,
-  other: false,
-  donation: 0,
 };
 
 const volunteerInputFields = [

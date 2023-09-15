@@ -1,8 +1,6 @@
 import { FunctionComponent, useEffect, useState } from "react";
 import ReactApexChart from "react-apexcharts";
-
 import "./charts.css";
-import { faScaleUnbalancedFlip } from "@fortawesome/free-solid-svg-icons";
 
 export function graphColor(num: number) {
   if (num < 25) {
@@ -20,7 +18,11 @@ export const CategoryChart: FunctionComponent<{ score: number }> = ({
 }) => {
   const [series, setSeries] = useState([score]);
 
-  const [options, setOptions] = useState({
+  useEffect(() => {
+    setSeries([score]);
+  }, [score]);
+
+  const [options] = useState({
     colors: graphColor(series[0]),
     chart: {
       sparkline: {
@@ -78,7 +80,7 @@ export const TotalScoreBar: FunctionComponent<{
   score: number;
   user: string;
 }> = ({ score, user }) => {
-  const [series, setSeries] = useState([
+  const [series] = useState([
     {
       name: "Actual",
       data: [
@@ -116,7 +118,7 @@ export const TotalScoreBar: FunctionComponent<{
     },
   ]);
 
-  const [options, setOptions] = useState({
+  const [options] = useState({
     chart: {
       toolbar: {
         show: false,
@@ -172,7 +174,7 @@ export const FormChart: FunctionComponent<{
     setSeries([score]);
   }, [score]);
 
-  const [options, setOptions] = useState({
+  const [options] = useState({
     colors: [color[0]],
     chart: {
       sparkline: {

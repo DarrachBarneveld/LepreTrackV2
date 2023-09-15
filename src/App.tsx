@@ -19,7 +19,7 @@ import CommunityPage from "./pages/CommunityPage";
 
 export interface IAppProps {}
 
-const App: React.FunctionComponent<IAppProps> = (props) => {
+const App: React.FunctionComponent<IAppProps> = () => {
   const { userAuth, setUserAuth, setUserData, userData } =
     useContext(AppContext);
 

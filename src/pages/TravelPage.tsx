@@ -164,7 +164,7 @@ const transportFields: FieldSet = {
     .max(100, "Value cannot exceed 100")
     .required("Required"),
   custom: Yup.number()
-    .test("custom", "Total percentage must equal 100%", function (value) {
+    .test("custom", "Total percentage must equal 100%", function () {
       const { drive, carpool, walk, cycle, train, bus } = this.parent;
       const total = drive + carpool + walk + cycle + train + bus;
       return total === 100;
