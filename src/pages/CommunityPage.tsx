@@ -233,7 +233,7 @@ const CommunityPage: FunctionComponent = () => {
             </p>
             {/* RECYCLING FORM */}
             <CustomForm
-              heading="Check the box if you recycle that material"
+              heading="Which material do you recycle?"
               columns
               initialValues={recycleInitialValues}
               validationSchema={recyclingValidationSchema}
@@ -265,7 +265,7 @@ const CommunityPage: FunctionComponent = () => {
             </p>
             {/* VOLUNTEERING FORM */}
             <CustomForm
-              heading="Check the box if you volunteer in"
+              heading="Do you volunteer in?"
               columns
               initialValues={volunteerInitialValues}
               validationSchema={volunteeringValidationSchema}

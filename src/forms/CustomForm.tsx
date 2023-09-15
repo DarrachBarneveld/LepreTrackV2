@@ -43,7 +43,11 @@ const CustomForm: FunctionComponent<CustomFormProps> = ({
     >
       {({ isSubmitting, errors, touched }) => (
         <Form id="customForm" className="p-2 rounded-3 ">
-          {heading && <p className="fw-bold mb-3 border-bottom">{heading}</p>}
+          {heading && (
+            <h2 className="fw-bold mb-3 p-1 pb-2 border-bottom border-dark rounded bg-light  h5">
+              {heading}
+            </h2>
+          )}
           <div className={`${columns && "grid-2"}`}>
             {inputFields.map((field) => (
               <div key={field.name}>

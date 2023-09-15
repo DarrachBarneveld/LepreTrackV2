@@ -12,7 +12,10 @@ import * as Yup from "yup";
 import { FieldSet, createValidationSchema } from "./TravelPage";
 import { AppContext } from "../context/FireBaseContext";
 import { updateFireBase } from "../config/firebaseAuth";
-import { calcBooleanAmountPercent } from "../helpers/math";
+import {
+  calcBooleanAmountPercent,
+  calculateInvertedPercentage,
+} from "../helpers/math";
 
 const energyInputFields = [
   {
@@ -87,7 +90,7 @@ const homeInputFields = [
   },
   {
     name: "materials",
-    label: "Sustainable Material Construction",
+    label: "Constructed Using Sustainable Material ",
     type: "checkbox",
   },
 ];
@@ -264,6 +267,7 @@ const EnergyPage: FunctionComponent = () => {
             </p>
             {/* DIET FORM */}
             <CustomForm
+              heading="Your yearly electric source?"
               columns
               initialValues={energyInitialValues}
               validationSchema={energyValidationSchema}
@@ -292,6 +296,7 @@ const EnergyPage: FunctionComponent = () => {
             </p>
             {/* DIET FORM */}
             <CustomForm
+              heading="Your home has the following?"
               columns
               initialValues={homeInitialValues}
               validationSchema={homeValidationSchema}
