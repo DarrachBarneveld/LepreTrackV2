@@ -185,7 +185,6 @@ const LearnPage: FunctionComponent = () => {
           initial={{ opacity: 0, x: -300 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ type: "spring" }}
-          className="chat-div"
         >
           <form
             onSubmit={handleSubmit}
@@ -198,24 +197,26 @@ const LearnPage: FunctionComponent = () => {
             <label htmlFor="input-gpt">
               Please ask us about the environment
             </label>
-            <input
-              type="text"
-              value={question}
-              onChange={handleInputChange}
-              required
-              name="input-gpt"
-              id="input-gpt"
-              className="input-gpt"
-            />
-            <button type="submit" className="btn btn-success">
-              <FontAwesomeIcon icon={faPaperPlane} />
-            </button>
+            <div className="d-flex">
+              <input
+                type="text"
+                value={question}
+                onChange={handleInputChange}
+                required
+                name="input-gpt"
+                id="input-gpt"
+                className="input-gpt"
+              />
+              <button type="submit" className="ask-btn">
+                <FontAwesomeIcon icon={faPaperPlane} />
+              </button>
+            </div>
+
             <textarea
               name="gpt-output"
               id="gpt-output"
-              cols={30}
               rows={10}
-              className="gpt-output"
+              className="text-dark bg-white p-2 rounded-3"
               disabled
               value={response}
             ></textarea>

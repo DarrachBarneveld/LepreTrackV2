@@ -92,6 +92,23 @@
   color: green;
 }
 
+.ask-btn {
+  border: none;
+  width: fit-content;
+  font-size: 1.6rem;
+  background: transparent;
+  color: green;
+  justify-content: center;
+  padding: 0.25rem;
+}
+
+.ask-btn:hover,
+.ask-btn:focus {
+  filter: brightness(1.2);
+  stroke-width: 20px;
+  stroke: black;
+}
+
 .chat-btn:hover,
 .chat-btn:focus {
   filter: brightness(1.1);
