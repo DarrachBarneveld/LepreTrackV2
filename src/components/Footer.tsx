@@ -5,8 +5,8 @@ interface FooterProps {}
 const Footer: FunctionComponent<FooterProps> = () => {
   return (
     <footer>
-      <div className="w-100 card footer glassmorphism mt-5">
-        <div className="card-body text-center">
+      <div className="w-100 footer glassmorphism rounded-0 mt-5">
+        <div className="p-4 text-center">
           <p className="fst-italic fw-bold">
             Together, we're driving positive change, one person at a time,
             towards a cleaner and more sustainable planet.
