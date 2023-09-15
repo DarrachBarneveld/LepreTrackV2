@@ -260,9 +260,9 @@ export class AppUser {
   }
 
   calcEnergyScore() {
-    const totalValue = +this.energy.energy.score;
-
-    return +totalValue;
+    const totalValue = +this.energy.energy.score + +this.energy.home.score;
+    const percentValue = (totalValue / 2).toFixed(2);
+    return +percentValue;
   }
 
   starRating() {

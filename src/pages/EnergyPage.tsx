@@ -153,7 +153,7 @@ const EnergyPage: FunctionComponent = () => {
     +userData.energy.energy.score
   );
   const [homeScore, setHomeScore] = useState<number>(
-    +userData.energy.home.score
+    +userData.energy?.home?.score
   );
 
   const energyInitialValues = {

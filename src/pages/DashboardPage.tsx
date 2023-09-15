@@ -10,6 +10,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { AppContext } from "../context/FireBaseContext";
 import { AppUser } from "../classes/AppUser";
+import guardian from "../assets/images/guardians/earth-guardian.png";
 import { TotalScoreBar } from "../components/Charts";
 import LeaderBoardUser from "../components/LeaderBoardUser";
 import { getAllUserDocuments } from "../config/firebaseAuth";

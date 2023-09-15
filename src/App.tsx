@@ -43,6 +43,7 @@ const App: React.FunctionComponent<IAppProps> = () => {
           };
 
           const newUser = new AppUser(userData);
+
           setUserData(newUser);
         }
       }
