@@ -1,4 +1,5 @@
 import { FunctionComponent, useContext, useState } from "react";
+import { motion } from "framer-motion";
 import PageHeader from "../components/PageHeader";
 import { FormChart } from "../components/Charts";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -154,7 +155,12 @@ const EnergyPage: FunctionComponent = () => {
 
       <div className="row container-row">
         <div className="col-12 mb-4 px-3">
-          <div className="card text-center glassmorphism">
+          <motion.div
+            className="card text-center glassmorphism"
+            initial={{ scale: 0 }}
+            animate={{ scale: 1 }}
+            transition={{ type: "spring", duration: 1 }}
+          >
             <div className="d-flex align-items-center justify-content-center">
               <FormChart score={energyScore} color={["#F07654", "#F5DF2E"]} />
               <FontAwesomeIcon
@@ -174,7 +180,7 @@ const EnergyPage: FunctionComponent = () => {
               inputFields={energyInputFields}
               handleSubmit={energySubmit}
             />
-          </div>
+          </motion.div>
         </div>
       </div>
     </main>

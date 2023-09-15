@@ -1,4 +1,5 @@
 import { FunctionComponent, useContext, useState } from "react";
+import { motion } from "framer-motion";
 import PageHeader from "../components/PageHeader";
 import { FormChart } from "../components/Charts";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -9,11 +10,7 @@ import {
   faUtensils,
 } from "@fortawesome/free-solid-svg-icons";
 import * as Yup from "yup";
-import {
-  CategoryPageProps,
-  FieldSet,
-  createValidationSchema,
-} from "./TravelPage";
+import { FieldSet, createValidationSchema } from "./TravelPage";
 import { AppContext } from "../context/FireBaseContext";
 import {
   calcFarmingPercent,
@@ -147,8 +144,6 @@ const FoodPage: FunctionComponent = () => {
     values: any,
     { setSubmitting }: { setSubmitting: (isSubmitting: boolean) => void }
   ) => {
-    console.log(values);
-
     const { local, produce, organic, crop, seasonal } = values;
 
     const dataValues = { local, produce, organic, seasonal, crop };
@@ -178,7 +173,6 @@ const FoodPage: FunctionComponent = () => {
     values: any,
     { setSubmitting }: { setSubmitting: (isSubmitting: boolean) => void }
   ) => {
-    console.log(values);
     const { out, waste } = values;
 
     let value = 0;
@@ -209,7 +203,12 @@ const FoodPage: FunctionComponent = () => {
       <PageHeader title="Food" subheadline="Can you improve your food score?" />
       <div className="row container-row">
         <div className="col-lg-4 col-md-6 col-sm-12 mb-4 px-3">
-          <div className="card text-center glassmorphism">
+          <motion.div
+            className="card text-center glassmorphism"
+            initial={{ scale: 0 }}
+            animate={{ scale: 1 }}
+            transition={{ type: "spring", duration: 1 }}
+          >
             <div className="d-flex align-items-center justify-content-center">
               <FormChart score={dietScore} color={["#FFBE3D", "#F06543"]} />
               <FontAwesomeIcon
@@ -228,10 +227,15 @@ const FoodPage: FunctionComponent = () => {
               inputFields={dietInputFields}
               handleSubmit={dietSubmit}
             />
-          </div>
+          </motion.div>
         </div>
         <div className="col-lg-4 col-md-6 col-sm-12 mb-4 px-3">
-          <div className="card text-center glassmorphism">
+          <motion.div
+            className="card text-center glassmorphism"
+            initial={{ scale: 0 }}
+            animate={{ scale: 1 }}
+            transition={{ type: "spring", duration: 1, delay: 0.2 }}
+          >
             <div className="d-flex align-items-center justify-content-center">
               <FormChart score={farmScore} color={["#63D471", "#378B29"]} />
               <FontAwesomeIcon
@@ -250,10 +254,19 @@ const FoodPage: FunctionComponent = () => {
               inputFields={farmInputFields}
               handleSubmit={farmSubmit}
             />
-          </div>
+          </motion.div>
         </div>
         <div className="col-lg-4 col-md-6 col-sm-12 mb-4 px-3">
-          <div className="card text-center glassmorphism">
+          <motion.div
+            className="card text-center glassmorphism"
+            initial={{ scale: 0 }}
+            animate={{ scale: 1 }}
+            transition={{
+              type: "spring",
+              duration: 1,
+              delay: 0.4,
+            }}
+          >
             <div className="d-flex align-items-center justify-content-center">
               <FormChart score={diningScore} color={["#A594F9", "#6247AA"]} />
               <FontAwesomeIcon
@@ -272,7 +285,7 @@ const FoodPage: FunctionComponent = () => {
               inputFields={diningInputFields}
               handleSubmit={diningSubmit}
             />
-          </div>
+          </motion.div>
         </div>
       </div>
     </main>

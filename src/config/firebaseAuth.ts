@@ -57,7 +57,6 @@ export async function updateFireBase(
     try {
       userData![category][prop] = data;
 
-      console.log(userData[category][prop]);
       updateDoc(userRef, userData);
     } catch (err) {
       console.log(err);

@@ -1,4 +1,5 @@
-import { FunctionComponent, useContext, useEffect, useState } from "react";
+import { FunctionComponent, useContext, useState } from "react";
+import { motion } from "framer-motion";
 import PageHeader from "../components/PageHeader";
 import { FormChart } from "../components/Charts";
 import {
@@ -360,7 +361,12 @@ const TravelPage: FunctionComponent = () => {
 
       <div className="row container-row">
         <div className="col-lg-4 col-md-6 col-sm-12 mb-4 px-3">
-          <div className="card text-center glassmorphism">
+          <motion.div
+            className="card text-center glassmorphism"
+            initial={{ scale: 0 }}
+            animate={{ scale: 1 }}
+            transition={{ type: "spring", duration: 1 }}
+          >
             <div className="d-flex align-items-center justify-content-center">
               <FormChart score={flightScore} color={["#DA2D2D", "#7C0000"]} />
               <FontAwesomeIcon
@@ -379,10 +385,15 @@ const TravelPage: FunctionComponent = () => {
               inputFields={flightInputFields}
               handleSubmit={flightSubmit}
             />
-          </div>
+          </motion.div>
         </div>
         <div className="col-lg-4 col-md-6 col-sm-12 mb-4 px-3">
-          <div className="card text-center glassmorphism">
+          <motion.div
+            className="card text-center glassmorphism"
+            initial={{ scale: 0 }}
+            animate={{ scale: 1 }}
+            transition={{ type: "spring", duration: 1, delay: 0.2 }}
+          >
             <div className="d-flex align-items-center justify-content-center">
               <FormChart score={carScore} color={["#009FFD", "#5200AE"]} />
               <FontAwesomeIcon icon={faCar} className="h2 position-absolute" />
@@ -398,10 +409,15 @@ const TravelPage: FunctionComponent = () => {
               inputFields={carInputFields}
               handleSubmit={carSubmit}
             />
-          </div>
+          </motion.div>
         </div>
         <div className="col-lg-4 col-md-6 col-sm-12 mb-4 px-3">
-          <div className="card text-center glassmorphism">
+          <motion.div
+            className="card text-center glassmorphism"
+            initial={{ scale: 0 }}
+            animate={{ scale: 1 }}
+            transition={{ type: "spring", duration: 1, delay: 0.4 }}
+          >
             <div className="d-flex align-items-center justify-content-center">
               <FormChart
                 score={transportScore}
@@ -426,7 +442,7 @@ const TravelPage: FunctionComponent = () => {
               inputFields={transportInputFields}
               handleSubmit={transportSubmit}
             />
-          </div>
+          </motion.div>
         </div>
       </div>
     </main>
