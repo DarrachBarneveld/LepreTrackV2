@@ -246,10 +246,10 @@ const EnergyPage: FunctionComponent = () => {
         subheadline="Can you improve your energy score?"
       />
 
-      <div className="row container-row">
+      <div className="row container-row px-2">
         <div className="col-md-6 col-sm-12 mb-4 px-3">
           <motion.div
-            className="card text-center glassmorphism"
+            className="text-center glassmorphism rounded-3"
             initial={{ scale: 0 }}
             animate={{ scale: 1 }}
             transition={{ type: "spring", duration: 1 }}
@@ -278,7 +278,7 @@ const EnergyPage: FunctionComponent = () => {
         </div>
         <div className="col-md-6 col-sm-12 mb-4 px-3">
           <motion.div
-            className="card text-center glassmorphism"
+            className="text-center glassmorphism rounded-3"
             initial={{ scale: 0 }}
             animate={{ scale: 1 }}
             transition={{ type: "spring", duration: 1 }}

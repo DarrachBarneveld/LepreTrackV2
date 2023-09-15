@@ -128,7 +128,7 @@ const CustomForm: FunctionComponent<CustomFormProps> = ({
                     id={field.name}
                     name={field.name}
                     // required={field.required}
-                    className={`form-control m-0 mb-1 ${
+                    className={`form-input p-2 m-0 mb-1 ${
                       touched[field.name] && errors[field.name]
                         ? "error-input"
                         : ""

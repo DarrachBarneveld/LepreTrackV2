@@ -43,7 +43,6 @@ export function IrishAverageTravelMethodTotal() {
 type Diet = "carnivore" | "omnivore" | "pescatarian" | "vegetarian" | "vegan";
 
 export function dietScoreComparedToIrishAverage(diet: Diet, calories: number) {
-  // Object for raw scores
   const scores: Record<Diet, number> = {
     carnivore: 100,
     omnivore: 80.5,

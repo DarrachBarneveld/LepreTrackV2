@@ -1,6 +1,4 @@
 import { FunctionComponent } from "react";
-import earthGuardian from "../assets/images/guardians/earth-guardian.png";
-import terraTormentor from "../assets/images/guardians/terra-tormentor.png";
 import AnimatedList, { HomeCopy } from "../components/AnimatedList";
 import { homeContent } from "../content/content";
 
@@ -13,11 +11,11 @@ const HomePage: FunctionComponent<IHomePageProps> = () => {
     <main>
       <div className="glassmorphism text-success fw-bold text-center w-100">
         <div className="d-flex justify-content-center align-items-center">
-          <img src={terraTormentor} width="150" alt="earth guardian photo" />
-          <h1 className="text-center">LepreTrackV2</h1>
-          <img src={earthGuardian} width="150" alt="earth guardian photo" />
+          {/* <img src={terraTormentor} width="150" alt="earth guardian photo" /> */}
+          <h1 className="text-center display-2 fw-bolder p-2">LepreTrackV2</h1>
+          {/* <img src={earthGuardian} width="150" alt="earth guardian photo" /> */}
         </div>
-        <h2 className="py-4 mt-2 h5">
+        <h2 className="py-4 mt-2 fst-italic h5">
           Empowering Individuals for a Greener Tomorrow
         </h2>
       </div>

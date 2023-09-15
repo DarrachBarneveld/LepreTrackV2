@@ -209,10 +209,10 @@ const CommunityPage: FunctionComponent = () => {
         title="Community"
         subheadline="Can you improve your community score?"
       />
-      <div className="row container-row">
+      <div className="row container-row px-2">
         <div className="col-md-6 col-sm-12 mb-4 px-3">
           <motion.div
-            className="card text-center glassmorphism"
+            className="text-center glassmorphism rounded-3"
             initial={{ scale: 0 }}
             animate={{ scale: 1 }}
             transition={{ type: "spring", duration: 1 }}
@@ -244,7 +244,7 @@ const CommunityPage: FunctionComponent = () => {
         </div>
         <div className="col-md-6 col-sm-12 mb-4 px-3">
           <motion.div
-            className="card text-center glassmorphism"
+            className="text-center glassmorphism rounded-3"
             initial={{ scale: 0 }}
             animate={{ scale: 1 }}
             transition={{ type: "spring", duration: 1, delay: 0.2 }}
