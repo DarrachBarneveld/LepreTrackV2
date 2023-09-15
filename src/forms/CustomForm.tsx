@@ -41,7 +41,7 @@ const CustomForm: FunctionComponent<CustomFormProps> = ({
       validationSchema={validationSchema}
       onSubmit={handleSubmit}
     >
-      {({ isSubmitting, errors, touched }) => (
+      {({ isSubmitting, errors, touched, initialValues }) => (
         <Form id="customForm" className="p-2 rounded-3 ">
           {heading && <p className="fw-bold mb-3 border-bottom">{heading}</p>}
           <div className={`${columns && "grid-2"}`}>
@@ -90,7 +90,6 @@ const CustomForm: FunctionComponent<CustomFormProps> = ({
                   <div className="d-flex flex-column mx-auto">
                     <Field
                       as="select"
-                      defaultValue={field.name}
                       name={field.name}
                       isInvalid={touched[field.name] && errors[field.name]}
                       className={`form-select mb-1 ${

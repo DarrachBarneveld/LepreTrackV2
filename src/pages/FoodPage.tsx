@@ -54,11 +54,6 @@ const farmInputFields = [
   { name: "crop", label: "Do you grow your own crop", type: "checkbox" },
 ];
 
-const diningInitialInputs = {
-  out: false,
-  waste: 0,
-};
-
 const diningInputFields = [
   { name: "out", label: "Do you eat out weekly?", type: "checkbox" },
   { name: "waste", label: "Do you regularly waste food?", type: "checkbox" },
@@ -110,7 +105,7 @@ const FoodPage: FunctionComponent = () => {
     calories: userData.food.diet.calories || 0,
   };
 
-  const farmInitialInputs = {
+  const farmInitialValues = {
     local: userData.food.farm.local || false,
     produce: userData.food.farm.produce || 0,
     organic: userData.food.farm.organic || 0,
@@ -127,15 +122,14 @@ const FoodPage: FunctionComponent = () => {
     values: any,
     { setSubmitting }: { setSubmitting: (isSubmitting: boolean) => void }
   ) => {
-    let score = dietScoreComparedToIrishAverage(values.diet, values.calories);
+    let score = dietScoreComparedToIrishAverage(values.type, values.calories);
     const trueScore = score;
 
     let inversePercent = calculateInvertedPercentage(trueScore);
 
     const data = {
-      type: values.diet,
-      calories: values.calories,
       score: inversePercent.toFixed(2),
+      ...values,
     };
 
     if (userAuth) {
@@ -232,7 +226,7 @@ const FoodPage: FunctionComponent = () => {
               initialValues={dietInitialValues}
               validationSchema={dietValidationSchema}
               inputFields={dietInputFields}
-              handleSubmit={farmSubmit}
+              handleSubmit={dietSubmit}
             />
           </div>
         </div>
@@ -251,7 +245,7 @@ const FoodPage: FunctionComponent = () => {
             </p>
             {/* FARMING FORM */}
             <CustomForm
-              initialValues={farmInitialInputs}
+              initialValues={farmInitialValues}
               validationSchema={farmingValidationSchema}
               inputFields={farmInputFields}
               handleSubmit={farmSubmit}
@@ -273,7 +267,7 @@ const FoodPage: FunctionComponent = () => {
             </p>
             {/* DINING FORM */}
             <CustomForm
-              initialValues={diningInitialInputs}
+              initialValues={diningInitialValues}
               validationSchema={diningValidationSchema}
               inputFields={diningInputFields}
               handleSubmit={diningSubmit}
