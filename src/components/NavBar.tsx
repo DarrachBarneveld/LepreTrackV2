@@ -4,7 +4,7 @@ import "./Navbar.css";
 import { NavLink } from "react-router-dom";
 import NavButton from "./NavButton";
 import { AppUser } from "../classes/AppUser";
-import { Container, Dropdown, Nav, Navbar } from "react-bootstrap";
+import { Dropdown, Nav, Navbar } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
 interface NavBarProps {
