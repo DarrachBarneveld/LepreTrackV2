@@ -1,4 +1,10 @@
-import { ChangeEvent, FormEvent, FunctionComponent, useState } from "react";
+import {
+  ChangeEvent,
+  FormEvent,
+  FunctionComponent,
+  useContext,
+  useState,
+} from "react";
 import { motion } from "framer-motion";
 import Carousel from "react-bootstrap/Carousel";
 
@@ -11,10 +17,13 @@ import {
   faPaperPlane,
   faRobot,
 } from "@fortawesome/free-solid-svg-icons";
+import { OpenAiContext } from "../context/OpenAiContext";
 
 const LearnPage: FunctionComponent = () => {
+  const { openai } = useContext(OpenAiContext);
   const [showBot, setShowBot] = useState(false);
   const [question, setQuestion] = useState("");
+  const [response, setResponse] = useState("");
 
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
     const { value } = event.target;
@@ -25,7 +34,17 @@ const LearnPage: FunctionComponent = () => {
   async function handleSubmit(event: FormEvent) {
     event.preventDefault();
 
-    console.log(question);
+    const message = await openai?.chat.completions.create({
+      model: "gpt-3.5-turbo",
+      messages: [{ role: "user", content: question }],
+      max_tokens: 30,
+    });
+
+    const reply = message?.choices[0].message.content;
+
+    if (reply) {
+      setResponse(reply);
+    } else setResponse("There was an error getting your request");
   }
 
   return (
@@ -198,6 +217,7 @@ const LearnPage: FunctionComponent = () => {
               rows={10}
               className="gpt-output"
               disabled
+              value={response}
             ></textarea>
           </form>
         </motion.div>
