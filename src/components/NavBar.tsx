@@ -14,7 +14,7 @@ interface NavBarProps {
 const NavBar: FC<NavBarProps> = ({ user }) => {
   return (
     <header>
-      <nav className="navbar navbar-expand-lg fixed-top">
+      <nav className="navbar navbar-expand-lg navbar-light fixed-top">
         <div className="container-fluid">
           <div className="logo">
             <a className="navbar-brand" href="index.html">
@@ -30,7 +30,7 @@ const NavBar: FC<NavBarProps> = ({ user }) => {
             aria-expanded="false"
             aria-label="Toggle navigation"
           >
-            <span className="navbar-toggler-icon"></span>
+            <span className="navbar-toggler-icon text-dark"></span>
           </button>
           <div className="collapse navbar-collapse fs-4" id="navbarNav">
             <ul className="navbar-nav me-auto mb-2 mb-lg-0" id="navbar-list">
@@ -109,10 +109,7 @@ const NavBar: FC<NavBarProps> = ({ user }) => {
             </ul>
             <div className="d-flex">
               {user ? (
-                <ul
-                  className="navbar-nav me-auto mb-2 mb-lg-0"
-                  id="navbar-list"
-                >
+                <ul className="navbar-nav" id="navbar-list">
                   <li className="nav-item">
                     <NavLink
                       to="/dashboard"
