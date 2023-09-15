@@ -92,6 +92,21 @@
   color: green;
 }
 
+.close {
+  border: none;
+  background: transparent;
+  position: absolute;
+  top: 0px;
+  right: 10px;
+  font-size: 1.4rem;
+}
+
+.close:hover,
+.close:focus {
+  filter: brightness(0.5);
+  cursor: pointer;
+}
+
 .ask-btn {
   border: none;
   width: fit-content;

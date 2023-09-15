@@ -13,6 +13,7 @@ import "./learn.css";
 import PageHeader from "../components/PageHeader";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
+  faClose,
   faComment,
   faPaperPlane,
   faRobot,
@@ -188,8 +189,11 @@ const LearnPage: FunctionComponent = () => {
         >
           <form
             onSubmit={handleSubmit}
-            className="d-flex flex-column card p-4 rounded-3 glassmorphism"
+            className="d-flex flex-column card p-4 rounded-3 glassmorphism position-relative"
           >
+            <button onClick={() => setShowBot(false)} className="close">
+              <FontAwesomeIcon icon={faClose} className="text-muted" />
+            </button>
             <FontAwesomeIcon
               icon={faRobot}
               className="robot text-primary h1 stroke-lg"
