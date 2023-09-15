@@ -8,6 +8,7 @@ export interface IAboutPageProps {}
 const developers = [
   {
     name: "Amanda",
+    position: "Design & Documentation",
     quote:
       "In the library of code, the librarian is the silent author, organizing knowledge with precision, while the coder is the eloquent storyteller, crafting tales in the language of machines.",
     github: "https://github.com/apita1423",
@@ -15,6 +16,7 @@ const developers = [
   },
   {
     name: "Aurelien",
+    position: "Research, Nutrition & Energy",
     quote:
       "In both cooking and coding, it's not just about following recipes or algorithms, but about understanding the ingredients and the logic, and adding one's unique flavor to create something exceptional.",
     github: "https://github.com/AMJL-16",
@@ -22,6 +24,7 @@ const developers = [
   },
   {
     name: "Adam",
+    position: "Research, Recycling & Community",
     quote:
       "Always code as if the person who ends up maintaining your code will be a violent psychopath who knows where you live.",
     github: "https://github.com/adammkeane",
@@ -29,12 +32,14 @@ const developers = [
   },
   {
     name: "Darrach",
+    position: "Authentication & Scrum Master",
     quote: "Know thy self, know thy enemy",
     github: "https://github.com/DarrachBarneveld",
     linkedIn: "https://au.linkedin.com/in/darrach-barneveld-2b493511b",
   },
   {
     name: "Marlon",
+    position: "UI, UX, Semantics & Performance",
     quote:
       "If you set your goals ridiculously high and it's a failure, you will fail above everyone else's success.",
     github: "https://github.com/Markpm-code",
@@ -42,6 +47,7 @@ const developers = [
   },
   {
     name: "Shane",
+    position: "Energy and Automated Assistance",
     quote:
       "Every great developer you know got there by solving problems they were unqualified to solve until they actually did it.",
     github: "https://github.com/Shane-Donlon",

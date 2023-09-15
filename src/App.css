@@ -78,3 +78,21 @@
 .categories .col-md-6:nth-child(4) .glassmorphism {
   color: green;
 }
+
+.linkedin {
+  background-color: #3877b5;
+}
+
+.linkedin:hover,
+.linkedin:focus {
+  filter: brightness(0.9);
+}
+
+.github {
+  background-color: #c9510c;
+}
+
+.github:hover,
+.github:focus {
+  filter: brightness(0.9);
+}
