@@ -1,11 +1,33 @@
-import { FunctionComponent } from "react";
+import { ChangeEvent, FormEvent, FunctionComponent, useState } from "react";
+import { motion } from "framer-motion";
 import Carousel from "react-bootstrap/Carousel";
 
 import "./learn.css";
 
 import PageHeader from "../components/PageHeader";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faComment,
+  faPaperPlane,
+  faRobot,
+} from "@fortawesome/free-solid-svg-icons";
 
 const LearnPage: FunctionComponent = () => {
+  const [showBot, setShowBot] = useState(false);
+  const [question, setQuestion] = useState("");
+
+  const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const { value } = event.target;
+
+    setQuestion(value);
+  };
+
+  async function handleSubmit(event: FormEvent) {
+    event.preventDefault();
+
+    console.log(question);
+  }
+
   return (
     <main>
       <PageHeader
@@ -15,7 +37,7 @@ const LearnPage: FunctionComponent = () => {
 
       <Carousel
         controls={false}
-        className="container text-dark my-carousel glassmorphism"
+        className="container text-dark my-carousel glassmorphism mb-5"
       >
         <Carousel.Item>
           <h2 className="">
@@ -128,6 +150,58 @@ const LearnPage: FunctionComponent = () => {
           </div>
         </Carousel.Item>
       </Carousel>
+
+      {!showBot && (
+        <div className="glassmorphism p-4">
+          <h3>Still have questions?</h3>
+          <p>Click the below Chat Icon to ask more questions</p>
+
+          <button className="chat-btn" onClick={() => setShowBot(true)}>
+            <FontAwesomeIcon icon={faComment} className="stroke-lg" />
+          </button>
+        </div>
+      )}
+      {showBot && (
+        <motion.div
+          initial={{ opacity: 0, x: -300 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ type: "spring" }}
+          className="chat-div"
+        >
+          <form
+            onSubmit={handleSubmit}
+            className="d-flex flex-column card p-4 rounded-3 glassmorphism"
+          >
+            <FontAwesomeIcon
+              icon={faRobot}
+              className="robot text-primary h1 stroke-lg"
+            />
+            <label htmlFor="input-gpt">
+              Please ask us about the environment
+            </label>
+            <input
+              type="text"
+              value={question}
+              onChange={handleInputChange}
+              required
+              name="input-gpt"
+              id="input-gpt"
+              className="input-gpt"
+            />
+            <button type="submit" className="btn btn-success">
+              <FontAwesomeIcon icon={faPaperPlane} />
+            </button>
+            <textarea
+              name="gpt-output"
+              id="gpt-output"
+              cols={30}
+              rows={10}
+              className="gpt-output"
+              disabled
+            ></textarea>
+          </form>
+        </motion.div>
+      )}
     </main>
   );
 };

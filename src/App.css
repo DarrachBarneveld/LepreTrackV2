@@ -21,6 +21,11 @@
   stroke-width: 5px;
 }
 
+.stroke-lg {
+  stroke: rgba(0, 0, 0, 0.7);
+  stroke-width: 20px;
+}
+
 .w-fit-content {
   width: fit-content !important;
 }
@@ -77,6 +82,20 @@
 
 .categories .col-md-6:nth-child(4) .glassmorphism {
   color: green;
+}
+
+.chat-btn {
+  border: none;
+  width: fit-content;
+  font-size: 3.4rem;
+  background: transparent;
+  color: green;
+}
+
+.chat-btn:hover,
+.chat-btn:focus {
+  filter: brightness(1.1);
+  cursor: pointer;
 }
 
 .linkedin {

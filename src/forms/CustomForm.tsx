@@ -44,7 +44,7 @@ const CustomForm: FunctionComponent<CustomFormProps> = ({
       {({ isSubmitting, errors, touched }) => (
         <Form id="customForm" className="p-2 rounded-3 ">
           {heading && (
-            <h2 className="fw-bold mb-3 p-1 pb-2 border-bottom border-dark rounded bg-light  h5">
+            <h2 className="fw-bold mb-3 p-1 pb-2 border-bottom border-dark rounded bg-light h5">
               {heading}
             </h2>
           )}
