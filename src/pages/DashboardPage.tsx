@@ -16,6 +16,7 @@ import LeaderBoardUser from "../components/LeaderBoardUser";
 import { getAllUserDocuments } from "../config/firebaseAuth";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import PageHeader from "../components/PageHeader";
+import { renderUserBadge } from "../helpers/renders";
 
 interface DashboardPageProps {}
 
@@ -24,6 +25,9 @@ const DashboardPage: FunctionComponent<DashboardPageProps> = () => {
   const { userData } = useContext(AppContext) as { userData: AppUser };
 
   const totalScore = userData?.overAllScore();
+  const rating = userData?.starRating();
+
+  const { guardianName, guardian } = renderUserBadge(totalScore);
 
   async function fetchAllUsers() {
     const usersDocs = (await getAllUserDocuments()) as AppUser[];
@@ -78,16 +82,16 @@ const DashboardPage: FunctionComponent<DashboardPageProps> = () => {
           </div>
 
           <div className="col-lg-6 col-md-6 col-sm-12 mb-4 py-2">
-            <div className="row m-0 p-2 glassmorphism">
+            <div className="row m-0 p-2 glassmorphism align-items-center">
               <h3 className="border-bottom">
-                Your Score{" "}
+                Your Score {rating && rating}
                 <FontAwesomeIcon
                   icon={faStar}
                   className="text-warning stroke"
                 />
               </h3>
               <div className="col-md-6 col-sm-12">
-                <h3>Earths Guardian</h3>
+                <h3>{guardianName}</h3>
                 <img
                   width="100%"
                   className="rounded-3"
@@ -104,7 +108,7 @@ const DashboardPage: FunctionComponent<DashboardPageProps> = () => {
           </div>
           <div className="col-lg-6 col-md-6 col-sm-12 mb-4 glassmorphism py-2">
             <div>
-              <h3 className="border-bottom">
+              <h3 className="border-bottom ">
                 Leaderboard{" "}
                 <FontAwesomeIcon
                   icon={faSignal}

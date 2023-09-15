@@ -90,13 +90,13 @@ export const TotalScoreBar: FunctionComponent<{
           goals: [
             {
               name: "Earth's Guardian",
-              value: 200,
+              value: 300,
               strokeHeight: 2,
               strokeColor: "#FFD700",
             },
             {
               name: "Green Fingers",
-              value: 150,
+              value: 200,
               strokeHeight: 2,
               strokeColor: "#4b7bff",
             },
@@ -108,7 +108,7 @@ export const TotalScoreBar: FunctionComponent<{
             },
             {
               name: "Terra's Tormentor",
-              value: 50,
+              value: 0,
               strokeHeight: 2,
               strokeColor: "#FF0000",
             },
@@ -127,7 +127,7 @@ export const TotalScoreBar: FunctionComponent<{
     plotOptions: {
       bar: {
         columnWidth: "50%",
-        borderRadius: 10,
+        borderRadius: 5,
       },
     },
     colors: ["#16b85f"],
