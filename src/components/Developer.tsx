@@ -3,7 +3,7 @@ import { FunctionComponent } from "react";
 export interface DeveloperProps {
   item: {
     name: string;
-    position: string;
+    role: string;
     quote: string;
     github: string;
     linkedIn: string;
@@ -19,7 +19,7 @@ const Developer: FunctionComponent<DeveloperProps> = ({ item }) => {
           {item.name}
         </h5>
         <p className="card-title text-center fw-bold text-decoration-underline">
-          {item.position}
+          {item.role}
         </p>
         <q className="card-text text-center fst-italic">{item.quote}</q>
         <div className="d-flex mt-3 justify-content-center align-items-center">
