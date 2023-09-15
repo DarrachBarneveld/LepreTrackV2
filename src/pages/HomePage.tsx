@@ -62,15 +62,6 @@ const HomePage: FunctionComponent<IHomePageProps> = () => {
         </h2>
         <AnimatedList list={homeContent} component={HomeCopy} />
       </div>
-
-      <div className="w-100 card glassmorphism my-5">
-        <div className="card-body">
-          <div className="card-title text-center my-auto py-1 text-muted">
-            Together, we're driving positive change, one person at a time,
-            towards a cleaner and more sustainable planet.
-          </div>
-        </div>
-      </div>
     </main>
   );
 };
