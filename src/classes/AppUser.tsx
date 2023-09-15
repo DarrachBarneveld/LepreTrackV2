@@ -34,6 +34,18 @@ export interface EnergyData {
     factor: number;
     score: number;
   };
+
+  home: {
+    solar: boolean;
+    lights: boolean;
+    insulation: boolean;
+    appliances: boolean;
+    windows: boolean;
+    thermostat: boolean;
+    water: boolean;
+    materials: boolean;
+    score: number;
+  };
 }
 
 export interface FoodData {
@@ -134,7 +146,17 @@ export class AppUser {
       factor: 0,
       score: 0,
     },
-    // ... (same as before)
+    home: {
+      solar: false,
+      lights: false,
+      insulation: false,
+      appliances: false,
+      windows: false,
+      thermostat: false,
+      water: false,
+      materials: false,
+      score: 0,
+    },
   };
 
   static defaultFood: FoodData = {

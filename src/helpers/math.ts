@@ -113,3 +113,17 @@ export function calcVolunteerPercent({
 
   return value + +donationPercent;
 }
+
+export function calcBooleanAmountPercent(obj: {
+  [key: string]: boolean;
+}): number {
+  const totalProperties = Object.keys(obj).length;
+  const trueProperties = Object.values(obj).filter((value) => value).length;
+
+  if (totalProperties === 0) {
+    return 0;
+  }
+
+  const score = (trueProperties / totalProperties) * 100;
+  return parseFloat(score.toFixed(2));
+}

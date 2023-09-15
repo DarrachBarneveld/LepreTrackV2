@@ -3,13 +3,16 @@ import { motion } from "framer-motion";
 import PageHeader from "../components/PageHeader";
 import { FormChart } from "../components/Charts";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlugCircleExclamation } from "@fortawesome/free-solid-svg-icons";
+import {
+  faHouse,
+  faPlugCircleExclamation,
+} from "@fortawesome/free-solid-svg-icons";
 import CustomForm from "../forms/CustomForm";
 import * as Yup from "yup";
 import { FieldSet, createValidationSchema } from "./TravelPage";
 import { AppContext } from "../context/FireBaseContext";
 import { updateFireBase } from "../config/firebaseAuth";
-import { calculateInvertedPercentage } from "../helpers/math";
+import { calcBooleanAmountPercent } from "../helpers/math";
 
 const energyInputFields = [
   {
@@ -50,6 +53,45 @@ const energyInputFields = [
   },
 ];
 
+const homeInputFields = [
+  {
+    name: "solar",
+    label: "Solar Panels",
+    type: "checkbox",
+  },
+  { name: "lights", label: "Energy Efficient Lights", type: "checkbox" },
+  {
+    name: "insulation",
+    label: "Quality Insulation",
+    type: "checkbox",
+  },
+  {
+    name: "appliances",
+    label: "Energy Efficient Appliances",
+    type: "checkbox",
+  },
+  {
+    name: "windows",
+    label: "Energy Efficient Windows",
+    type: "checkbox",
+  },
+  {
+    name: "thermostat",
+    label: "Programmable Thermostat",
+    type: "checkbox",
+  },
+  {
+    name: "water",
+    label: "Water Conservation Devices",
+    type: "checkbox",
+  },
+  {
+    name: "materials",
+    label: "Sustainable Material Construction",
+    type: "checkbox",
+  },
+];
+
 const energyFields: FieldSet = {
   electric: Yup.number()
     .required("This field is required")
@@ -85,7 +127,19 @@ const energyFields: FieldSet = {
     .integer("Number of factor must be an integer"),
 };
 
+const homeFields: FieldSet = {
+  solar: Yup.boolean(),
+  lights: Yup.boolean(),
+  insulation: Yup.boolean(),
+  appliances: Yup.boolean(),
+  windows: Yup.boolean(),
+  thermostat: Yup.boolean(),
+  water: Yup.boolean(),
+  materials: Yup.boolean(),
+};
+
 const energyValidationSchema = createValidationSchema(energyFields);
+const homeValidationSchema = createValidationSchema(homeFields);
 
 const EnergyPage: FunctionComponent = () => {
   const { userData, userAuth } = useContext(AppContext);
@@ -94,6 +148,9 @@ const EnergyPage: FunctionComponent = () => {
 
   const [energyScore, setEnergyScore] = useState<number>(
     +userData.energy.energy.score
+  );
+  const [homeScore, setHomeScore] = useState<number>(
+    +userData.energy.home.score
   );
 
   const energyInitialValues = {
@@ -105,6 +162,17 @@ const EnergyPage: FunctionComponent = () => {
     propane: userData.energy.energy.propane || 0,
     wood: userData.energy.energy.wood || 0,
     factor: userData.energy.energy.factor || 0,
+  };
+
+  const homeInitialValues = {
+    solar: userData.energy.home?.solar || false,
+    lights: userData.energy.home?.lights || false,
+    insulation: userData.energy.home?.insulation || false,
+    appliances: userData.energy.home?.appliances || false,
+    windows: userData.energy.home?.windows || false,
+    thermostat: userData.energy.home?.thermostat || false,
+    water: userData.energy.home?.water || false,
+    materials: userData.energy.home?.materials || false,
   };
 
   const energySubmit = async (
@@ -146,6 +214,28 @@ const EnergyPage: FunctionComponent = () => {
 
     setSubmitting(false);
   };
+
+  const homeSubmit = async (
+    values: any,
+    { setSubmitting }: { setSubmitting: (isSubmitting: boolean) => void }
+  ) => {
+    console.log(values);
+
+    const score = calcBooleanAmountPercent(values);
+
+    const data = {
+      score,
+      ...values,
+    };
+
+    if (userAuth) {
+      await updateFireBase(data, "energy", "home", userAuth);
+
+      setHomeScore(score);
+    }
+
+    setSubmitting(false);
+  };
   return (
     <main>
       <PageHeader
@@ -154,7 +244,7 @@ const EnergyPage: FunctionComponent = () => {
       />
 
       <div className="row container-row">
-        <div className="col-12 mb-4 px-3">
+        <div className="col-md-6 col-sm-12 mb-4 px-3">
           <motion.div
             className="card text-center glassmorphism"
             initial={{ scale: 0 }}
@@ -179,6 +269,34 @@ const EnergyPage: FunctionComponent = () => {
               validationSchema={energyValidationSchema}
               inputFields={energyInputFields}
               handleSubmit={energySubmit}
+            />
+          </motion.div>
+        </div>
+        <div className="col-md-6 col-sm-12 mb-4 px-3">
+          <motion.div
+            className="card text-center glassmorphism"
+            initial={{ scale: 0 }}
+            animate={{ scale: 1 }}
+            transition={{ type: "spring", duration: 1 }}
+          >
+            <div className="d-flex align-items-center justify-content-center">
+              <FormChart score={homeScore} color={["#F08EFC", "#EE5166"]} />
+              <FontAwesomeIcon
+                icon={faHouse}
+                className="h2 position-absolute"
+              />
+            </div>
+            <p className="d-flex justify-content-center">
+              <span className="fw-bolder mx-2">{homeScore}%</span>
+              <span className="text-muted">Avg</span>
+            </p>
+            {/* DIET FORM */}
+            <CustomForm
+              columns
+              initialValues={homeInitialValues}
+              validationSchema={homeValidationSchema}
+              inputFields={homeInputFields}
+              handleSubmit={homeSubmit}
             />
           </motion.div>
         </div>
