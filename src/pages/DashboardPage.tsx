@@ -42,6 +42,15 @@ const DashboardPage: FunctionComponent<DashboardPageProps> = () => {
     fetchAllUsers();
   }, []);
 
+  if (totalUsers.length != 0) {
+    const gaia = totalUsers.find(
+      (user) => user.name === "g.streparola@gmail.com"
+    );
+
+    console.log(gaia?.calcTransportScore());
+  }
+
+  console.log(totalUsers);
   return (
     <main>
       <PageHeader title="Dashboard" subheadline="Check out your latest data" />

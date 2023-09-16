@@ -212,17 +212,23 @@ export class AppUser {
   }
 
   overAllScore() {
-    const valueTransport =
+    let valueTransport =
       this.calcTransportScore() > 100 ? 100 : this.calcTransportScore();
 
-    const valueFood = this.calcFoodScore() > 100 ? 100 : this.calcFoodScore();
+    let valueFood = this.calcFoodScore() > 100 ? 100 : this.calcFoodScore();
 
-    const valueRecycle =
+    let valueRecycle =
       this.calcRecyclingScore() > 100 ? 100 : this.calcRecyclingScore();
 
-    const valueEnergy =
+    let valueEnergy =
       this.calcEnergyScore() > 100 ? 100 : this.calcEnergyScore();
 
+    valueEnergy < 0 ? (valueEnergy = 0) : 0;
+    valueFood < 0 ? (valueFood = 0) : 0;
+    valueRecycle < 0 ? (valueRecycle = 0) : 0;
+    valueTransport < 0 ? (valueTransport = 0) : 0;
+
+    console.log(valueTransport);
     const totalScore =
       +valueTransport + +valueFood + +valueRecycle + +valueEnergy;
 
