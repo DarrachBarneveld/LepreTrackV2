@@ -1,12 +1,25 @@
-import { FunctionComponent } from "react";
+import { FunctionComponent, useContext } from "react";
 import AnimatedList, { HomeCopy } from "../components/AnimatedList";
 import { homeContent } from "../content/content";
 
 import "./homepage.css";
+import { AppContext } from "../context/FireBaseContext";
+import { useNavigate } from "react-router-dom";
+import { loginForm } from "../components/NavButton";
 
 export interface IHomePageProps {}
 
 const HomePage: FunctionComponent<IHomePageProps> = () => {
+  const navigate = useNavigate();
+  const { userData } = useContext(AppContext);
+
+  function startTracking() {
+    if (userData) {
+      navigate("/dashboard");
+    } else {
+      loginForm(navigate);
+    }
+  }
   return (
     <main>
       <div className="glassmorphism text-success fw-bold text-center w-100">
@@ -45,12 +58,12 @@ const HomePage: FunctionComponent<IHomePageProps> = () => {
             empowering you to make informed choices that reduce your CO2
             emissions.
           </div>
-          <a
+          <button
+            onClick={startTracking}
             className="btn btn-success text-white start-tracking mt-3"
-            href="#"
           >
             Start Tracking
-          </a>
+          </button>
         </div>
       </div>
 
