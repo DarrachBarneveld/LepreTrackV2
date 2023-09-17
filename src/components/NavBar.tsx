@@ -13,7 +13,7 @@ interface NavBarProps {
 const NavBar: FC<NavBarProps> = ({ user }) => {
   return (
     <header>
-      <Navbar expand="lg" className="navbar-light fixed-top px-2">
+      <Navbar expand="lg" className="navbar-light fixed-top px-2 py-0">
         <Navbar.Brand href="#">
           <div className="logo">
             <img className="img-fluid" src={logo} alt="logo" />
