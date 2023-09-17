@@ -228,11 +228,8 @@ export class AppUser {
     valueRecycle < 0 ? (valueRecycle = 0) : 0;
     valueTransport < 0 ? (valueTransport = 0) : 0;
 
-    console.log(valueTransport);
     const totalScore =
       +valueTransport + +valueFood + +valueRecycle + +valueEnergy;
-
-    // const totalPercentage = totalScore / 2;
 
     return totalScore;
   }

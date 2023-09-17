@@ -125,26 +125,32 @@ export async function loginForm(navigate: NavigateFunction) {
       return { email: email?.value, password: password?.value };
     },
   }).then(async (result) => {
-    await signInWithEmailAndPassword(
-      firebaseAuth,
-      result.value.email,
-      result.value.password
-    );
-
-    const Toast = Swal.mixin({
-      toast: true,
-      position: "top-end",
-      showConfirmButton: false,
-      timer: 1500,
-      timerProgressBar: true,
-    });
-
-    navigate("dashboard");
-
-    await Toast.fire({
-      icon: "success",
-      title: "Signed in successfully",
-    });
+    try {
+      await signInWithEmailAndPassword(
+        firebaseAuth,
+        result.value.email,
+        result.value.password
+      );
+      const Toast = Swal.mixin({
+        toast: true,
+        position: "top-end",
+        showConfirmButton: false,
+        timer: 1500,
+        timerProgressBar: true,
+      });
+      navigate("dashboard");
+      await Toast.fire({
+        icon: "success",
+        title: "Signed in successfully",
+      });
+    } catch (err) {
+      Swal.fire({
+        title: "Error!",
+        text: "Invalid Credentials",
+        icon: "error",
+        confirmButtonText: "Cool",
+      });
+    }
   });
 }
 

@@ -132,6 +132,10 @@ const flightFields: FieldSet = {
   flightClass: Yup.string().required("Please select a flight class"),
 };
 
+
+
+
+
 const transportFields: FieldSet = {
   drive: Yup.number()
     .typeError("Must be a number")
