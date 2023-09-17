@@ -1,6 +1,5 @@
 import { FC } from "react";
 import logo from "../assets/images/logo.png";
-import "./Navbar.css";
 import { NavLink } from "react-router-dom";
 import NavButton from "./NavButton";
 import { AppUser } from "../classes/AppUser";

@@ -1,6 +1,5 @@
 import { FunctionComponent, useEffect, useState } from "react";
 import ReactApexChart from "react-apexcharts";
-import "./charts.css";
 
 export function graphColor(num: number) {
   if (num < 25) {
